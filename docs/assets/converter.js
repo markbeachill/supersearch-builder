@@ -116,16 +116,53 @@
     return result;
   }
 
-  // Apply a template to a real query, for previews and the exported page.
-  function applyTemplate(template, query) {
-    var enc = encodeURIComponent(String(query || "").trim());
-    return String(template || "").split(TOKEN).join(enc);
+  // Encode a query for a URL, using + for spaces to match the classic Super Search
+  // style. This reads well in site: searches (site:bbc.co.uk+climate+migration) and
+  // works identically for ordinary query strings.
+  function encodeQuery(query) {
+    return encodeURIComponent(String(query || "").trim()).replace(/%20/g, "+");
   }
 
-  // Best-effort label suggestion from the hostname, e.g. scholar.google.com -> "Scholar Google".
+  // Apply a template to a real query, for previews and the exported page.
+  function applyTemplate(template, query) {
+    return String(template || "").split(TOKEN).join(encodeQuery(query));
+  }
+
+  // Build a Google site-search template for a domain, e.g. economist.com ->
+  // https://www.google.com/search?q=site:economist.com+%s . This is how you search
+  // any site that has poor or no search of its own.
+  function siteSearchTemplate(domain, opts) {
+    opts = opts || {};
+    var d = String(domain || "").trim();
+    if (!d) return { ok: false, template: "", message: "Type a website address, e.g. economist.com" };
+    // strip scheme, path, leading www. and trailing slashes
+    d = d.replace(/^https?:\/\//i, "").replace(/^www\./i, "").replace(/\/.*$/, "").replace(/\/+$/, "");
+    if (!/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(d)) {
+      return { ok: false, template: "", message: "That does not look like a website address. Try something like guardian.com or bbc.co.uk." };
+    }
+    var google = opts.uk ? "https://www.google.co.uk/search" : "https://www.google.com/search";
+    var extra = opts.pdf ? "+pdf" : "";
+    return {
+      ok: true,
+      domain: d,
+      template: google + "?q=site:" + d + extra + "+" + TOKEN,
+      message: "Site search ready."
+    };
+  }
+
+  // Best-effort label suggestion. For a Google site: search, name it after the target
+  // site (site:economist.com -> "Economist"); otherwise use the hostname.
   function suggestLabel(url) {
     try {
-      var host = new URL(url).hostname.replace(/^www\./, "");
+      var u = String(url || "");
+      var siteMatch = u.match(/[?&]q=site:([a-z0-9.-]+)/i);
+      var host;
+      if (siteMatch) {
+        host = siteMatch[1];
+      } else {
+        host = new URL(u).hostname;
+      }
+      host = host.replace(/^www\./, "");
       var core = host.split(".");
       if (core.length > 2) core = core.slice(0, core.length - 1);
       core = core.filter(function (p) {
@@ -149,6 +186,8 @@
     TOKEN: TOKEN,
     convert: convert,
     applyTemplate: applyTemplate,
+    encodeQuery: encodeQuery,
+    siteSearchTemplate: siteSearchTemplate,
     queryVariants: queryVariants,
     suggestLabel: suggestLabel,
     isValidTemplate: isValidTemplate

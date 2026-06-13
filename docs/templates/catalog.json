@@ -10,12 +10,20 @@
       "description": "Academic databases, repositories, theses, news, media and reference — one query across all of them."
     },
     {
+      "id": "mark",
+      "file": "mark.json",
+      "title": "Mark's Super Search",
+      "group": "Research",
+      "columns": 5,
+      "description": "The classic Super Search setup: academic, news via site-search, media, social, magazines, sites, images and more. UEL specifics omitted."
+    },
+    {
       "id": "blank",
       "file": "blank.json",
       "title": "Blank",
       "group": "Start from scratch",
       "columns": 3,
-      "description": "An empty Super Search with a single engine to build on."
+      "description": "An empty Super Search with a single search to build on."
     }
   ]
 }

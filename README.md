@@ -1,17 +1,39 @@
-# Super Search Builder — Stage 1.0
+# Super Search Builder — Stage 1.1
 
-**Live website:** https://USERNAME.github.io/supersearch-builder
-**GitHub repository:** https://github.com/USERNAME/supersearch-builder
+**Live website:** https://markbeachill.github.io/supersearch-builder
+**GitHub repository:** https://github.com/markbeachill/supersearch-builder
 
 A static GitHub Pages website for building standalone **Super Search** pages aimed at
 research. A Super Search page takes a single typed query and fans it out into many
-search links — one per engine, database or site — each opening that engine's own
-results for your query.
+searches — one per site, database or engine — each opening that site's own results for
+your query.
 
 This builder is a sibling of the
 [Personal Start Page Creator](https://github.com/markbeachill/start-page-builder).
 It shares the same philosophy: no account, no backend, no framework, no external
 library, and a **standalone HTML file you own** as the output.
+
+## Stage 1.1 update
+
+- Searches now start as **plain dark text** and become **blue underlined links** once a
+  query is typed — matching how the classic Super Search behaved.
+- Added a **centred masthead** with a red "Super Search" prefix in a serif font, to
+  distinguish a Super Search page from a start-page menu. The "show title" setting now
+  controls this masthead.
+- Darker body text, lighter grey backgrounds, and **wider letter-spacing on section
+  headings** for readability.
+- Queries are now encoded with **`+` for spaces** (e.g. `climate+migration`), matching
+  the classic style and reading well in site searches.
+- Added a **site search** builder: type a website address (e.g. `economist.com`) and get
+  a Google site-search template `…?q=site:economist.com+%s`. Available both on the
+  converter page and inside the builder's per-section panel. This is how most news and
+  magazine searches work.
+- New **How it works** page with a live interactive demo (type a query, get links).
+- Renamed throughout: a entry is a **search** (not an "engine"); the old
+  "How to add a search engine" guide is now **Add a search** and covers both the
+  paste-a-link route and the site-search route.
+- Added **Mark's Super Search** template, reconstructed from the classic setup with UEL
+  library, Keenious and institutional setup links omitted.
 
 ## What a Super Search page does
 
@@ -93,7 +115,8 @@ docs/
   index.html              integrated public home page
   builder.html            light-wrapper builder app
   converter.html          standalone search-link → template converter
-  how-to-add-a-search.html instructions for capturing a search link
+  how-it-works.html      normal site page with a live interactive demo
+  add-a-search.html       guide: paste-a-link route and site-search route
   templates.html          jump-start research template catalogue
   about.html              about this tool
   help.html               help and notes

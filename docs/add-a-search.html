@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add a search · Super Search Builder</title>
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <nav class="site-nav"><div class="site-nav-inner">
+    <a class="brand" href="index.html">Super Search Builder</a>
+    <a class="nav-link" href="builder.html">Builder</a>
+    <a class="nav-link" href="how-it-works.html">How it works</a>
+    <a class="nav-link" href="converter.html">Link converter</a>
+    <a class="nav-link" href="add-a-search.html">Add a search</a>
+    <a class="nav-link" href="templates.html">Templates</a>
+    <a class="nav-link" href="help.html">Help</a>
+  </div></nav>
+
+  <main class="page">
+    <div class="section-title">
+      <span class="badge">Guide</span>
+      <h2>Add a search</h2>
+      <p>Each search in a Super Search page is a link with a <code>%s</code> token where your
+      query goes, for example <code>https://core.ac.uk/search?q=%s</code>. There are two easy
+      ways to make one — you never have to write the <code>%s</code> by hand.</p>
+    </div>
+
+    <div class="section-title" style="margin-top:14px"><h2>Option 1 — from a search link</h2></div>
+    <p class="tiny-note">Best when a site has its own search box.</p>
+    <div class="steps">
+      <div class="step"><div><strong>Search for a memorable phrase</strong><br>
+        <span class="tiny-note">On the site you want — a library catalogue, a database, a journal — run a normal search for a short, distinctive phrase such as <code>climate migration</code>. Avoid single common words.</span></div></div>
+      <div class="step"><div><strong>Copy the results-page address</strong><br>
+        <span class="tiny-note">Copy the full address from your browser's address bar. It will contain your phrase, e.g. <code>…doSearch?Query=climate+migration</code>.</span></div></div>
+      <div class="step"><div><strong>Convert and add</strong><br>
+        <span class="tiny-note">Paste it into the <a href="converter.html">link converter</a> (or the builder's "Add from a search link" panel) and tell it the phrase. It produces <code>…doSearch?Query=%s</code>, ready to drop into a section.</span></div></div>
+    </div>
+
+    <div class="section-title" style="margin-top:24px"><h2>Option 2 — a site search</h2></div>
+    <p class="tiny-note">Best when a site has poor or no search of its own — which is most of them.
+    Instead of using the site's search, you search it <em>through Google</em>.</p>
+    <p class="tiny-note">In the builder's <strong>+ Add a site search</strong> panel, type just the
+    website address, e.g. <code>economist.com</code>, and it builds:</p>
+    <pre class="codeblock">https://www.google.com/search?q=site:economist.com+%s</pre>
+    <p class="tiny-note">Tick <strong>UK Google</strong> to use <code>google.co.uk</code> instead.
+    This is exactly how many of the searches in the templates work — the news titles, the
+    magazines, and the UK academic search are all Google site searches.</p>
+
+    <div class="section-title" style="margin-top:24px"><h2>What the converter recognises</h2></div>
+    <p class="tiny-note">Your phrase can be written into a link in different ways. The converter
+    checks the common forms automatically:</p>
+    <pre class="codeblock">climate+migration      spaces written as +
+climate%20migration    spaces written as %20
+in the query string    …?q=climate+migration   ->  …?q=%s
+in the path            …/search/climate+migration  ->  …/search/%s
+with extra settings    …?q=climate+migration&amp;sort=date  ->  …?q=%s&amp;sort=date</pre>
+
+    <div class="inline-note" style="margin-top:18px">
+      <strong>If the converter cannot find your phrase:</strong> some sites send searches as
+      hidden form data, so the results address does not contain your words and cannot become a
+      simple link. A Google <strong>site search</strong> (Option 2) almost always works as a
+      fallback.
+    </div>
+
+    <div class="actions" style="margin-top:22px">
+      <a class="button" href="converter.html">Open the link converter</a>
+      <a class="button secondary" href="builder.html?template=research">Open the builder</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">Super Search Builder — Stage 1.0.</footer>
+</body>
+</html>

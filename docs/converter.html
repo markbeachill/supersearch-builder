@@ -26,8 +26,9 @@
   <nav class="site-nav"><div class="site-nav-inner">
     <a class="brand" href="index.html">Super Search Builder</a>
     <a class="nav-link" href="builder.html">Builder</a>
+    <a class="nav-link" href="how-it-works.html">How it works</a>
     <a class="nav-link" href="converter.html">Link converter</a>
-    <a class="nav-link" href="how-to-add-a-search.html">How to add a search</a>
+    <a class="nav-link" href="add-a-search.html">Add a search</a>
     <a class="nav-link" href="templates.html">Templates</a>
     <a class="nav-link" href="help.html">Help</a>
   </div></nav>
@@ -66,8 +67,31 @@
     <div class="inline-note" style="margin-top:18px">
       Once you have a template you are happy with, open the
       <a href="builder.html">Builder</a> and paste it into a section, or use the
-      builder's built-in "Add engine from a search link" panel which runs this same
+      builder's built-in "Add from a search link" panel which runs this same
       converter for you.
+    </div>
+
+    <div class="section-title" style="margin-top:30px">
+      <span class="badge">Tool</span>
+      <h2>Site search builder</h2>
+      <p>For a site with poor or no search of its own, search it <em>through Google</em>
+      instead. Type just the website address and get a ready template.</p>
+    </div>
+    <div class="convert-card">
+      <label for="domainInput">Website address</label>
+      <input type="text" id="domainInput" placeholder="e.g. economist.com or bbc.co.uk" autocomplete="off">
+      <div class="convert-actions">
+        <label style="display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px;color:var(--muted)"><input type="checkbox" id="ukToggle"> Use UK Google</label>
+        <button type="button" class="button" id="siteBtn">Build site search</button>
+      </div>
+      <div class="result-box" id="siteResultBox">
+        <div id="siteTemplateWrap">
+          <div class="result-template" id="siteTemplate"></div>
+          <button type="button" class="copy-inline" id="siteCopyBtn">Copy template</button>
+        </div>
+        <p class="result-msg" id="siteMsg"></p>
+        <p class="preview-line" id="sitePreview"></p>
+      </div>
     </div>
 
     <div class="section-title" style="margin-top:30px">
@@ -130,6 +154,40 @@ climate+migration  or  climate%20migration   both encodings are recognised</pre>
       navigator.clipboard.writeText(tmplEl.textContent).then(function(){
         copyBtn.textContent = "Copied";
         setTimeout(function(){ copyBtn.textContent = "Copy template"; }, 1400);
+      });
+    });
+
+    // Site search builder
+    var domainInput = document.getElementById("domainInput");
+    var siteBox = document.getElementById("siteResultBox");
+    var siteWrap = document.getElementById("siteTemplateWrap");
+    var siteTmpl = document.getElementById("siteTemplate");
+    var siteMsg = document.getElementById("siteMsg");
+    var sitePreview = document.getElementById("sitePreview");
+    var siteCopyBtn = document.getElementById("siteCopyBtn");
+    function runSite(){
+      var r = E.siteSearchTemplate(domainInput.value, { uk: document.getElementById("ukToggle").checked });
+      siteBox.classList.add("show");
+      siteBox.classList.toggle("ok", r.ok);
+      siteBox.classList.toggle("bad", !r.ok);
+      if(r.ok){
+        siteWrap.style.display = "";
+        siteTmpl.textContent = r.template;
+        siteMsg.textContent = "Searches " + r.domain + " through Google.";
+        var demo = E.applyTemplate(r.template, phraseInput.value || "test query");
+        sitePreview.innerHTML = "Preview: <a href=\"" + demo.replace(/"/g,"&quot;") + "\" target=\"_blank\" rel=\"noopener\">" + demo.replace(/</g,"&lt;") + "</a>";
+      }else{
+        siteWrap.style.display = "none";
+        siteMsg.textContent = r.message;
+        sitePreview.textContent = "";
+      }
+    }
+    document.getElementById("siteBtn").addEventListener("click", runSite);
+    domainInput.addEventListener("keydown", function(e){ if(e.key === "Enter") runSite(); });
+    siteCopyBtn.addEventListener("click", function(){
+      navigator.clipboard.writeText(siteTmpl.textContent).then(function(){
+        siteCopyBtn.textContent = "Copied";
+        setTimeout(function(){ siteCopyBtn.textContent = "Copy template"; }, 1400);
       });
     });
   </script>

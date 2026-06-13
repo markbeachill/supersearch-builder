@@ -48,8 +48,9 @@
   <nav class="site-nav"><div class="site-nav-inner">
     <a class="brand" href="index.html">Super Search Builder</a>
     <a class="nav-link" href="builder.html">Builder</a>
+    <a class="nav-link" href="how-it-works.html">How it works</a>
     <a class="nav-link" href="converter.html">Link converter</a>
-    <a class="nav-link" href="how-to-add-a-search.html">How to add a search</a>
+    <a class="nav-link" href="add-a-search.html">Add a search</a>
     <a class="nav-link" href="templates.html">Templates</a>
     <a class="nav-link" href="help.html">Help</a>
   </div></nav>
@@ -149,34 +150,40 @@ function buildClassicMenuCss(settings){
   const colourStyle=cleanColourStyle(settings.colours||"primary");
   const pal=colourStyle==="pastel"?pastelPalette:(settings.palette||defaultPalette);
   const isPastel=colourStyle==="pastel";
-  const searchBg=isPastel?"#f8f3f6":"#f1f1f1";
-  const searchBorder=isPastel?"#eadde6":"#ddd";
-  const headerText=isPastel?"#222":"#fff";
-  const btnBg=isPastel?"#f7f5f2":"#eee";
-  const btnHoverBg=isPastel?"#e9e3dc":"#aaa";
+  const searchBg=isPastel?"#fbf7fa":"#fafafa";
+  const searchBorder=isPastel?"#f0e6ee":"#e6e6e6";
+  const headerText=isPastel?"#1a1a1a":"#fff";
+  const btnBg=isPastel?"#faf8f5":"#f4f4f4";
+  const btnHoverBg=isPastel?"#efe9e2":"#e4e4e4";
+  const textColor="#1a1a1a";
+  const linkColor="#1a4fce";
   return `
 :root{--columns:${cleanColumnCount(settings.columns)};--c-blue:${pal.blue};--c-green:${pal.green};--c-orange:${pal.orange};--c-purple:${pal.purple};--c-red:${pal.red};}
-body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#333;}
-.searchbar-wrapper{background:${searchBg};padding:12px 15px;border-bottom:1px solid ${searchBorder};}
-.searchbar-inner{width:84%;max-width:96em;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;}
-.menu-title{font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:20px;line-height:1.2;font-weight:700;color:#333;white-space:nowrap;}
-.searchbar-form{flex:1 1 520px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;min-width:260px;}
-.searchbar-form input[type="text"]{flex:1 1 320px;padding:8px 10px;border:1px solid #ccc;border-radius:2px;font-size:15px;min-width:0;}
+body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:${textColor};}
+.supersearch-masthead{text-align:center;padding:18px 15px 4px;}
+.supersearch-masthead .masthead-title{font-family:Georgia,"Times New Roman",Times,serif;font-size:30px;line-height:1.15;font-weight:700;color:${textColor};letter-spacing:.01em;}
+.supersearch-masthead .masthead-prefix{color:var(--c-red);}
+.searchbar-wrapper{background:${searchBg};padding:14px 15px;border-bottom:1px solid ${searchBorder};}
+.searchbar-inner{width:84%;max-width:96em;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:center;}
+.searchbar-form{flex:1 1 560px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;min-width:260px;justify-content:center;}
+.searchbar-form input[type="text"]{flex:1 1 360px;padding:9px 11px;border:1px solid #c4c4c4;border-radius:3px;font-size:15px;min-width:0;color:${textColor};}
 .searchbar-form input[type="text"]:focus{outline:2px solid var(--c-blue);outline-offset:0;border-color:var(--c-blue);}
-.searchbar-form button{padding:8px 16px;border-radius:2px;border:1px solid var(--c-blue);background:var(--c-blue);color:${isPastel?"#222":"#fff"};cursor:pointer;font-size:14px;font-weight:700;}
+.searchbar-form button{padding:9px 18px;border-radius:3px;border:1px solid var(--c-blue);background:var(--c-blue);color:${isPastel?"#1a1a1a":"#fff"};cursor:pointer;font-size:14px;font-weight:700;}
 .searchbar-form button:hover{filter:brightness(.92);}
-.searchbar-hint{flex-basis:100%;font-size:12px;color:#666;}
-.maincontent{clear:both;width:84%;font-size:.8125em;max-width:96em;margin:0 auto;padding:1em 0;color:#333;line-height:1.5em;position:relative;}
+.searchbar-hint{flex-basis:100%;font-size:12px;color:#555;text-align:center;}
+.maincontent{clear:both;width:84%;font-size:.8125em;max-width:96em;margin:0 auto;padding:1em 0;color:${textColor};line-height:1.5em;position:relative;}
 .section{clear:both;padding:0;margin:0;}
 .group{display:flex;flex-wrap:wrap;gap:0 2%;}
 .col{box-sizing:border-box;flex:0 0 calc((100% - (var(--columns) - 1)*2%)/var(--columns));max-width:calc((100% - (var(--columns) - 1)*2%)/var(--columns));margin:1% 0;}
-@media only screen and (max-width:767px){.col{flex:1 1 100%;max-width:100%;margin:1% 0;}.searchbar-inner,.maincontent{width:100%;padding-left:0;padding-right:0;}.searchbar-inner{display:block;}.menu-title{white-space:normal;margin-bottom:8px;}.maincontent{padding:1em 12px;width:auto;}}
-.btn{box-sizing:border-box;text-align:left;display:block;width:100%;color:#333;position:relative;overflow:hidden;margin:8px 0 0;padding:10px 14px;cursor:pointer;outline:0;border-style:none none none solid;border-width:0 0 0 3px;background:${btnBg};z-index:1;font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;line-height:18px;text-shadow:#fff 0 1px 0;text-decoration:none;white-space:nowrap;text-overflow:ellipsis;font-weight:600;}
-.btn:hover{background-color:${btnHoverBg};color:#000;}
-.btn.disabled-empty{opacity:.55;}
+@media only screen and (max-width:767px){.col{flex:1 1 100%;max-width:100%;margin:1% 0;}.searchbar-inner,.maincontent{width:100%;padding-left:0;padding-right:0;}.maincontent{padding:1em 12px;width:auto;}.supersearch-masthead .masthead-title{font-size:24px;}}
+/* Each search starts as plain text and becomes a real underlined link after a query is typed. */
+.btn{box-sizing:border-box;text-align:left;display:block;width:100%;color:${textColor};position:relative;overflow:hidden;margin:8px 0 0;padding:9px 14px;outline:0;border-style:none none none solid;border-width:0 0 0 3px;background:transparent;z-index:1;font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;line-height:18px;text-decoration:none;white-space:nowrap;text-overflow:ellipsis;font-weight:600;cursor:default;}
+.btn.ready{background:${btnBg};color:${linkColor};text-decoration:underline;cursor:pointer;}
+.btn.ready:hover{background:${btnHoverBg};color:#0b2f8f;}
+.btn.disabled-empty{opacity:1;color:${textColor};text-decoration:none;background:transparent;}
 .blue-btn{border-left-color:var(--c-blue);}.green-btn{border-left-color:var(--c-green);}.orange-btn{border-left-color:var(--c-orange);}.purple-btn{border-left-color:var(--c-purple);}.red-btn{border-left-color:var(--c-red);}
-.hdr{box-sizing:border-box;text-align:left;display:block;width:100%;color:${headerText};position:relative;overflow:hidden;margin:8px 0 0;padding:10px 14px;cursor:pointer;outline:0;border:0;z-index:1;font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;line-height:14px;text-decoration:none;white-space:nowrap;text-overflow:ellipsis;font-weight:700;}
-.hdr .openall{float:right;font-size:11px;font-weight:700;opacity:.9;text-decoration:underline;}
+.hdr{box-sizing:border-box;text-align:left;display:block;width:100%;color:${headerText};position:relative;overflow:hidden;margin:14px 0 0;padding:10px 16px;cursor:pointer;outline:0;border:0;z-index:1;font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;line-height:14px;text-decoration:none;white-space:nowrap;text-overflow:ellipsis;font-weight:700;letter-spacing:.14em;}
+.hdr .openall{float:right;font-size:11px;font-weight:700;opacity:.9;text-decoration:underline;letter-spacing:.02em;}
 .blue-hdr{background-color:var(--c-blue);}.green-hdr{background-color:var(--c-green);}.orange-hdr{background-color:var(--c-orange);}.purple-hdr{background-color:var(--c-purple);}.red-hdr{background-color:var(--c-red);}
 .hdr-para{margin:0;line-height:160%;}
 `;
@@ -189,16 +196,16 @@ function renderClassicMenuBody(menu,settings,options={}){
   let body="";
   const autofocusAttr=options.autofocusSearch?" autofocus":"";
   const showTitle=cleanShowTitle(settings.showTitle);
-  const titleMarkup=showTitle?`<div class="menu-title">${escapeHtml(settings.pageTitle||"My Super Search")}</div>`:"";
+  const mastheadMarkup=showTitle?`<div class="supersearch-masthead"><span class="masthead-title"><span class="masthead-prefix">Super Search</span>${(settings.pageTitle&&settings.pageTitle.trim())?" · "+escapeHtml(settings.pageTitle):""}</span></div>`:"";
+  body+=mastheadMarkup;
   body+=`
 <div class="searchbar-wrapper">
   <div class="searchbar-inner">
-    ${titleMarkup}
     <form class="searchbar-form" id="superSearchForm" onsubmit="return false;">
-      <input type="text" id="superSearchInput" name="q" placeholder="Type one query, then pick an engine…" aria-label="Super Search query"${autofocusAttr}>
-      <button type="button" id="superSearchApply">Update links</button>
+      <input type="text" id="superSearchInput" name="q" placeholder="Type one query, then pick a search…" aria-label="Super Search query"${autofocusAttr}>
+      <button type="button" id="superSearchApply">Search</button>
       ${openMode==="openAll"?`<button type="button" id="superSearchOpenAll">Open all</button>`:""}
-      <span class="searchbar-hint">Type a query and the buttons below open that search on each engine.</span>
+      <span class="searchbar-hint">Type a query and press Search. Each link below opens that search on its own site.</span>
     </form>
   </div>
 </div>
@@ -236,7 +243,7 @@ function renderClassicMenuBody(menu,settings,options={}){
    single query box, supports header collapse and optional open-all. */
 function attachSuperSearchBehaviour(root,options){
   options=options||{};
-  function encode(q){return encodeURIComponent(String(q||"").trim());}
+  function encode(q){return encodeURIComponent(String(q||"").trim()).replace(/%20/g,"+");}
   var input=root.querySelector("#superSearchInput");
   var buttons=Array.prototype.slice.call(root.querySelectorAll("a.btn[data-template]"));
   function refresh(){
@@ -245,9 +252,10 @@ function attachSuperSearchBehaviour(root,options){
     buttons.forEach(function(b){
       var tmpl=b.getAttribute("data-template")||"";
       if(!tmpl){return;}
-      if(!q){ b.setAttribute("href","#"); b.classList.add("disabled-empty"); return; }
+      if(!q){ b.setAttribute("href","#"); b.classList.add("disabled-empty"); b.classList.remove("ready"); return; }
       b.setAttribute("href", tmpl.split("%s").join(enc));
       b.classList.remove("disabled-empty");
+      b.classList.add("ready");
     });
   }
   if(input){ input.addEventListener("input",refresh); }
@@ -396,7 +404,7 @@ function renderSettings(){
   document.getElementById("coloursInput").value=cleanColourStyle(project.colours||"primary");
   document.getElementById("openModeInput").value=cleanOpenMode(project.openMode);
   document.getElementById("showTitleInput").checked=cleanShowTitle(project.showTitle);
-  document.getElementById("templateDescription").innerHTML="Each engine is a search template — a URL with a <code>%s</code> where your query goes. Use the link converter or the per-section <strong>+ Add engine from a search link</strong> panel to make templates. Tick <strong>Use</strong> to include a section. Links mode rewrites every button from one query box; open-all mode adds buttons that try to open a whole section at once.";
+  document.getElementById("templateDescription").innerHTML="Each search is a link with a <code>%s</code> where your query goes. Add one by pasting a results-page link into <strong>+ Add from a search link</strong>, or make a Google <strong>site search</strong> of any website with <strong>+ Add a site search</strong>. Tick <strong>Use</strong> to include a section. Links mode rewrites every link from one query box; open-all mode adds buttons that try to open a whole section at once.";
 }
 function renderEditor(){
   const container=document.getElementById("sectionList");
@@ -435,8 +443,9 @@ function renderEditor(){
         </div>
         <div class="engines">${rows}</div>
         <div class="section-foot">
-          <button type="button" class="mini secondary" data-action="add-engine">+ Add engine</button>
-          <button type="button" class="mini secondary" data-action="toggle-add-panel">+ Add engine from a search link</button>
+          <button type="button" class="mini secondary" data-action="add-engine">+ Add search</button>
+          <button type="button" class="mini secondary" data-action="toggle-add-panel">+ Add from a search link</button>
+          <button type="button" class="mini secondary" data-action="toggle-site-panel">+ Add a site search</button>
         </div>
         <div class="add-link-panel" data-add-panel="${si}">
           <div class="row">
@@ -447,6 +456,14 @@ function renderEditor(){
             <button type="button" class="mini secondary" data-action="convert-add">Convert &amp; add</button>
           </div>
           <div class="conv-msg" data-conv="msg"></div>
+        </div>
+        <div class="add-link-panel" data-site-panel="${si}">
+          <div class="row">
+            <input type="text" data-site="domain" placeholder="Website address, e.g. economist.com or bbc.co.uk">
+            <label style="font-size:11px;display:inline-flex;gap:4px;align-items:center;font-weight:700;color:#475569"><input type="checkbox" data-site="uk"> UK Google</label>
+            <button type="button" class="mini secondary" data-action="site-add">Add site search</button>
+          </div>
+          <div class="conv-msg" data-site="msg">Searches the site through Google — useful when a site has poor or no search of its own.</div>
         </div>
       </article>`;
   }).join("");
@@ -488,10 +505,15 @@ function onSectionListInput(event){
 function onSectionListClick(event){
   const btn=event.target.closest("button");
   const headerToggle=event.target.closest("[data-action='toggle-add-panel']");
+  const siteToggle=event.target.closest("[data-action='toggle-site-panel']");
   if(headerToggle){
     const card=headerToggle.closest("[data-section-index]");
-    const panel=card.querySelector(".add-link-panel");
-    panel.classList.toggle("show");
+    card.querySelector(".add-link-panel[data-add-panel]").classList.toggle("show");
+    return;
+  }
+  if(siteToggle){
+    const card=siteToggle.closest("[data-section-index]");
+    card.querySelector(".add-link-panel[data-site-panel]").classList.toggle("show");
     return;
   }
   if(!btn)return;
@@ -500,7 +522,7 @@ function onSectionListClick(event){
   if(!row)return;
   const si=Number(row.getAttribute("data-section-index"));
   const section=project.sections[si];
-  if(action==="add-engine"){section.engines=section.engines||[];section.engines.push({label:"New engine",template:"https://www.google.com/search?q=%s",colour:section.colour,included:true});scheduleRender();return;}
+  if(action==="add-engine"){section.engines=section.engines||[];section.engines.push({label:"New search",template:"https://www.google.com/search?q=%s",colour:section.colour,included:true});scheduleRender();return;}
   if(action==="convert-add"){
     const card=btn.closest("[data-section-index]");
     const phrase=card.querySelector("[data-conv='phrase']").value;
@@ -510,12 +532,30 @@ function onSectionListClick(event){
     msg.className="conv-msg "+(r.ok?"ok":"bad");
     msg.textContent=r.message;
     if(r.ok){
-      const label=E.suggestLabel(r.template)||"New engine";
+      const label=E.suggestLabel(r.template)||"New search";
       section.engines=section.engines||[];
       section.engines.push({label:label,template:r.template,colour:section.colour,included:true});
       card.querySelector("[data-conv='url']").value="";
       scheduleRender();
       setStatus("Added "+label+" from a search link.");
+    }
+    return;
+  }
+  if(action==="site-add"){
+    const card=btn.closest("[data-section-index]");
+    const domain=card.querySelector("[data-site='domain']").value;
+    const uk=card.querySelector("[data-site='uk']").checked;
+    const msg=card.querySelector("[data-site='msg']");
+    const r=E.siteSearchTemplate(domain,{uk:uk});
+    msg.className="conv-msg "+(r.ok?"ok":"bad");
+    msg.textContent=r.message;
+    if(r.ok){
+      const label=E.suggestLabel(r.template)||r.domain;
+      section.engines=section.engines||[];
+      section.engines.push({label:label,template:r.template,colour:section.colour,included:true});
+      card.querySelector("[data-site='domain']").value="";
+      scheduleRender();
+      setStatus("Added a site search for "+r.domain+".");
     }
     return;
   }

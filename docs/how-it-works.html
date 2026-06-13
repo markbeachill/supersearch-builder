@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How it works · Super Search Builder</title>
+  <link rel="stylesheet" href="assets/site.css">
+  <style>
+    .demo{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 8px 24px rgba(15,23,42,.05);margin-top:18px}
+    .demo-row{display:flex;gap:10px;flex-wrap:wrap}
+    .demo input[type=text]{flex:1 1 320px;padding:11px 13px;border:1px solid #c4c4c4;border-radius:8px;font:inherit;font-size:16px;color:#1a1a1a}
+    .demo input[type=text]:focus{outline:2px solid #2563eb;border-color:#2563eb}
+    .demo button{background:#2563eb;color:#fff;border:1px solid #1d4ed8;border-radius:8px;padding:11px 20px;font-weight:800;cursor:pointer;font-size:15px}
+    .demo button:hover{background:#1d4ed8}
+    .demo-hint{font-size:13px;color:var(--muted);margin:10px 2px 0}
+    .demo-results{margin-top:16px;display:none}
+    .demo-results.show{display:block}
+    .demo-searching{font-size:15px;margin:0 0 10px}
+    .demo-searching b{color:#bd121d}
+    .demo-links{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+    .demo-link{display:block;padding:9px 13px;border-left:3px solid #2563eb;background:#f4f4f4;color:#1a4fce;text-decoration:underline;font-weight:600;border-radius:0 4px 4px 0}
+    .demo-link:hover{background:#e4e4e4;color:#0b2f8f;text-decoration:underline}
+    .demo-link.site{border-left-color:#d84a38}
+    .demo-empty{color:var(--muted);font-size:14px;padding:8px 2px}
+  </style>
+</head>
+<body>
+  <nav class="site-nav"><div class="site-nav-inner">
+    <a class="brand" href="index.html">Super Search Builder</a>
+    <a class="nav-link" href="builder.html">Builder</a>
+    <a class="nav-link" href="how-it-works.html">How it works</a>
+    <a class="nav-link" href="converter.html">Link converter</a>
+    <a class="nav-link" href="add-a-search.html">Add a search</a>
+    <a class="nav-link" href="templates.html">Templates</a>
+    <a class="nav-cta" href="builder.html?template=research">Start building</a>
+  </div></nav>
+
+  <main class="page">
+    <div class="section-title">
+      <span class="badge">How it works</span>
+      <h2>One query, many searches</h2>
+      <p>A Super Search page has a single search box. You type a query once, press
+      <strong>Search</strong>, and a set of links appears — each one runs your query on a
+      different site. Try it right here:</p>
+    </div>
+
+    <div class="demo">
+      <div class="demo-row">
+        <input type="text" id="demoInput" placeholder="Type something, e.g. climate migration" autocomplete="off" aria-label="Demo search query">
+        <button type="button" id="demoBtn">Search</button>
+      </div>
+      <p class="demo-hint">Press Enter or click Search. Nothing is sent anywhere until you click one of the links that appears.</p>
+      <div class="demo-results" id="demoResults">
+        <p class="demo-searching">Searching for: <b id="demoTerm"></b></p>
+        <div class="demo-links" id="demoLinks"></div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:30px">
+      <h2>Why the links look different</h2>
+      <p>Each link is just your query dropped into that site's own search address. Most sites
+      take the query straight, like <code>?q=your+query</code>. Some have poor search of their
+      own, so the link uses a <strong>Google site search</strong> instead — that is the
+      <span style="color:#bd121d;font-weight:700">red-edged</span> one above. The builder
+      handles both for you.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div><strong>Pick or build your set of searches</strong><br><span class="tiny-note">Start from a template and keep the searches you want, or add your own.</span></div></div>
+      <div class="step"><div><strong>Save a standalone page</strong><br><span class="tiny-note">Export one HTML file. No account, no install, works offline and on mobile.</span></div></div>
+      <div class="step"><div><strong>Use it as your research launcher</strong><br><span class="tiny-note">Bookmark it or set it as your homepage. One query, every source.</span></div></div>
+    </div>
+
+    <div class="actions" style="margin-top:24px">
+      <a class="button" href="builder.html?template=research">Start building</a>
+      <a class="button secondary" href="add-a-search.html">How to add a search</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">Super Search Builder — Stage 1.0.</footer>
+
+  <script src="assets/converter.js"></script>
+  <script>
+    var E=window.SuperSearchEngine;
+    // A representative spread, including one site: search so the pattern is visible.
+    var DEMO=[
+      {label:"Google Scholar", template:"https://scholar.google.co.uk/scholar?hl=en&q=%s"},
+      {label:"Google Books",   template:"https://www.google.com/search?tbm=bks&q=%s"},
+      {label:"Google",         template:"https://www.google.co.uk/search?q=%s"},
+      {label:"DuckDuckGo",     template:"https://duckduckgo.com/?q=%s"},
+      {label:"Wikipedia",      template:"https://en.wikipedia.org/wiki/Special:Search?search=%s"},
+      {label:"YouTube",        template:"https://www.youtube.com/results?search_query=%s"},
+      {label:"BBC (site search)", template:"https://www.google.co.uk/search?q=site:bbc.co.uk+%s", site:true}
+    ];
+    var input=document.getElementById("demoInput");
+    var results=document.getElementById("demoResults");
+    var links=document.getElementById("demoLinks");
+    var term=document.getElementById("demoTerm");
+    function run(){
+      var q=input.value.trim();
+      if(!q){ input.focus(); return; }
+      term.textContent=q;
+      links.innerHTML="";
+      DEMO.forEach(function(d){
+        var a=document.createElement("a");
+        a.className="demo-link"+(d.site?" site":"");
+        a.href=E.applyTemplate(d.template,q);
+        a.target="_blank"; a.rel="noopener noreferrer";
+        a.textContent=d.label;
+        links.appendChild(a);
+      });
+      results.classList.add("show");
+    }
+    document.getElementById("demoBtn").addEventListener("click",run);
+    input.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); run(); } });
+  </script>
+</body>
+</html>

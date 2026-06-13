@@ -1,0 +1,93 @@
+{
+  "format": "supersearch-builder-v1",
+  "title": "Mark's Super Search",
+  "description": "The classic Super Search setup: academic search, news via Google site-search, media, social, magazines, reference, images and more. UEL library and institutional links omitted.",
+  "filename": "supersearch-mark.html",
+  "columns": 5,
+  "colours": "primary",
+  "showTitle": true,
+  "openMode": "links",
+  "sections": [
+    {
+      "name": "ACADEMIC",
+      "colour": "green",
+      "engines": [
+        { "label": "Google Scholar", "template": "https://scholar.google.co.uk/scholar?hl=en&q=%s" },
+        { "label": "Google Books", "template": "https://www.google.com/search?tbm=bks&q=%s" },
+        { "label": "UK Academic search", "template": "https://www.google.co.uk/search?q=site:ac.uk+%s" },
+        { "label": "UK Academic PDF", "template": "https://www.google.co.uk/search?q=site:ac.uk+pdf+%s" },
+        { "label": "British Library Thesis", "template": "https://www.google.co.uk/search?q=site:bl.uk+ethos+%s", "colour": "orange" }
+      ]
+    },
+    {
+      "name": "NEWS",
+      "colour": "red",
+      "engines": [
+        { "label": "BBC", "template": "https://www.google.co.uk/search?q=site:bbc.co.uk+%s" },
+        { "label": "Guardian", "template": "https://www.google.co.uk/search?q=site:theguardian.com+%s" },
+        { "label": "Economist", "template": "https://www.google.co.uk/search?q=site:economist.com+%s" },
+        { "label": "Independent", "template": "https://www.google.co.uk/search?q=site:independent.co.uk+%s" },
+        { "label": "Mail", "template": "https://www.google.co.uk/search?q=site:dailymail.co.uk+%s" },
+        { "label": "Mirror", "template": "https://www.google.co.uk/search?q=site:mirror.co.uk+%s" },
+        { "label": "New York Times", "template": "https://www.google.co.uk/search?q=site:nytimes.com+%s" },
+        { "label": "Telegraph", "template": "https://www.google.co.uk/search?q=site:telegraph.co.uk+%s" },
+        { "label": "Sun", "template": "https://www.google.co.uk/search?q=site:thesun.co.uk+%s" },
+        { "label": "NewsNow", "template": "https://www.newsnow.co.uk/h/?lang=en&search=%s" },
+        { "label": "Google News", "template": "https://news.google.com/search?q=%s" }
+      ]
+    },
+    {
+      "name": "MEDIA",
+      "colour": "purple",
+      "engines": [
+        { "label": "YouTube", "template": "https://www.youtube.com/results?search_query=%s" },
+        { "label": "Bing videos", "template": "https://www.bing.com/videos/search?q=%s" }
+      ]
+    },
+    {
+      "name": "SOCIAL MEDIA",
+      "colour": "blue",
+      "engines": [
+        { "label": "Reddit", "template": "https://www.reddit.com/search/?q=%s" },
+        { "label": "Substack", "template": "https://substack.com/search/%s?searching=all_posts&language=en" },
+        { "label": "X / Twitter", "template": "https://twitter.com/search?q=%s" }
+      ]
+    },
+    {
+      "name": "MAGS",
+      "colour": "orange",
+      "engines": [
+        { "label": "New Statesman", "template": "https://www.google.co.uk/search?q=site:newstatesman.com+%s" },
+        { "label": "Order Order", "template": "https://www.google.co.uk/search?q=site:order-order.com+%s" },
+        { "label": "Spectator", "template": "https://www.google.co.uk/search?q=site:spectator.co.uk+%s" },
+        { "label": "Spiked", "template": "https://www.google.co.uk/search?q=site:spiked-online.com+%s" }
+      ]
+    },
+    {
+      "name": "SITES",
+      "colour": "orange",
+      "engines": [
+        { "label": "Google", "template": "https://www.google.co.uk/search?q=%s", "colour": "red" },
+        { "label": "Wikipedia", "template": "https://en.wikipedia.org/wiki/Special:Search?search=%s", "colour": "green" }
+      ]
+    },
+    {
+      "name": "IMAGES",
+      "colour": "orange",
+      "engines": [
+        { "label": "Bing Images", "template": "https://www.bing.com/images/search?q=%s" },
+        { "label": "Bing Img (free)", "template": "https://www.bing.com/images/search?qft=+filterui:license-L1&form=IRFLTR&q=%s" },
+        { "label": "Pixabay", "template": "https://pixabay.com/images/search/%s" },
+        { "label": "Wikimedia Commons", "template": "https://commons.wikimedia.org/w/index.php?title=Special:MediaSearch&go=Go&type=image&search=%s" }
+      ]
+    },
+    {
+      "name": "OTHER",
+      "colour": "red",
+      "engines": [
+        { "label": "Project Gutenberg", "template": "https://www.gutenberg.org/ebooks/search/?query=%s", "colour": "green" },
+        { "label": "DuckDuckGo", "template": "https://duckduckgo.com/?q=%s", "colour": "green" }
+      ]
+    }
+  ]
+}
