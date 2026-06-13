@@ -43,8 +43,9 @@
     </div>
 
     <div class="convert-card">
-      <label for="phraseInput">1. The exact phrase you searched for</label>
+      <label for="phraseInput">1. The exact phrase you searched for — use two distinctive words</label>
       <input type="text" id="phraseInput" placeholder="e.g. climate migration" value="climate migration" autocomplete="off">
+      <p class="tiny-note" style="margin:6px 2px 0">A two-word phrase with a space is easier to find in the address and shows how the site handles spaces, so it converts more reliably than a single common word.</p>
 
       <label for="urlInput">2. The full results-page link you copied from the address bar</label>
       <input type="text" id="urlInput" placeholder="e.g. https://www.jstor.org/action/doSearch?Query=climate+migration" autocomplete="off">
@@ -60,6 +61,7 @@
           <button type="button" class="copy-inline" id="copyBtn">Copy template</button>
         </div>
         <p class="result-msg" id="resultMsg"></p>
+        <p class="result-msg" id="resultTip" style="color:#92600a"></p>
         <p class="preview-line" id="previewLine"></p>
       </div>
     </div>
@@ -122,6 +124,7 @@ climate+migration  or  climate%20migration   both encodings are recognised</pre>
     var tmplWrap = document.getElementById("resultTemplateWrap");
     var tmplEl = document.getElementById("resultTemplate");
     var msgEl = document.getElementById("resultMsg");
+    var tipEl = document.getElementById("resultTip");
     var previewEl = document.getElementById("previewLine");
     var copyBtn = document.getElementById("copyBtn");
 
@@ -130,6 +133,7 @@ climate+migration  or  climate%20migration   both encodings are recognised</pre>
       box.classList.add("show");
       box.classList.toggle("ok", r.ok);
       box.classList.toggle("bad", !r.ok);
+      tipEl.textContent = r.tip || "";
       if(r.ok){
         tmplWrap.style.display = "";
         tmplEl.textContent = r.template;

@@ -56,6 +56,9 @@
       original: original,
       matchedForm: null,
       tokenCount: 0,
+      placement: "none",
+      phraseHadSpace: /\s/.test(String(query || "").trim()),
+      tip: "",
       message: ""
     };
 
@@ -106,26 +109,69 @@
     result.template = working;
     result.matchedForm = matched;
     result.tokenCount = (working.match(/%s/g) || []).length;
+    result.placement = tokenPlacement(working);
     if (result.tokenCount > 1) {
       result.message =
         "Heads up: the phrase appeared more than once, so the template has more than one %s. " +
         "Usually only the first should stay. Edit the template if needed.";
+    } else if (result.placement === "path") {
+      result.message =
+        "Template ready. This site puts the query in the address path, so spaces will be " +
+        "written as %20 automatically — nothing for you to change.";
     } else {
       result.message = "Template ready.";
+    }
+    if (result.ok && !result.phraseHadSpace) {
+      result.tip =
+        "Tip: searching a two-word phrase (with a space) gives a more reliable result — " +
+        "it is easier to find in the address and confirms how the site handles spaces.";
     }
     return result;
   }
 
-  // Encode a query for a URL, using + for spaces to match the classic Super Search
-  // style. This reads well in site: searches (site:bbc.co.uk+climate+migration) and
-  // works identically for ordinary query strings.
+  // Where does the (first) %s sit? "query" if inside the query string (after ? and before
+  // any #), otherwise "path". Used only to give the user a friendly note; the actual
+  // encoding decision is made the same way at apply time.
+  function tokenPlacement(template) {
+    var t = String(template || "");
+    var offset = t.indexOf(TOKEN);
+    if (offset === -1) return "none";
+    var hashIndex = t.indexOf("#");
+    var qIndex = t.indexOf("?");
+    var queryStart = (qIndex !== -1 && (hashIndex === -1 || qIndex < hashIndex)) ? qIndex : -1;
+    var queryEnd = hashIndex === -1 ? t.length : hashIndex;
+    return (queryStart !== -1 && offset > queryStart && offset < queryEnd) ? "query" : "path";
+  }
+
+  // Encode a query for a URL. Uses + for spaces, which is correct and conventional
+  // inside a query string (the part after ?). Kept for callers that want the classic style.
   function encodeQuery(query) {
     return encodeURIComponent(String(query || "").trim()).replace(/%20/g, "+");
   }
 
-  // Apply a template to a real query, for previews and the exported page.
+  // Strict percent-encoding (spaces as %20). Correct inside a URL path segment, where a
+  // literal + would NOT mean a space.
+  function encodePath(query) {
+    return encodeURIComponent(String(query || "").trim());
+  }
+
+  // Apply a template to a real query for previews and the exported page. The %s token is
+  // encoded according to WHERE it sits in the URL:
+  //   - in the query string (after ? and before any #)  -> + for spaces (form style)
+  //   - anywhere else (path, or fragment after #)        -> %20 (strict percent-encoding)
+  // This keeps the familiar climate+migration look for the common case while staying
+  // correct for path-based searches (e.g. Substack) and fragment-based ones.
   function applyTemplate(template, query) {
-    return String(template || "").split(TOKEN).join(encodeQuery(query));
+    var t = String(template || "");
+    var hashIndex = t.indexOf("#");
+    var qIndex = t.indexOf("?");
+    // A ? only starts the query string if it appears before any fragment.
+    var queryStart = (qIndex !== -1 && (hashIndex === -1 || qIndex < hashIndex)) ? qIndex : -1;
+    var queryEnd = hashIndex === -1 ? t.length : hashIndex;
+    return t.replace(/%s/g, function (match, offset) {
+      var inQueryString = queryStart !== -1 && offset > queryStart && offset < queryEnd;
+      return inQueryString ? encodeQuery(query) : encodePath(query);
+    });
   }
 
   // Build a Google site-search template for a domain, e.g. economist.com ->
@@ -187,8 +233,10 @@
     convert: convert,
     applyTemplate: applyTemplate,
     encodeQuery: encodeQuery,
+    encodePath: encodePath,
     siteSearchTemplate: siteSearchTemplate,
     queryVariants: queryVariants,
+    tokenPlacement: tokenPlacement,
     suggestLabel: suggestLabel,
     isValidTemplate: isValidTemplate
   };

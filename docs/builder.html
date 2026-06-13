@@ -243,17 +243,26 @@ function renderClassicMenuBody(menu,settings,options={}){
    single query box, supports header collapse and optional open-all. */
 function attachSuperSearchBehaviour(root,options){
   options=options||{};
-  function encode(q){return encodeURIComponent(String(q||"").trim()).replace(/%20/g,"+");}
+  function encQuery(q){return encodeURIComponent(String(q||"").trim()).replace(/%20/g,"+");}
+  function encPath(q){return encodeURIComponent(String(q||"").trim());}
+  function fill(tmpl,q){
+    var hi=tmpl.indexOf("#");
+    var qi=tmpl.indexOf("?");
+    var qStart=(qi!==-1&&(hi===-1||qi<hi))?qi:-1;
+    var qEnd=hi===-1?tmpl.length:hi;
+    return tmpl.replace(/%s/g,function(m,off){
+      return (qStart!==-1&&off>qStart&&off<qEnd)?encQuery(q):encPath(q);
+    });
+  }
   var input=root.querySelector("#superSearchInput");
   var buttons=Array.prototype.slice.call(root.querySelectorAll("a.btn[data-template]"));
   function refresh(){
     var q=input?input.value:"";
-    var enc=encode(q);
     buttons.forEach(function(b){
       var tmpl=b.getAttribute("data-template")||"";
       if(!tmpl){return;}
       if(!q){ b.setAttribute("href","#"); b.classList.add("disabled-empty"); b.classList.remove("ready"); return; }
-      b.setAttribute("href", tmpl.split("%s").join(enc));
+      b.setAttribute("href", fill(tmpl,q));
       b.classList.remove("disabled-empty");
       b.classList.add("ready");
     });
@@ -449,7 +458,7 @@ function renderEditor(){
         </div>
         <div class="add-link-panel" data-add-panel="${si}">
           <div class="row">
-            <input type="text" data-conv="phrase" placeholder="Phrase you searched, e.g. climate migration" value="climate migration">
+            <input type="text" data-conv="phrase" placeholder="Two-word phrase you searched, e.g. climate migration" value="climate migration">
           </div>
           <div class="row">
             <input type="text" data-conv="url" placeholder="Paste the results-page link, e.g. https://…?q=climate+migration">
@@ -530,7 +539,7 @@ function onSectionListClick(event){
     const msg=card.querySelector("[data-conv='msg']");
     const r=E.convert(url,phrase);
     msg.className="conv-msg "+(r.ok?"ok":"bad");
-    msg.textContent=r.message;
+    msg.textContent=r.message+(r.tip?" "+r.tip:"");
     if(r.ok){
       const label=E.suggestLabel(r.template)||"New search";
       section.engines=section.engines||[];
