@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search link converter · Super Search Builder</title>
+  <link rel="stylesheet" href="assets/site.css">
+  <style>
+    .convert-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 8px 24px rgba(15,23,42,.05);margin-top:18px}
+    .convert-card label{display:block;font-weight:750;margin:14px 0 6px;font-size:14px}
+    .convert-card input[type=text]{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font:inherit;font-size:15px}
+    .convert-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .result-box{margin-top:18px;padding:16px;border-radius:12px;border:1px solid var(--border);background:#f8fafc;display:none}
+    .result-box.show{display:block}
+    .result-box.ok{border-color:#bbf7d0;background:#f0fdf4}
+    .result-box.bad{border-color:#fecaca;background:#fef2f2}
+    .result-template{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;word-break:break-all;background:#0f172a;color:#e5e7eb;padding:12px 14px;border-radius:10px;margin:10px 0;position:relative}
+    .result-msg{font-size:14px;color:var(--muted);line-height:1.5}
+    .copy-inline{background:#fff;color:#0f172a;border:1px solid #cbd5e1;border-radius:8px;padding:7px 11px;font-weight:800;cursor:pointer;font-size:13px}
+    .copy-inline:hover{background:#f1f5f9}
+    .preview-line{font-size:13px;color:var(--muted);margin-top:8px;word-break:break-all}
+    .preview-line a{font-weight:700}
+  </style>
+</head>
+<body>
+  <nav class="site-nav"><div class="site-nav-inner">
+    <a class="brand" href="index.html">Super Search Builder</a>
+    <a class="nav-link" href="builder.html">Builder</a>
+    <a class="nav-link" href="converter.html">Link converter</a>
+    <a class="nav-link" href="how-to-add-a-search.html">How to add a search</a>
+    <a class="nav-link" href="templates.html">Templates</a>
+    <a class="nav-link" href="help.html">Help</a>
+  </div></nav>
+
+  <main class="page">
+    <div class="section-title">
+      <span class="badge">Tool</span>
+      <h2>Search link converter</h2>
+      <p>Turn a normal search-results link into a reusable Super Search template. The
+      converter finds the words you searched for inside the link and replaces them with
+      a <code>%s</code> token — so the same engine can be searched for anything later.</p>
+    </div>
+
+    <div class="convert-card">
+      <label for="phraseInput">1. The exact phrase you searched for</label>
+      <input type="text" id="phraseInput" placeholder="e.g. climate migration" value="climate migration" autocomplete="off">
+
+      <label for="urlInput">2. The full results-page link you copied from the address bar</label>
+      <input type="text" id="urlInput" placeholder="e.g. https://www.jstor.org/action/doSearch?Query=climate+migration" autocomplete="off">
+
+      <div class="convert-actions">
+        <button type="button" class="button" id="convertBtn">Convert to template</button>
+        <button type="button" class="button secondary" id="exampleBtn">Use an example</button>
+      </div>
+
+      <div class="result-box" id="resultBox">
+        <div id="resultTemplateWrap">
+          <div class="result-template" id="resultTemplate"></div>
+          <button type="button" class="copy-inline" id="copyBtn">Copy template</button>
+        </div>
+        <p class="result-msg" id="resultMsg"></p>
+        <p class="preview-line" id="previewLine"></p>
+      </div>
+    </div>
+
+    <div class="inline-note" style="margin-top:18px">
+      Once you have a template you are happy with, open the
+      <a href="builder.html">Builder</a> and paste it into a section, or use the
+      builder's built-in "Add engine from a search link" panel which runs this same
+      converter for you.
+    </div>
+
+    <div class="section-title" style="margin-top:30px">
+      <h2>Why links look so different</h2>
+      <p>Different sites put your query in different places. The converter handles the
+      common shapes automatically:</p>
+    </div>
+    <pre class="codeblock">?q=%s            Google, DuckDuckGo, Reddit, CORE
+?Query=%s        JSTOR
+?search=%s       Wikipedia, Wikimedia
+?term=%s         PubMed
+?search_query=%s YouTube
+?query=%s        Project Gutenberg, OpenAIRE
+/search/%s       some sites put the query in the path
+climate+migration  or  climate%20migration   both encodings are recognised</pre>
+  </main>
+
+  <footer class="site-footer">
+    Super Search Builder — Stage 1.0. Standalone, no account, no tracking.
+  </footer>
+
+  <script src="assets/converter.js"></script>
+  <script>
+    var E = window.SuperSearchEngine;
+    var phraseInput = document.getElementById("phraseInput");
+    var urlInput = document.getElementById("urlInput");
+    var box = document.getElementById("resultBox");
+    var tmplWrap = document.getElementById("resultTemplateWrap");
+    var tmplEl = document.getElementById("resultTemplate");
+    var msgEl = document.getElementById("resultMsg");
+    var previewEl = document.getElementById("previewLine");
+    var copyBtn = document.getElementById("copyBtn");
+
+    function run(){
+      var r = E.convert(urlInput.value, phraseInput.value);
+      box.classList.add("show");
+      box.classList.toggle("ok", r.ok);
+      box.classList.toggle("bad", !r.ok);
+      if(r.ok){
+        tmplWrap.style.display = "";
+        tmplEl.textContent = r.template;
+        msgEl.textContent = r.message;
+        var demo = E.applyTemplate(r.template, phraseInput.value || "test query");
+        previewEl.innerHTML = "Preview for your phrase: <a href=\"" + demo.replace(/"/g,"&quot;") + "\" target=\"_blank\" rel=\"noopener\">" + demo.replace(/</g,"&lt;") + "</a>";
+      }else{
+        tmplWrap.style.display = "none";
+        msgEl.textContent = r.message;
+        previewEl.textContent = "";
+      }
+    }
+
+    document.getElementById("convertBtn").addEventListener("click", run);
+    urlInput.addEventListener("keydown", function(e){ if(e.key === "Enter") run(); });
+    document.getElementById("exampleBtn").addEventListener("click", function(){
+      phraseInput.value = "climate migration";
+      urlInput.value = "https://www.jstor.org/action/doSearch?Query=climate+migration";
+      run();
+    });
+    copyBtn.addEventListener("click", function(){
+      navigator.clipboard.writeText(tmplEl.textContent).then(function(){
+        copyBtn.textContent = "Copied";
+        setTimeout(function(){ copyBtn.textContent = "Copy template"; }, 1400);
+      });
+    });
+  </script>
+</body>
+</html>

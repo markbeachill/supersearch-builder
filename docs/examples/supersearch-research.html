@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Research Super Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+
+:root{--columns:3;--c-blue:#4d90fe;--c-green:#35aa47;--c-orange:#d84a38;--c-purple:#852b99;--c-red:#bd121d;}
+body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#333;}
+.searchbar-wrapper{background:#f1f1f1;padding:12px 15px;border-bottom:1px solid #ddd;}
+.searchbar-inner{width:84%;max-width:96em;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;}
+.menu-title{font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:20px;line-height:1.2;font-weight:700;color:#333;white-space:nowrap;}
+.searchbar-form{flex:1 1 520px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;min-width:260px;}
+.searchbar-form input[type="text"]{flex:1 1 320px;padding:8px 10px;border:1px solid #ccc;border-radius:2px;font-size:15px;min-width:0;}
+.searchbar-form input[type="text"]:focus{outline:2px solid var(--c-blue);outline-offset:0;border-color:var(--c-blue);}
+.searchbar-form button{padding:8px 16px;border-radius:2px;border:1px solid var(--c-blue);background:var(--c-blue);color:#fff;cursor:pointer;font-size:14px;font-weight:700;}
+.searchbar-form button:hover{filter:brightness(.92);}
+.searchbar-hint{flex-basis:100%;font-size:12px;color:#666;}
+.maincontent{clear:both;width:84%;font-size:.8125em;max-width:96em;margin:0 auto;padding:1em 0;color:#333;line-height:1.5em;position:relative;}
+.section{clear:both;padding:0;margin:0;}
+.group{display:flex;flex-wrap:wrap;gap:0 2%;}
+.col{box-sizing:border-box;flex:0 0 calc((100% - (var(--columns) - 1)*2%)/var(--columns));max-width:calc((100% - (var(--columns) - 1)*2%)/var(--columns));margin:1% 0;}
+@media only screen and (max-width:767px){.col{flex:1 1 100%;max-width:100%;margin:1% 0;}.searchbar-inner,.maincontent{width:100%;padding-left:0;padding-right:0;}.searchbar-inner{display:block;}.menu-title{white-space:normal;margin-bottom:8px;}.maincontent{padding:1em 12px;width:auto;}}
+.btn{box-sizing:border-box;text-align:left;display:block;width:100%;color:#333;position:relative;overflow:hidden;margin:8px 0 0;padding:10px 14px;cursor:pointer;outline:0;border-style:none none none solid;border-width:0 0 0 3px;background:#eee;z-index:1;font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;line-height:18px;text-shadow:#fff 0 1px 0;text-decoration:none;white-space:nowrap;text-overflow:ellipsis;font-weight:600;}
+.btn:hover{background-color:#aaa;color:#000;}
+.btn.disabled-empty{opacity:.55;}
+.blue-btn{border-left-color:var(--c-blue);}.green-btn{border-left-color:var(--c-green);}.orange-btn{border-left-color:var(--c-orange);}.purple-btn{border-left-color:var(--c-purple);}.red-btn{border-left-color:var(--c-red);}
+.hdr{box-sizing:border-box;text-align:left;display:block;width:100%;color:#fff;position:relative;overflow:hidden;margin:8px 0 0;padding:10px 14px;cursor:pointer;outline:0;border:0;z-index:1;font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;line-height:14px;text-decoration:none;white-space:nowrap;text-overflow:ellipsis;font-weight:700;}
+.hdr .openall{float:right;font-size:11px;font-weight:700;opacity:.9;text-decoration:underline;}
+.blue-hdr{background-color:var(--c-blue);}.green-hdr{background-color:var(--c-green);}.orange-hdr{background-color:var(--c-orange);}.purple-hdr{background-color:var(--c-purple);}.red-hdr{background-color:var(--c-red);}
+.hdr-para{margin:0;line-height:160%;}
+
+  </style>
+</head>
+<body data-skin="supersearch" data-columns="3" data-colours="primary" data-show-title="true" data-open-mode="links">
+
+<div class="searchbar-wrapper">
+  <div class="searchbar-inner">
+    <div class="menu-title">Research Super Search</div>
+    <form class="searchbar-form" id="superSearchForm" onsubmit="return false;">
+      <input type="text" id="superSearchInput" name="q" placeholder="Type one query, then pick an engine…" aria-label="Super Search query" autofocus>
+      <button type="button" id="superSearchApply">Update links</button>
+      
+      <span class="searchbar-hint">Type a query and the buttons below open that search on each engine.</span>
+    </form>
+  </div>
+</div>
+<div class="maincontent">
+  <div class="section group">
+<div class="col">
+    <p class="hdr-para">
+      <a class="hdr green-hdr" data-section-header="true"><b>Academic</b></a>
+    </p>
+
+    <a class="btn green-btn disabled-empty" data-template="https://scholar.google.com/scholar?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+      Google Scholar
+    </a>
+
+    <a class="btn green-btn disabled-empty" data-template="https://www.google.com/search?tbm=bks&amp;q=%s" href="#" target="_blank" rel="noopener noreferrer">
+      Google Books
+    </a>
+
+    <a class="btn green-btn disabled-empty" data-template="https://www.semanticscholar.org/search?q=%s&amp;sort=relevance" href="#" target="_blank" rel="noopener noreferrer">
+      Semantic Scholar
+    </a>
+
+    <a class="btn green-btn disabled-empty" data-template="https://www.jstor.org/action/doSearch?Query=%s" href="#" target="_blank" rel="noopener noreferrer">
+      JSTOR
+    </a>
+
+    <a class="btn green-btn disabled-empty" data-template="https://pubmed.ncbi.nlm.nih.gov/?term=%s" href="#" target="_blank" rel="noopener noreferrer">
+      PubMed
+    </a>
+
+    <a class="btn green-btn disabled-empty" data-template="https://arxiv.org/abs/?searchtype=all&amp;query=%s" href="#" target="_blank" rel="noopener noreferrer">
+      arXiv
+    </a>
+
+    <p class="hdr-para">
+      <a class="hdr blue-hdr" data-section-header="true"><b>Discussion</b></a>
+    </p>
+
+    <a class="btn blue-btn disabled-empty" data-template="https://www.reddit.com/search/?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+      Reddit
+    </a>
+
+    <a class="btn blue-btn disabled-empty" data-template="https://substack.com/search/%s" href="#" target="_blank" rel="noopener noreferrer">
+      Substack
+    </a>
+</div><div class="col">
+    <p class="hdr-para">
+      <a class="hdr purple-hdr" data-section-header="true"><b>Repositories &amp; Theses</b></a>
+    </p>
+
+    <a class="btn purple-btn disabled-empty" data-template="https://core.ac.uk/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+      CORE
+    </a>
+
+    <a class="btn purple-btn disabled-empty" data-template="https://www.base-search.net/Search/Results?lookfor=%s" href="#" target="_blank" rel="noopener noreferrer">
+      BASE
+    </a>
+
+    <a class="btn purple-btn disabled-empty" data-template="https://explore.openaire.eu/search/find?keyword=%s" href="#" target="_blank" rel="noopener noreferrer">
+      OpenDOAR / OpenAIRE
+    </a>
+
+    <a class="btn purple-btn disabled-empty" data-template="https://www.google.com/search?q=site:bl.uk+ethos+%s" href="#" target="_blank" rel="noopener noreferrer">
+      British Library Thesis (EThOS)
+    </a>
+
+    <a class="btn purple-btn disabled-empty" data-template="https://search.worldcat.org/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+      WorldCat
+    </a>
+
+    <p class="hdr-para">
+      <a class="hdr red-hdr" data-section-header="true"><b>Media</b></a>
+    </p>
+
+    <a class="btn red-btn disabled-empty" data-template="https://www.youtube.com/results?search_query=%s" href="#" target="_blank" rel="noopener noreferrer">
+      YouTube
+    </a>
+
+    <a class="btn red-btn disabled-empty" data-template="https://commons.wikimedia.org/w/index.php?search=%s" href="#" target="_blank" rel="noopener noreferrer">
+      Wikimedia Commons
+    </a>
+</div><div class="col">
+    <p class="hdr-para">
+      <a class="hdr blue-hdr" data-section-header="true"><b>Reference</b></a>
+    </p>
+
+    <a class="btn blue-btn disabled-empty" data-template="https://en.wikipedia.org/wiki/Special:Search?search=%s" href="#" target="_blank" rel="noopener noreferrer">
+      Wikipedia
+    </a>
+
+    <a class="btn blue-btn disabled-empty" data-template="https://www.google.com/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+      Google
+    </a>
+
+    <a class="btn blue-btn disabled-empty" data-template="https://duckduckgo.com/?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+      DuckDuckGo
+    </a>
+
+    <a class="btn blue-btn disabled-empty" data-template="https://www.gutenberg.org/ebooks/search/?query=%s" href="#" target="_blank" rel="noopener noreferrer">
+      Project Gutenberg
+    </a>
+
+    <p class="hdr-para">
+      <a class="hdr orange-hdr" data-section-header="true"><b>News</b></a>
+    </p>
+
+    <a class="btn orange-btn disabled-empty" data-template="https://news.google.com/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+      Google News
+    </a>
+
+    <a class="btn orange-btn disabled-empty" data-template="https://www.bbc.co.uk/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+      BBC
+    </a>
+
+    <a class="btn orange-btn disabled-empty" data-template="https://www.theguardian.com/uk/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+      Guardian
+    </a>
+
+    <a class="btn orange-btn disabled-empty" data-template="https://www.reuters.com/site-search/?query=%s" href="#" target="_blank" rel="noopener noreferrer">
+      Reuters
+    </a>
+</div>
+  </div>
+</div>
+<script>
+  (function attachSuperSearchBehaviour(root,options){
+  options=options||{};
+  function encode(q){return encodeURIComponent(String(q||"").trim());}
+  var input=root.querySelector("#superSearchInput");
+  var buttons=Array.prototype.slice.call(root.querySelectorAll("a.btn[data-template]"));
+  function refresh(){
+    var q=input?input.value:"";
+    var enc=encode(q);
+    buttons.forEach(function(b){
+      var tmpl=b.getAttribute("data-template")||"";
+      if(!tmpl){return;}
+      if(!q){ b.setAttribute("href","#"); b.classList.add("disabled-empty"); return; }
+      b.setAttribute("href", tmpl.split("%s").join(enc));
+      b.classList.remove("disabled-empty");
+    });
+  }
+  if(input){ input.addEventListener("input",refresh); }
+  var applyBtn=root.querySelector("#superSearchApply");
+  if(applyBtn){ applyBtn.addEventListener("click",refresh); }
+  // A button with no query yet should still focus the box rather than navigate.
+  buttons.forEach(function(b){
+    b.addEventListener("click",function(ev){
+      if(!input||!input.value.trim()){ ev.preventDefault(); if(input){input.focus();} }
+    });
+  });
+  // Optional open-all per section.
+  var openAllBtn=root.querySelector("#superSearchOpenAll");
+  function sectionButtonsFromHeader(headerAnchor){
+    var list=[]; var p=headerAnchor.parentElement; var node=p?p.nextElementSibling:null;
+    while(node){
+      var nextHdr=node.querySelector&&node.querySelector('[data-section-header="true"]');
+      if(nextHdr)break;
+      if(node.tagName==="A"&&node.classList.contains("btn"))list.push(node);
+      node=node.nextElementSibling;
+    }
+    return list;
+  }
+  function openMany(btns){
+    if(!input||!input.value.trim()){ if(input)input.focus(); return; }
+    refresh();
+    var opened=0;
+    btns.forEach(function(b){ var href=b.getAttribute("href"); if(href&&href!=="#"){ window.open(href,"_blank","noopener"); opened++; } });
+    if(opened>1){ /* browser may have blocked some as pop-ups */ }
+  }
+  if(openAllBtn){
+    openAllBtn.addEventListener("click",function(){ openMany(buttons); });
+  }
+  root.querySelectorAll('[data-open-all="true"]').forEach(function(h){
+    h.addEventListener("click",function(ev){ ev.preventDefault(); ev.stopPropagation(); openMany(sectionButtonsFromHeader(h)); });
+  });
+  // Header collapse (matches the classic menu).
+  root.querySelectorAll('[data-section-header="true"]').forEach(function(h){
+    h.addEventListener("click",function(ev){
+      ev.preventDefault();
+      var current=h.parentElement.nextElementSibling; var hiding=false;
+      while(current){
+        var nh=current.querySelector&&current.querySelector('[data-section-header="true"]'); if(nh)break;
+        if(current.tagName==="A"&&current.classList.contains("btn")){ hiding=current.style.display!=="none"; break; }
+        current=current.nextElementSibling;
+      }
+      current=h.parentElement.nextElementSibling;
+      while(current){
+        var nh2=current.querySelector&&current.querySelector('[data-section-header="true"]'); if(nh2)break;
+        if(current.tagName==="A"&&current.classList.contains("btn")){ current.style.display=hiding?"none":""; }
+        current=current.nextElementSibling;
+      }
+    });
+  });
+  if(options.focusSearch!==false&&input&&input.hasAttribute("autofocus")){ try{input.focus();}catch(e){} }
+  refresh();
+})(document,{});
+</script>
+</body>
+</html>

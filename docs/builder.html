@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Builder · Super Search Builder</title>
+  <style>
+    :root{--site-bg:#f7f7f7;--site-card:#fff;--site-text:#1f2937;--site-muted:#6b7280;--site-border:#d8dee9;--site-accent:#2563eb;--site-accent-dark:#1d4ed8;--site-danger:#b91c1c;--site-soft:#eef4ff;}
+    *{box-sizing:border-box}html,body{height:100%}
+    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--site-bg);color:var(--site-text)}
+    .site-nav{background:#fff;border-bottom:1px solid var(--site-border);position:sticky;top:0;z-index:100}
+    .site-nav-inner{padding:10px 18px;display:flex;gap:16px;align-items:center}
+    .brand{font-weight:800;color:var(--site-text);text-decoration:none;margin-right:auto}
+    .nav-link{font-weight:650;color:#334155;text-decoration:none;font-size:14px}.nav-link:hover{text-decoration:underline}
+    .builder-page{height:calc(100vh - 45px);display:flex;flex-direction:column;min-height:0}
+    .builder-toolbar{background:#333;color:#fff;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:8px 10px;font-size:13px;border-bottom:1px solid #222}
+    .builder-toolbar label{font-size:12px;color:#eee;display:inline-flex;align-items:center;gap:6px}
+    .builder-toolbar select,.builder-toolbar input{font-size:12px;padding:4px 6px;border-radius:3px;border:1px solid #aaa;background:#fff;color:#111}
+    button,.file-label{border:1px solid #555;background:#555;color:#fff;border-radius:3px;padding:4px 8px;font-weight:650;font-size:12px;cursor:pointer;display:inline-flex;gap:6px;align-items:center;line-height:1.2;text-decoration:none}
+    button.danger{background:#5d1d1d;color:#fff;border-color:#7f2a2a}
+    button:hover,.file-label:hover{background:#777}button:disabled{opacity:.5;cursor:not-allowed}
+    .mini{font-size:11px;padding:2px 6px;border-radius:3px;font-weight:650;background:#f2f2f2;color:#222;border:1px solid #aaa}.mini:hover{background:#e0e0e0}.mini.danger{background:#fff;color:#b91c1c;border-color:#f0b4b4}.mini.secondary{background:#f2f2f2;color:#1d4ed8;border-color:#9ab7ff}
+    input[type=file]{display:none}
+    .import-group,.toolbar-group{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+    .toolbar-group{border-left:1px solid #555;padding-left:8px}
+    .status{font-size:12px;color:#ddd;margin-left:auto;min-width:220px;text-align:right}
+    .builder-main{flex:1;min-height:0;display:flex;background:#e9ecef}
+    .builder-editor{flex:0 0 48%;min-width:560px;max-width:900px;min-height:0;padding:10px;overflow:auto;background:#f7f7f7;border-right:1px solid #c9cfd8}
+    .builder-preview-wrapper{flex:1;min-width:520px;min-height:0;padding:10px;overflow:auto;background:#fff}
+    .builder-settings{margin-bottom:8px;padding:6px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start}
+    .builder-settings h1{font-size:16px;margin:0 14px 0 0;align-self:center;white-space:nowrap}
+    .field{display:flex;flex-direction:column;gap:3px}.field.full{flex:1 1 320px}label{font-size:11px;font-weight:700;color:#4b5563}
+    .field input,.field textarea,.section-title input,.field select,.section-title select,.engine-row input,.engine-row select{border:1px solid #ccc;border-radius:4px;padding:5px 6px;font:inherit;font-size:12px;background:#fff}
+    .field textarea{height:42px;min-width:300px;resize:vertical}.field input{min-width:150px}
+    .subtle-help{font-size:11px;color:#666;margin:0 0 6px}.editor-actions{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.section-list{display:flex;flex-direction:column;gap:8px}
+    .section-card{background:#fff;border-radius:4px;border:1px solid #ddd;padding:8px;box-shadow:0 1px 2px rgba(0,0,0,.04)}.section-card.excluded{opacity:.55;background:#f6f6f6}
+    .section-head{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}.toggle-line{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#555;font-weight:700;margin-right:4px}.toggle-line input{margin:0}
+    .section-title{display:flex;flex:1 1 330px;gap:6px;align-items:center}.section-title input{flex:1 1 220px;min-width:160px}.section-title select{width:96px}.section-controls{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+    .engines{display:flex;flex-direction:column;gap:4px}.engine-row{border:1px solid #eee;border-radius:3px;padding:5px;background:#fcfcfc;display:flex;flex-wrap:wrap;gap:5px;align-items:center}.engine-row.drag-over{outline:2px dashed #2563eb;outline-offset:1px}.drag-handle{border:1px solid #bbb;background:#f4f4f4;border-radius:4px;padding:3px 6px;cursor:grab;font-size:12px;line-height:1}.drag-handle:active{cursor:grabbing}.engine-actions{display:flex;gap:4px;align-items:center}.engine-row input[data-action=engine-label]{flex:1 1 140px;min-width:120px}.engine-row input[data-action=engine-template]{flex:2 1 300px;min-width:240px}.engine-row select{width:92px}.engine-row.invalid input[data-action=engine-template]{border-color:#e0a3a3;background:#fff7f7}.empty-engines{font-size:12px;color:#666;padding:4px 0}.section-foot{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+    .add-link-panel{margin-top:6px;border:1px dashed #b7c3d6;border-radius:6px;padding:8px;background:#f4f8ff;display:none}.add-link-panel.show{display:block}.add-link-panel .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:6px}.add-link-panel input{flex:1 1 200px;min-width:160px;border:1px solid #ccc;border-radius:4px;padding:5px 6px;font-size:12px}.add-link-panel .conv-msg{font-size:11px;color:#475569;flex-basis:100%}.add-link-panel .conv-msg.bad{color:#b91c1c}.add-link-panel .conv-msg.ok{color:#15803d}
+    .builder-preview-wrapper h2{margin:0 0 8px;font-size:16px;font-weight:600;border-bottom:1px solid #ddd;padding-bottom:4px;display:flex;justify-content:space-between;gap:10px}.preview-meta{font-size:12px;color:#666;font-weight:400}.preview-frame{background:#fff;min-height:calc(100vh - 120px)}
+    .privacy{font-size:11px;color:#666;margin-top:8px;line-height:1.4}
+    @media(max-width:1100px){.builder-main{flex-direction:column}.builder-editor,.builder-preview-wrapper{flex:none;max-width:none;min-width:0;height:auto;min-height:50vh}.status{width:100%;margin-left:0;text-align:left}.builder-page{height:auto}.builder-toolbar{position:static}.field textarea{min-width:0}}
+  </style>
+  <style id="classicMenuCss"></style>
+</head>
+<body>
+  <nav class="site-nav"><div class="site-nav-inner">
+    <a class="brand" href="index.html">Super Search Builder</a>
+    <a class="nav-link" href="builder.html">Builder</a>
+    <a class="nav-link" href="converter.html">Link converter</a>
+    <a class="nav-link" href="how-to-add-a-search.html">How to add a search</a>
+    <a class="nav-link" href="templates.html">Templates</a>
+    <a class="nav-link" href="help.html">Help</a>
+  </div></nav>
+
+  <div class="builder-page">
+    <div class="builder-toolbar">
+      <div class="toolbar-group" style="border-left:0;padding-left:0">
+        <label>Template
+          <select id="templateSelect"></select>
+        </label>
+        <button type="button" id="loadTemplateBtn">Use template</button>
+      </div>
+      <div class="toolbar-group">
+        <button type="button" id="exportHtmlBtn">Save Super Search page</button>
+        <button type="button" id="exportConfigBtn">Save config</button>
+      </div>
+      <div class="toolbar-group import-group">
+        <label class="file-label" for="importConfigInput">Load config</label>
+        <input type="file" id="importConfigInput" accept="application/json,.json">
+        <label class="file-label" for="importHtmlInput">Load page</label>
+        <input type="file" id="importHtmlInput" accept="text/html,.html,.htm">
+      </div>
+      <div class="toolbar-group">
+        <button type="button" id="restoreSavedBtn" hidden>Restore draft</button>
+        <button type="button" class="danger" id="clearSavedBtn">Clear draft</button>
+      </div>
+      <span class="status" id="status">Ready.</span>
+    </div>
+
+    <div class="builder-main">
+      <div class="builder-editor">
+        <div class="builder-settings">
+          <h1>Super Search</h1>
+          <div class="field"><label for="titleInput">Title</label><input type="text" id="titleInput"></div>
+          <div class="field"><label for="filenameInput">File name</label><input type="text" id="filenameInput"></div>
+          <div class="field"><label for="columnsInput">Columns</label>
+            <select id="columnsInput"><option>2</option><option>3</option><option>4</option><option>5</option></select>
+          </div>
+          <div class="field"><label for="coloursInput">Colours</label>
+            <select id="coloursInput"><option value="primary">Primary</option><option value="pastel">Pastel</option></select>
+          </div>
+          <div class="field"><label for="openModeInput">Open mode</label>
+            <select id="openModeInput"><option value="links">Links (reliable)</option><option value="openAll">Open-all buttons</option></select>
+          </div>
+          <div class="field"><label for="showTitleInput" style="white-space:nowrap"><input type="checkbox" id="showTitleInput"> Show title</label></div>
+          <div class="field full"><label for="descriptionInput">Description</label><textarea id="descriptionInput"></textarea></div>
+        </div>
+        <p class="subtle-help" id="templateDescription"></p>
+        <div class="editor-actions">
+          <button type="button" id="addSectionBtn">Add section</button>
+          <button type="button" class="mini secondary" id="includeAllBtn">Use all sections</button>
+          <button type="button" class="mini secondary" id="excludeAllBtn">Use no sections</button>
+        </div>
+        <div class="section-list" id="sectionList"></div>
+        <p class="privacy">Everything stays in this browser. Your draft is saved locally only. Exported pages are standalone HTML with no tracking and no dependency on this site.</p>
+      </div>
+
+      <div class="builder-preview-wrapper">
+        <h2>Preview <span class="preview-meta" id="previewMeta"></span></h2>
+        <div class="preview-frame" id="preview"></div>
+      </div>
+    </div>
+  </div>
+
+<script src="assets/converter.js"></script>
+<script>
+/*
+  Super Search Builder — classic responsive renderer
+  ---------------------------------------------------
+  Based on the start page builder's known-good classic menu, adapted so that each
+  button is a SEARCH TEMPLATE (URL with a %s token). The exported page has one query
+  box that rewrites every button's href live, fanning one query out to many engines.
+*/
+var E = window.SuperSearchEngine;
+const defaultPalette = {blue:"#4d90fe",green:"#35aa47",orange:"#d84a38",purple:"#852b99",red:"#bd121d"};
+const pastelPalette  = {blue:"#8bbcff",green:"#8fd6a3",orange:"#f3aa8f",purple:"#c69ad6",red:"#e88f96"};
+const allowedColours = ["blue","green","orange","purple","red"];
+const allowedColourStyles = ["primary","pastel"];
+const allowedOpenModes = ["links","openAll"];
+const MIN_COLUMNS = 2, MAX_COLUMNS = 5, DEFAULT_COLUMNS = 3;
+const STORAGE_KEY = "superSearchBuilderStage1";
+
+function escapeHtml(str){return String(str ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
+function cleanColour(c){return allowedColours.includes(c)?c:"blue";}
+function cleanColourStyle(v){return allowedColourStyles.includes(v)?v:"primary";}
+function cleanOpenMode(v){return allowedOpenModes.includes(v)?v:"links";}
+function cleanShowTitle(v){return v!==false && v!=="false" && v!==0 && v!=="0";}
+function cleanColumnCount(v){const n=Number.parseInt(v,10);return n>=MIN_COLUMNS && n<=MAX_COLUMNS?n:DEFAULT_COLUMNS;}
+function makeColumns(count){return Array.from({length:cleanColumnCount(count)},()=>({items:[]}));}
+function ensureHtmlFilename(name){let f=String(name||"supersearch.html").trim()||"supersearch.html";if(!/\.html?$/i.test(f))f+=".html";return f.replace(/[\\/:*?"<>|]+/g,"-");}
+function defaultProject(){return {format:"supersearch-builder-v1",title:"My Super Search",description:"",filename:"supersearch.html",columns:DEFAULT_COLUMNS,colours:"primary",showTitle:true,openMode:"links",sections:[]};}
+function defaultState(){return {settings:{pageTitle:"My Super Search",menuFilename:"supersearch.html",columns:DEFAULT_COLUMNS,colours:"primary",showTitle:true,openMode:"links",theme:"light",palette:{...defaultPalette}},menu:{columns:makeColumns(DEFAULT_COLUMNS)}};}
+function ensureColumnCount(menu,columns){const desired=cleanColumnCount(columns);const cols=menu.columns||[];if(cols.length<desired){while(cols.length<desired)cols.push({items:[]});menu.columns=cols;}else if(cols.length>desired){const keep=cols.slice(0,desired);const extra=cols.slice(desired);const target=keep[keep.length-1];extra.forEach(c=>target.items.push(...(c.items||[])));menu.columns=keep;}}
+function colorToClasses(color){const c=cleanColour(color||"blue");return {btn:c+"-btn",hdr:c+"-hdr"};}
+
+function buildClassicMenuCss(settings){
+  const colourStyle=cleanColourStyle(settings.colours||"primary");
+  const pal=colourStyle==="pastel"?pastelPalette:(settings.palette||defaultPalette);
+  const isPastel=colourStyle==="pastel";
+  const searchBg=isPastel?"#f8f3f6":"#f1f1f1";
+  const searchBorder=isPastel?"#eadde6":"#ddd";
+  const headerText=isPastel?"#222":"#fff";
+  const btnBg=isPastel?"#f7f5f2":"#eee";
+  const btnHoverBg=isPastel?"#e9e3dc":"#aaa";
+  return `
+:root{--columns:${cleanColumnCount(settings.columns)};--c-blue:${pal.blue};--c-green:${pal.green};--c-orange:${pal.orange};--c-purple:${pal.purple};--c-red:${pal.red};}
+body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#333;}
+.searchbar-wrapper{background:${searchBg};padding:12px 15px;border-bottom:1px solid ${searchBorder};}
+.searchbar-inner{width:84%;max-width:96em;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;}
+.menu-title{font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:20px;line-height:1.2;font-weight:700;color:#333;white-space:nowrap;}
+.searchbar-form{flex:1 1 520px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;min-width:260px;}
+.searchbar-form input[type="text"]{flex:1 1 320px;padding:8px 10px;border:1px solid #ccc;border-radius:2px;font-size:15px;min-width:0;}
+.searchbar-form input[type="text"]:focus{outline:2px solid var(--c-blue);outline-offset:0;border-color:var(--c-blue);}
+.searchbar-form button{padding:8px 16px;border-radius:2px;border:1px solid var(--c-blue);background:var(--c-blue);color:${isPastel?"#222":"#fff"};cursor:pointer;font-size:14px;font-weight:700;}
+.searchbar-form button:hover{filter:brightness(.92);}
+.searchbar-hint{flex-basis:100%;font-size:12px;color:#666;}
+.maincontent{clear:both;width:84%;font-size:.8125em;max-width:96em;margin:0 auto;padding:1em 0;color:#333;line-height:1.5em;position:relative;}
+.section{clear:both;padding:0;margin:0;}
+.group{display:flex;flex-wrap:wrap;gap:0 2%;}
+.col{box-sizing:border-box;flex:0 0 calc((100% - (var(--columns) - 1)*2%)/var(--columns));max-width:calc((100% - (var(--columns) - 1)*2%)/var(--columns));margin:1% 0;}
+@media only screen and (max-width:767px){.col{flex:1 1 100%;max-width:100%;margin:1% 0;}.searchbar-inner,.maincontent{width:100%;padding-left:0;padding-right:0;}.searchbar-inner{display:block;}.menu-title{white-space:normal;margin-bottom:8px;}.maincontent{padding:1em 12px;width:auto;}}
+.btn{box-sizing:border-box;text-align:left;display:block;width:100%;color:#333;position:relative;overflow:hidden;margin:8px 0 0;padding:10px 14px;cursor:pointer;outline:0;border-style:none none none solid;border-width:0 0 0 3px;background:${btnBg};z-index:1;font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;line-height:18px;text-shadow:#fff 0 1px 0;text-decoration:none;white-space:nowrap;text-overflow:ellipsis;font-weight:600;}
+.btn:hover{background-color:${btnHoverBg};color:#000;}
+.btn.disabled-empty{opacity:.55;}
+.blue-btn{border-left-color:var(--c-blue);}.green-btn{border-left-color:var(--c-green);}.orange-btn{border-left-color:var(--c-orange);}.purple-btn{border-left-color:var(--c-purple);}.red-btn{border-left-color:var(--c-red);}
+.hdr{box-sizing:border-box;text-align:left;display:block;width:100%;color:${headerText};position:relative;overflow:hidden;margin:8px 0 0;padding:10px 14px;cursor:pointer;outline:0;border:0;z-index:1;font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;line-height:14px;text-decoration:none;white-space:nowrap;text-overflow:ellipsis;font-weight:700;}
+.hdr .openall{float:right;font-size:11px;font-weight:700;opacity:.9;text-decoration:underline;}
+.blue-hdr{background-color:var(--c-blue);}.green-hdr{background-color:var(--c-green);}.orange-hdr{background-color:var(--c-orange);}.purple-hdr{background-color:var(--c-purple);}.red-hdr{background-color:var(--c-red);}
+.hdr-para{margin:0;line-height:160%;}
+`;
+}
+
+function renderClassicMenuBody(menu,settings,options={}){
+  const columnCount=cleanColumnCount(settings.columns);
+  ensureColumnCount(menu,columnCount);
+  const openMode=cleanOpenMode(settings.openMode);
+  let body="";
+  const autofocusAttr=options.autofocusSearch?" autofocus":"";
+  const showTitle=cleanShowTitle(settings.showTitle);
+  const titleMarkup=showTitle?`<div class="menu-title">${escapeHtml(settings.pageTitle||"My Super Search")}</div>`:"";
+  body+=`
+<div class="searchbar-wrapper">
+  <div class="searchbar-inner">
+    ${titleMarkup}
+    <form class="searchbar-form" id="superSearchForm" onsubmit="return false;">
+      <input type="text" id="superSearchInput" name="q" placeholder="Type one query, then pick an engine…" aria-label="Super Search query"${autofocusAttr}>
+      <button type="button" id="superSearchApply">Update links</button>
+      ${openMode==="openAll"?`<button type="button" id="superSearchOpenAll">Open all</button>`:""}
+      <span class="searchbar-hint">Type a query and the buttons below open that search on each engine.</span>
+    </form>
+  </div>
+</div>
+<div class="maincontent">
+  <div class="section group">
+`;
+  menu.columns.forEach(col=>{
+    body+=`<div class="col">`;
+    (col.items||[]).forEach(item=>{
+      const classes=colorToClasses(item.color||"blue");
+      if(item.type==="header"){
+        const openAllLink=openMode==="openAll"?`<span class="openall" data-open-all="true">open all ▸</span>`:"";
+        body+=`
+    <p class="hdr-para">
+      <a class="hdr ${classes.hdr}" data-section-header="true"><b>${escapeHtml(item.text||"")}</b>${openAllLink}</a>
+    </p>
+`;
+      }else{
+        body+=`
+    <a class="btn ${classes.btn} disabled-empty" data-template="${escapeHtml(item.template||"")}" href="#" target="_blank" rel="noopener noreferrer">
+      ${escapeHtml(item.text||"")}
+    </a>
+`;
+      }
+    });
+    body+=`</div>`;
+  });
+  body+=`
+  </div>
+</div>`;
+  return body;
+}
+
+/* Behaviour serialized into the exported page: rewrites every button href from the
+   single query box, supports header collapse and optional open-all. */
+function attachSuperSearchBehaviour(root,options){
+  options=options||{};
+  function encode(q){return encodeURIComponent(String(q||"").trim());}
+  var input=root.querySelector("#superSearchInput");
+  var buttons=Array.prototype.slice.call(root.querySelectorAll("a.btn[data-template]"));
+  function refresh(){
+    var q=input?input.value:"";
+    var enc=encode(q);
+    buttons.forEach(function(b){
+      var tmpl=b.getAttribute("data-template")||"";
+      if(!tmpl){return;}
+      if(!q){ b.setAttribute("href","#"); b.classList.add("disabled-empty"); return; }
+      b.setAttribute("href", tmpl.split("%s").join(enc));
+      b.classList.remove("disabled-empty");
+    });
+  }
+  if(input){ input.addEventListener("input",refresh); }
+  var applyBtn=root.querySelector("#superSearchApply");
+  if(applyBtn){ applyBtn.addEventListener("click",refresh); }
+  // A button with no query yet should still focus the box rather than navigate.
+  buttons.forEach(function(b){
+    b.addEventListener("click",function(ev){
+      if(!input||!input.value.trim()){ ev.preventDefault(); if(input){input.focus();} }
+    });
+  });
+  // Optional open-all per section.
+  var openAllBtn=root.querySelector("#superSearchOpenAll");
+  function sectionButtonsFromHeader(headerAnchor){
+    var list=[]; var p=headerAnchor.parentElement; var node=p?p.nextElementSibling:null;
+    while(node){
+      var nextHdr=node.querySelector&&node.querySelector('[data-section-header="true"]');
+      if(nextHdr)break;
+      if(node.tagName==="A"&&node.classList.contains("btn"))list.push(node);
+      node=node.nextElementSibling;
+    }
+    return list;
+  }
+  function openMany(btns){
+    if(!input||!input.value.trim()){ if(input)input.focus(); return; }
+    refresh();
+    var opened=0;
+    btns.forEach(function(b){ var href=b.getAttribute("href"); if(href&&href!=="#"){ window.open(href,"_blank","noopener"); opened++; } });
+    if(opened>1){ /* browser may have blocked some as pop-ups */ }
+  }
+  if(openAllBtn){
+    openAllBtn.addEventListener("click",function(){ openMany(buttons); });
+  }
+  root.querySelectorAll('[data-open-all="true"]').forEach(function(h){
+    h.addEventListener("click",function(ev){ ev.preventDefault(); ev.stopPropagation(); openMany(sectionButtonsFromHeader(h)); });
+  });
+  // Header collapse (matches the classic menu).
+  root.querySelectorAll('[data-section-header="true"]').forEach(function(h){
+    h.addEventListener("click",function(ev){
+      ev.preventDefault();
+      var current=h.parentElement.nextElementSibling; var hiding=false;
+      while(current){
+        var nh=current.querySelector&&current.querySelector('[data-section-header="true"]'); if(nh)break;
+        if(current.tagName==="A"&&current.classList.contains("btn")){ hiding=current.style.display!=="none"; break; }
+        current=current.nextElementSibling;
+      }
+      current=h.parentElement.nextElementSibling;
+      while(current){
+        var nh2=current.querySelector&&current.querySelector('[data-section-header="true"]'); if(nh2)break;
+        if(current.tagName==="A"&&current.classList.contains("btn")){ current.style.display=hiding?"none":""; }
+        current=current.nextElementSibling;
+      }
+    });
+  });
+  if(options.focusSearch!==false&&input&&input.hasAttribute("autofocus")){ try{input.focus();}catch(e){} }
+  refresh();
+}
+
+function exportClassicStandaloneHtml(state){
+  const css=buildClassicMenuCss(state.settings);
+  const body=renderClassicMenuBody(JSON.parse(JSON.stringify(state.menu)),state.settings,{autofocusSearch:true});
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>${escapeHtml(state.settings.pageTitle||"My Super Search")}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+${css}
+  </style>
+</head>
+<body data-skin="supersearch" data-columns="${cleanColumnCount(state.settings.columns)}" data-colours="${cleanColourStyle(state.settings.colours)}" data-show-title="${cleanShowTitle(state.settings.showTitle)?"true":"false"}" data-open-mode="${cleanOpenMode(state.settings.openMode)}">
+${body}
+<script>
+  (${attachSuperSearchBehaviour.toString()})(document,{});
+<\/script>
+</body>
+</html>`;
+}
+
+/* Project data and conversion */
+let project=defaultProject();
+let renderQueued=false, renderQueuedMode="all";
+
+function normaliseFriendlyProject(input){
+  const p=defaultProject();
+  p.title=input.title||input.settings?.pageTitle||"My Super Search";
+  p.description=input.description||"";
+  p.filename=ensureHtmlFilename(input.filename||"supersearch.html");
+  p.columns=cleanColumnCount(input.columns);
+  p.colours=cleanColourStyle(input.colours||"primary");
+  p.showTitle=cleanShowTitle(input.showTitle);
+  p.openMode=cleanOpenMode(input.openMode);
+  p.sections=(input.sections||[]).map(section=>({
+    name:section.name||"Section",
+    colour:cleanColour(section.colour||"blue"),
+    included:section.included!==false,
+    engines:(section.engines||section.links||[]).map(en=>({
+      label:en.label||en.text||"Engine",
+      template:en.template||en.url||"",
+      colour:cleanColour(en.colour||section.colour||"blue"),
+      included:en.included!==false
+    }))
+  }));
+  return p;
+}
+function projectToInternalState(p){
+  const state=defaultState();
+  state.settings.pageTitle=p.title||"My Super Search";
+  state.settings.menuFilename=ensureHtmlFilename(p.filename||"supersearch.html");
+  state.settings.columns=cleanColumnCount(p.columns);
+  state.settings.colours=cleanColourStyle(p.colours||"primary");
+  state.settings.palette=state.settings.colours==="pastel"?{...pastelPalette}:{...defaultPalette};
+  state.settings.showTitle=cleanShowTitle(p.showTitle);
+  state.settings.openMode=cleanOpenMode(p.openMode);
+  state.menu.columns=makeColumns(state.settings.columns);
+  (p.sections||[]).filter(s=>s.included!==false).forEach(section=>{
+    const colour=cleanColour(section.colour||"blue");
+    const block=[{type:"header",text:section.name||"Section",color:colour}];
+    (section.engines||[]).filter(en=>en.included!==false).forEach(en=>{
+      block.push({type:"link",text:en.label||"Engine",template:en.template||"",color:cleanColour(en.colour||colour)});
+    });
+    let targetIndex=0,fewest=Infinity;
+    state.menu.columns.forEach((col,i)=>{const count=(col.items||[]).length;if(count<fewest){fewest=count;targetIndex=i;}});
+    state.menu.columns[targetIndex].items.push(...block);
+  });
+  ensureColumnCount(state.menu,state.settings.columns);
+  return state;
+}
+function getCurrentState(){return projectToInternalState(project);}
+function downloadBlob(content,filename,type){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);}
+function setStatus(m){document.getElementById("status").textContent=m;}
+function hasBrowserSave(){try{return !!localStorage.getItem(STORAGE_KEY);}catch(e){return false;}}
+function updateRestoreButton(){const b=document.getElementById("restoreSavedBtn");if(b)b.hidden=!hasBrowserSave();}
+function saveToBrowser(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(project));updateRestoreButton();}catch(e){}}
+function loadFromBrowser(){try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return null;return normaliseFriendlyProject(JSON.parse(raw));}catch(e){return null;}}
+function colourOptions(selected){return allowedColours.map(c=>`<option value="${c}" ${c===selected?"selected":""}>${c}</option>`).join("");}
+function scheduleRender(save=true,mode="all"){if(save)saveToBrowser();if(mode==="all")renderQueuedMode="all";else if(!renderQueued)renderQueuedMode="preview";if(renderQueued)return;renderQueued=true;requestAnimationFrame(()=>{const m=renderQueuedMode;renderQueued=false;renderQueuedMode="all";if(m==="preview")renderPreview();else renderAll();});}
+function schedulePreviewRender(save=true){scheduleRender(save,"preview");}
+
+function renderSettings(){
+  document.getElementById("titleInput").value=project.title||"";
+  document.getElementById("filenameInput").value=project.filename||"supersearch.html";
+  document.getElementById("descriptionInput").value=project.description||"";
+  document.getElementById("columnsInput").value=String(cleanColumnCount(project.columns));
+  document.getElementById("coloursInput").value=cleanColourStyle(project.colours||"primary");
+  document.getElementById("openModeInput").value=cleanOpenMode(project.openMode);
+  document.getElementById("showTitleInput").checked=cleanShowTitle(project.showTitle);
+  document.getElementById("templateDescription").innerHTML="Each engine is a search template — a URL with a <code>%s</code> where your query goes. Use the link converter or the per-section <strong>+ Add engine from a search link</strong> panel to make templates. Tick <strong>Use</strong> to include a section. Links mode rewrites every button from one query box; open-all mode adds buttons that try to open a whole section at once.";
+}
+function renderEditor(){
+  const container=document.getElementById("sectionList");
+  if(!project.sections.length){container.innerHTML=`<div class="section-card"><div class="engines"><div class="empty-engines">No sections yet. Use “Add section” to start.</div></div></div>`;return;}
+  container.innerHTML=project.sections.map((section,si)=>{
+    const included=section.included!==false;
+    const rows=(section.engines||[]).map((en,li)=>{
+      const valid=E.isValidTemplate(en.template);
+      return `
+      <div class="engine-row ${valid?"":"invalid"}" data-section-index="${si}" data-engine-index="${li}">
+        <span class="drag-handle" draggable="true" title="Drag to reorder" aria-label="Drag to reorder">↕</span>
+        <input type="text" value="${escapeHtml(en.label||"")}" data-action="engine-label" aria-label="Engine label" placeholder="Label">
+        <input type="text" value="${escapeHtml(en.template||"")}" data-action="engine-template" aria-label="Search template URL with %s" placeholder="https://…?q=%s">
+        <select data-action="engine-colour" aria-label="Engine colour">${colourOptions(cleanColour(en.colour||section.colour))}</select>
+        <div class="engine-actions">
+          <button type="button" class="mini secondary" data-action="move-engine-up" ${li===0?"disabled":""}>↑</button>
+          <button type="button" class="mini secondary" data-action="move-engine-down" ${li===(section.engines||[]).length-1?"disabled":""}>↓</button>
+          <button type="button" class="mini danger" data-action="delete-engine">Remove</button>
+        </div>
+      </div>`;
+    }).join("")||`<div class="empty-engines">No engines in this section yet.</div>`;
+    return `
+      <article class="section-card ${included?"":"excluded"}" data-section-index="${si}">
+        <div class="section-head">
+          <label class="toggle-line"><input type="checkbox" data-action="toggle-section" ${included?"checked":""}> Use</label>
+          <div class="section-title">
+            <input type="text" value="${escapeHtml(section.name||"")}" data-action="section-name" aria-label="Section name">
+            <select data-action="section-colour" aria-label="Section colour">${colourOptions(cleanColour(section.colour||"blue"))}</select>
+          </div>
+          <div class="section-controls">
+            <button type="button" class="mini secondary" data-action="move-section-up" ${si===0?"disabled":""}>↑</button>
+            <button type="button" class="mini secondary" data-action="move-section-down" ${si===project.sections.length-1?"disabled":""}>↓</button>
+            <button type="button" class="mini secondary" data-action="duplicate-section">Copy</button>
+            <button type="button" class="mini danger" data-action="delete-section">Delete</button>
+          </div>
+        </div>
+        <div class="engines">${rows}</div>
+        <div class="section-foot">
+          <button type="button" class="mini secondary" data-action="add-engine">+ Add engine</button>
+          <button type="button" class="mini secondary" data-action="toggle-add-panel">+ Add engine from a search link</button>
+        </div>
+        <div class="add-link-panel" data-add-panel="${si}">
+          <div class="row">
+            <input type="text" data-conv="phrase" placeholder="Phrase you searched, e.g. climate migration" value="climate migration">
+          </div>
+          <div class="row">
+            <input type="text" data-conv="url" placeholder="Paste the results-page link, e.g. https://…?q=climate+migration">
+            <button type="button" class="mini secondary" data-action="convert-add">Convert &amp; add</button>
+          </div>
+          <div class="conv-msg" data-conv="msg"></div>
+        </div>
+      </article>`;
+  }).join("");
+}
+function renderPreview(){
+  const state=getCurrentState();
+  document.getElementById("classicMenuCss").textContent=buildClassicMenuCss(state.settings);
+  const preview=document.getElementById("preview");
+  const includedSections=project.sections.filter(s=>s.included!==false);
+  const engineCount=includedSections.reduce((sum,s)=>sum+(s.engines||[]).filter(e=>e.included!==false).length,0);
+  document.getElementById("previewMeta").textContent=`${includedSections.length} sections · ${engineCount} engines · ${cleanOpenMode(state.settings.openMode)} mode`;
+  preview.innerHTML=renderClassicMenuBody(JSON.parse(JSON.stringify(state.menu)),state.settings,{autofocusSearch:false});
+  attachSuperSearchBehaviour(preview,{focusSearch:false});
+}
+function renderAll(){renderSettings();renderEditor();renderPreview();}
+
+/* Editor events */
+function onSectionListInput(event){
+  const row=event.target.closest("[data-section-index]");
+  if(!row)return;
+  const si=Number(row.getAttribute("data-section-index"));
+  const section=project.sections[si];
+  if(!section)return;
+  const action=event.target.getAttribute("data-action");
+  if(action==="section-name"){section.name=event.target.value;schedulePreviewRender();}
+  else if(action==="section-colour"){const old=section.colour;section.colour=cleanColour(event.target.value);(section.engines||[]).forEach(en=>{if(!en.colour||en.colour===old)en.colour=section.colour;});scheduleRender();}
+  else if(action==="toggle-section"){section.included=event.target.checked;scheduleRender();}
+  else{
+    const enRow=event.target.closest("[data-engine-index]");
+    if(!enRow)return;
+    const li=Number(enRow.getAttribute("data-engine-index"));
+    const en=(section.engines||[])[li];
+    if(!en)return;
+    if(action==="engine-label"){en.label=event.target.value;schedulePreviewRender();}
+    else if(action==="engine-template"){en.template=event.target.value;enRow.classList.toggle("invalid",!E.isValidTemplate(en.template));schedulePreviewRender();}
+    else if(action==="engine-colour"){en.colour=cleanColour(event.target.value);schedulePreviewRender();}
+  }
+}
+function onSectionListClick(event){
+  const btn=event.target.closest("button");
+  const headerToggle=event.target.closest("[data-action='toggle-add-panel']");
+  if(headerToggle){
+    const card=headerToggle.closest("[data-section-index]");
+    const panel=card.querySelector(".add-link-panel");
+    panel.classList.toggle("show");
+    return;
+  }
+  if(!btn)return;
+  const action=btn.getAttribute("data-action");
+  const row=btn.closest("[data-section-index]");
+  if(!row)return;
+  const si=Number(row.getAttribute("data-section-index"));
+  const section=project.sections[si];
+  if(action==="add-engine"){section.engines=section.engines||[];section.engines.push({label:"New engine",template:"https://www.google.com/search?q=%s",colour:section.colour,included:true});scheduleRender();return;}
+  if(action==="convert-add"){
+    const card=btn.closest("[data-section-index]");
+    const phrase=card.querySelector("[data-conv='phrase']").value;
+    const url=card.querySelector("[data-conv='url']").value;
+    const msg=card.querySelector("[data-conv='msg']");
+    const r=E.convert(url,phrase);
+    msg.className="conv-msg "+(r.ok?"ok":"bad");
+    msg.textContent=r.message;
+    if(r.ok){
+      const label=E.suggestLabel(r.template)||"New engine";
+      section.engines=section.engines||[];
+      section.engines.push({label:label,template:r.template,colour:section.colour,included:true});
+      card.querySelector("[data-conv='url']").value="";
+      scheduleRender();
+      setStatus("Added "+label+" from a search link.");
+    }
+    return;
+  }
+  if(action==="add-section"){return;}
+  if(action==="delete-section"){if(confirm("Delete this section?")){project.sections.splice(si,1);scheduleRender();}return;}
+  if(action==="duplicate-section"){const copy=JSON.parse(JSON.stringify(section));copy.name=(section.name||"Section")+" copy";project.sections.splice(si+1,0,copy);scheduleRender();return;}
+  if(action==="move-section-up"&&si>0){[project.sections[si-1],project.sections[si]]=[project.sections[si],project.sections[si-1]];scheduleRender();return;}
+  if(action==="move-section-down"&&si<project.sections.length-1){[project.sections[si+1],project.sections[si]]=[project.sections[si],project.sections[si+1]];scheduleRender();return;}
+  const enRow=btn.closest("[data-engine-index]");
+  if(!enRow)return;
+  const li=Number(enRow.getAttribute("data-engine-index"));
+  if(action==="delete-engine"){section.engines.splice(li,1);scheduleRender();}
+  else if(action==="move-engine-up"&&li>0){[section.engines[li-1],section.engines[li]]=[section.engines[li],section.engines[li-1]];scheduleRender();}
+  else if(action==="move-engine-down"&&li<section.engines.length-1){[section.engines[li+1],section.engines[li]]=[section.engines[li],section.engines[li+1]];scheduleRender();}
+}
+
+/* Drag reorder of engines within a section */
+let dragInfo=null;
+function onLinkDragStart(e){const h=e.target.closest(".drag-handle");if(!h)return;const row=h.closest("[data-engine-index]");if(!row)return;dragInfo={si:Number(row.getAttribute("data-section-index")),li:Number(row.getAttribute("data-engine-index"))};e.dataTransfer.effectAllowed="move";try{e.dataTransfer.setData("text/plain","drag");}catch(err){}}
+function onLinkDragOver(e){if(!dragInfo)return;const row=e.target.closest("[data-engine-index]");if(!row)return;if(Number(row.getAttribute("data-section-index"))!==dragInfo.si)return;e.preventDefault();row.classList.add("drag-over");}
+function onLinkDragLeave(e){const row=e.target.closest("[data-engine-index]");if(row)row.classList.remove("drag-over");}
+function onLinkDrop(e){if(!dragInfo)return;const row=e.target.closest("[data-engine-index]");if(!row)return;const si=Number(row.getAttribute("data-section-index"));if(si!==dragInfo.si)return;e.preventDefault();const target=Number(row.getAttribute("data-engine-index"));const arr=project.sections[si].engines;const [moved]=arr.splice(dragInfo.li,1);arr.splice(target,0,moved);dragInfo=null;scheduleRender();}
+function onLinkDragEnd(){document.querySelectorAll(".engine-row.drag-over").forEach(el=>el.classList.remove("drag-over"));dragInfo=null;}
+
+/* Templates */
+let templateFiles={};
+function getTemplateFromUrl(){const p=new URLSearchParams(location.search);return p.get("template")||"research";}
+async function loadCatalog(){
+  try{
+    const res=await fetch("templates/catalog.json");
+    const cat=await res.json();
+    const sel=document.getElementById("templateSelect");
+    (cat.templates||[]).forEach(t=>{templateFiles[t.id]=t.file;const o=document.createElement("option");o.value=t.id;o.textContent=t.title;sel.appendChild(o);});
+  }catch(e){
+    templateFiles={research:"research.json",blank:"blank.json"};
+    const sel=document.getElementById("templateSelect");
+    [["research","Research Super Search"],["blank","Blank"]].forEach(([id,title])=>{const o=document.createElement("option");o.value=id;o.textContent=title;sel.appendChild(o);});
+  }
+}
+async function loadSelectedTemplate(saveAfterLoad=true){
+  const id=document.getElementById("templateSelect").value||"research";
+  const file=templateFiles[id]||"research.json";
+  try{
+    const res=await fetch("templates/"+file);
+    const data=await res.json();
+    project=normaliseFriendlyProject(data);
+    if(saveAfterLoad)saveToBrowser();
+    renderAll();
+    setStatus("Loaded template: "+(data.title||id)+".");
+  }catch(e){
+    project=normaliseFriendlyProject(defaultProject());
+    renderAll();
+    setStatus("Could not load that template; started a blank Super Search.");
+  }
+}
+function loadTemplate(saveAfterLoad=true){return loadSelectedTemplate(saveAfterLoad);}
+function restoreBrowserSave(){const p=loadFromBrowser();if(p){project=p;renderAll();setStatus("Restored your saved draft.");}else{setStatus("No saved draft found.");}}
+
+/* Import */
+function readTextFile(file,cb){const r=new FileReader();r.onload=e=>cb(String(e.target.result||""));r.readAsText(file);}
+function importJsonFile(file){readTextFile(file,text=>{try{project=normaliseFriendlyProject(JSON.parse(text));saveToBrowser();renderAll();setStatus("Imported config.");}catch(e){alert("Could not read that config file: "+e.message);}});}
+function colourFromClass(el,suffix){const cls=Array.from(el.classList||[]).find(c=>c.endsWith(suffix));return cls?cls.replace(suffix,""):"blue";}
+function importHtmlPage(file){
+  readTextFile(file,html=>{
+    try{
+      const doc=new DOMParser().parseFromString(html,"text/html");
+      const columns=Array.from(doc.querySelectorAll(".col"));
+      if(!columns.length)throw new Error("No Super Search columns were found.");
+      const sections=[];
+      columns.forEach(col=>{
+        let current=null;
+        Array.from(col.children).forEach(el=>{
+          const header=el.matches("p.hdr-para")?el.querySelector(".hdr"):(el.matches(".hdr")?el:null);
+          if(header){current={name:(header.textContent||"Section").replace(/open all.*/i,"").trim(),colour:colourFromClass(header,"-hdr"),included:true,engines:[]};sections.push(current);return;}
+          if(el.matches("a.btn")){if(!current){current={name:"Engines",colour:colourFromClass(el,"-btn"),included:true,engines:[]};sections.push(current);}current.engines.push({label:(el.textContent||"Engine").trim(),template:el.getAttribute("data-template")||"",colour:colourFromClass(el,"-btn")||current.colour,included:true});}
+        });
+      });
+      if(!sections.length)throw new Error("No sections or engines found.");
+      const openMode=(doc.body&&doc.body.getAttribute("data-open-mode"))||"links";
+      const colours=(doc.body&&doc.body.getAttribute("data-colours"))||"primary";
+      const cols=(doc.body&&doc.body.getAttribute("data-columns"))||columns.length||DEFAULT_COLUMNS;
+      const showTitle=(doc.body&&doc.body.getAttribute("data-show-title"))!=="false";
+      project=normaliseFriendlyProject({title:(doc.title||"Imported Super Search").trim(),filename:ensureHtmlFilename(file.name||"supersearch.html"),columns:cols,colours:colours,showTitle:showTitle,openMode:openMode,sections});
+      saveToBrowser();renderAll();setStatus("Loaded existing Super Search page.");
+    }catch(err){alert("Could not load that page: "+err.message);}
+  });
+}
+
+function initialiseEvents(){
+  document.getElementById("titleInput").addEventListener("input",e=>{project.title=e.target.value;schedulePreviewRender();});
+  document.getElementById("filenameInput").addEventListener("input",e=>{project.filename=e.target.value;schedulePreviewRender();});
+  document.getElementById("descriptionInput").addEventListener("input",e=>{project.description=e.target.value;schedulePreviewRender();});
+  document.getElementById("columnsInput").addEventListener("change",e=>{project.columns=cleanColumnCount(e.target.value);setStatus(`Layout set to ${project.columns} columns.`);schedulePreviewRender();});
+  document.getElementById("coloursInput").addEventListener("change",e=>{project.colours=cleanColourStyle(e.target.value);schedulePreviewRender();});
+  document.getElementById("openModeInput").addEventListener("change",e=>{project.openMode=cleanOpenMode(e.target.value);setStatus(project.openMode==="openAll"?"Open-all buttons enabled (browser may ask to allow pop-ups).":"Links mode: buttons open one engine each.");schedulePreviewRender();});
+  document.getElementById("showTitleInput").addEventListener("change",e=>{project.showTitle=e.target.checked;schedulePreviewRender();});
+  const list=document.getElementById("sectionList");
+  list.addEventListener("input",onSectionListInput);
+  list.addEventListener("change",onSectionListInput);
+  list.addEventListener("click",onSectionListClick);
+  list.addEventListener("dragstart",onLinkDragStart);
+  list.addEventListener("dragover",onLinkDragOver);
+  list.addEventListener("dragleave",onLinkDragLeave);
+  list.addEventListener("drop",onLinkDrop);
+  list.addEventListener("dragend",onLinkDragEnd);
+  document.getElementById("addSectionBtn").addEventListener("click",()=>{project.sections.push({name:"New section",colour:"blue",included:true,engines:[{label:"Google",template:"https://www.google.com/search?q=%s",colour:"blue",included:true}]});scheduleRender();});
+  document.getElementById("includeAllBtn").addEventListener("click",()=>{project.sections.forEach(s=>s.included=true);scheduleRender();});
+  document.getElementById("excludeAllBtn").addEventListener("click",()=>{project.sections.forEach(s=>s.included=false);scheduleRender();});
+  const fromUrl=getTemplateFromUrl();
+  document.getElementById("templateSelect").addEventListener("change",()=>setStatus("Template selected. Click Use template to replace the current menu."));
+  document.getElementById("loadTemplateBtn").addEventListener("click",()=>{if(confirm("Use the selected template? This replaces the current menu in this browser."))loadTemplate(true);});
+  document.getElementById("exportHtmlBtn").addEventListener("click",()=>{const state=getCurrentState();downloadBlob(exportClassicStandaloneHtml(state),ensureHtmlFilename(project.filename||state.settings.menuFilename),"text/html");setStatus("Saved Super Search page.");});
+  document.getElementById("exportConfigBtn").addEventListener("click",()=>{const filename=ensureHtmlFilename(project.filename||"supersearch.html").replace(/\.html?$/i,"-config.json");downloadBlob(JSON.stringify(project,null,2),filename,"application/json");setStatus("Saved config.");});
+  document.getElementById("importConfigInput").addEventListener("change",ev=>{const f=ev.target.files[0];if(f)importJsonFile(f);ev.target.value="";});
+  document.getElementById("importHtmlInput").addEventListener("change",ev=>{const f=ev.target.files[0];if(f)importHtmlPage(f);ev.target.value="";});
+  document.getElementById("restoreSavedBtn").addEventListener("click",restoreBrowserSave);
+  document.getElementById("clearSavedBtn").addEventListener("click",()=>{if(confirm("Clear the previous draft saved in this browser?")){localStorage.removeItem(STORAGE_KEY);updateRestoreButton();setStatus("Previous draft cleared.");}});
+  updateRestoreButton();
+  return fromUrl;
+}
+
+(async function start(){
+  await loadCatalog();
+  const fromUrl=initialiseEvents();
+  if(templateFiles[fromUrl])document.getElementById("templateSelect").value=fromUrl;
+  await loadTemplate(false);
+})();
+</script>
+</body>
+</html>

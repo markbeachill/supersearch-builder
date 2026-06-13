@@ -1,0 +1,19 @@
+{
+  "format": "supersearch-builder-v1",
+  "title": "My Super Search",
+  "description": "A blank Super Search template.",
+  "filename": "supersearch.html",
+  "columns": 3,
+  "colours": "primary",
+  "showTitle": true,
+  "openMode": "links",
+  "sections": [
+    {
+      "name": "My Engines",
+      "colour": "blue",
+      "engines": [
+        { "label": "Google", "template": "https://www.google.com/search?q=%s" }
+      ]
+    }
+  ]
+}

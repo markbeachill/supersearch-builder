@@ -1,0 +1,21 @@
+{
+  "format": "supersearch-builder-catalog-v1",
+  "templates": [
+    {
+      "id": "research",
+      "file": "research.json",
+      "title": "Research Super Search",
+      "group": "Research",
+      "columns": 3,
+      "description": "Academic databases, repositories, theses, news, media and reference — one query across all of them."
+    },
+    {
+      "id": "blank",
+      "file": "blank.json",
+      "title": "Blank",
+      "group": "Start from scratch",
+      "columns": 3,
+      "description": "An empty Super Search with a single engine to build on."
+    }
+  ]
+}
