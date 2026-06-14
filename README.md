@@ -13,6 +13,21 @@ This builder is a sibling of the
 It shares the same philosophy: no account, no backend, no framework, no external
 library, and a **standalone HTML file you own** as the output.
 
+## Stage 1.2 update
+
+- **Namespaced exported markup.** Exported pages now prefix every class, CSS variable and
+  data attribute with `ss-` (e.g. `ss-btn`, `ss-hdr`, `ss-col`, `--ss-columns`,
+  `--ss-c-blue`, `data-ss-columns`). The menu is wrapped in an `.ss-root` element. This
+  prevents clashes when an exported Super Search is embedded inside another website.
+- **Accessibility.** Section headers are now real `<button type="button">` controls with
+  `aria-expanded`; collapse/expand toggles the `hidden` attribute instead of inline
+  `display:none`.
+- **Embedded config for lossless reloading.** Exported pages include their menu config in
+  a `<script type="application/json" id="ss-menu-config">` block. When you load a page back
+  into the builder it reads this first, so the round-trip is exact.
+- **Robust import order:** embedded `ss-menu-config` JSON → namespaced HTML → legacy
+  generic-class HTML (older exports still load).
+
 ## Stage 1.1 update
 
 - Searches now start as **plain dark text** and become **blue underlined links** once a

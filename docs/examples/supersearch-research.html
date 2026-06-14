@@ -6,170 +6,172 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
 
-:root{--columns:3;--c-blue:#4d90fe;--c-green:#35aa47;--c-orange:#d84a38;--c-purple:#852b99;--c-red:#bd121d;}
+.ss-root{--ss-columns:3;--ss-c-blue:#4d90fe;--ss-c-green:#35aa47;--ss-c-orange:#d84a38;--ss-c-purple:#852b99;--ss-c-red:#bd121d;}
 body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#1a1a1a;}
-.supersearch-masthead{text-align:center;padding:18px 15px 4px;}
-.supersearch-masthead .masthead-title{font-family:Georgia,"Times New Roman",Times,serif;font-size:30px;line-height:1.15;font-weight:700;color:#1a1a1a;letter-spacing:.01em;}
-.supersearch-masthead .masthead-prefix{color:var(--c-red);}
-.searchbar-wrapper{background:#fafafa;padding:14px 15px;border-bottom:1px solid #e6e6e6;}
-.searchbar-inner{width:84%;max-width:96em;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:center;}
-.searchbar-form{flex:1 1 560px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;min-width:260px;justify-content:center;}
-.searchbar-form input[type="text"]{flex:1 1 360px;padding:9px 11px;border:1px solid #c4c4c4;border-radius:3px;font-size:15px;min-width:0;color:#1a1a1a;}
-.searchbar-form input[type="text"]:focus{outline:2px solid var(--c-blue);outline-offset:0;border-color:var(--c-blue);}
-.searchbar-form button{padding:9px 18px;border-radius:3px;border:1px solid var(--c-blue);background:var(--c-blue);color:#fff;cursor:pointer;font-size:14px;font-weight:700;}
-.searchbar-form button:hover{filter:brightness(.92);}
-.searchbar-hint{flex-basis:100%;font-size:12px;color:#555;text-align:center;}
-.maincontent{clear:both;width:84%;font-size:.8125em;max-width:96em;margin:0 auto;padding:1em 0;color:#1a1a1a;line-height:1.5em;position:relative;}
-.section{clear:both;padding:0;margin:0;}
-.group{display:flex;flex-wrap:wrap;gap:0 2%;}
-.col{box-sizing:border-box;flex:0 0 calc((100% - (var(--columns) - 1)*2%)/var(--columns));max-width:calc((100% - (var(--columns) - 1)*2%)/var(--columns));margin:1% 0;}
-@media only screen and (max-width:767px){.col{flex:1 1 100%;max-width:100%;margin:1% 0;}.searchbar-inner,.maincontent{width:100%;padding-left:0;padding-right:0;}.maincontent{padding:1em 12px;width:auto;}.supersearch-masthead .masthead-title{font-size:24px;}}
+.ss-masthead{text-align:center;padding:18px 15px 4px;}
+.ss-masthead .ss-masthead-title{font-family:Georgia,"Times New Roman",Times,serif;font-size:30px;line-height:1.15;font-weight:700;color:#1a1a1a;letter-spacing:.01em;}
+.ss-masthead .ss-masthead-prefix{color:var(--ss-c-red);}
+.ss-searchbar-wrapper{background:#fafafa;padding:14px 15px;border-bottom:1px solid #e6e6e6;}
+.ss-searchbar-inner{width:84%;max-width:96em;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:center;}
+.ss-searchbar-form{flex:1 1 560px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;min-width:260px;justify-content:center;}
+.ss-searchbar-form input[type="text"]{flex:1 1 360px;padding:9px 11px;border:1px solid #c4c4c4;border-radius:3px;font-size:15px;min-width:0;color:#1a1a1a;}
+.ss-searchbar-form input[type="text"]:focus{outline:2px solid var(--ss-c-blue);outline-offset:0;border-color:var(--ss-c-blue);}
+.ss-searchbar-form button{padding:9px 18px;border-radius:3px;border:1px solid var(--ss-c-blue);background:var(--ss-c-blue);color:#fff;cursor:pointer;font-size:14px;font-weight:700;}
+.ss-searchbar-form button:hover{filter:brightness(.92);}
+.ss-searchbar-hint{flex-basis:100%;font-size:12px;color:#555;text-align:center;}
+.ss-maincontent{clear:both;width:84%;font-size:.8125em;max-width:96em;margin:0 auto;padding:1em 0;color:#1a1a1a;line-height:1.5em;position:relative;}
+.ss-section{clear:both;padding:0;margin:0;}
+.ss-group{display:flex;flex-wrap:wrap;gap:0 2%;}
+.ss-col{box-sizing:border-box;flex:0 0 calc((100% - (var(--ss-columns) - 1)*2%)/var(--ss-columns));max-width:calc((100% - (var(--ss-columns) - 1)*2%)/var(--ss-columns));margin:1% 0;}
+@media only screen and (max-width:767px){.ss-col{flex:1 1 100%;max-width:100%;margin:1% 0;}.ss-searchbar-inner,.ss-maincontent{width:100%;padding-left:0;padding-right:0;}.ss-maincontent{padding:1em 12px;width:auto;}.ss-masthead .ss-masthead-title{font-size:24px;}}
 /* Each search starts as plain text and becomes a real underlined link after a query is typed. */
-.btn{box-sizing:border-box;text-align:left;display:block;width:100%;color:#1a1a1a;position:relative;overflow:hidden;margin:8px 0 0;padding:9px 14px;outline:0;border-style:none none none solid;border-width:0 0 0 3px;background:transparent;z-index:1;font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;line-height:18px;text-decoration:none;white-space:nowrap;text-overflow:ellipsis;font-weight:600;cursor:default;}
-.btn.ready{background:#f4f4f4;color:#1a4fce;text-decoration:underline;cursor:pointer;}
-.btn.ready:hover{background:#e4e4e4;color:#0b2f8f;}
-.btn.disabled-empty{opacity:1;color:#1a1a1a;text-decoration:none;background:transparent;}
-.blue-btn{border-left-color:var(--c-blue);}.green-btn{border-left-color:var(--c-green);}.orange-btn{border-left-color:var(--c-orange);}.purple-btn{border-left-color:var(--c-purple);}.red-btn{border-left-color:var(--c-red);}
-.hdr{box-sizing:border-box;text-align:left;display:block;width:100%;color:#fff;position:relative;overflow:hidden;margin:14px 0 0;padding:10px 16px;cursor:pointer;outline:0;border:0;z-index:1;font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;line-height:14px;text-decoration:none;white-space:nowrap;text-overflow:ellipsis;font-weight:700;letter-spacing:.14em;}
-.hdr .openall{float:right;font-size:11px;font-weight:700;opacity:.9;text-decoration:underline;letter-spacing:.02em;}
-.blue-hdr{background-color:var(--c-blue);}.green-hdr{background-color:var(--c-green);}.orange-hdr{background-color:var(--c-orange);}.purple-hdr{background-color:var(--c-purple);}.red-hdr{background-color:var(--c-red);}
-.hdr-para{margin:0;line-height:160%;}
+.ss-btn{box-sizing:border-box;text-align:left;display:block;width:100%;color:#1a1a1a;position:relative;overflow:hidden;margin:8px 0 0;padding:9px 14px;outline:0;border-style:none none none solid;border-width:0 0 0 3px;background:transparent;z-index:1;font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;line-height:18px;text-decoration:none;white-space:nowrap;text-overflow:ellipsis;font-weight:600;cursor:default;}
+.ss-btn.ss-ready{background:#f4f4f4;color:#1a4fce;text-decoration:underline;cursor:pointer;}
+.ss-btn.ss-ready:hover{background:#e4e4e4;color:#0b2f8f;}
+.ss-btn.ss-disabled-empty{opacity:1;color:#1a1a1a;text-decoration:none;background:transparent;}
+.ss-blue-btn{border-left-color:var(--ss-c-blue);}.ss-green-btn{border-left-color:var(--ss-c-green);}.ss-orange-btn{border-left-color:var(--ss-c-orange);}.ss-purple-btn{border-left-color:var(--ss-c-purple);}.ss-red-btn{border-left-color:var(--ss-c-red);}
+.ss-hdr{box-sizing:border-box;text-align:left;display:block;width:100%;color:#fff;position:relative;overflow:hidden;margin:14px 0 0;padding:10px 16px;cursor:pointer;outline:0;border:0;z-index:1;font-family:"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;line-height:14px;text-decoration:none;white-space:nowrap;text-overflow:ellipsis;font-weight:700;letter-spacing:.14em;}
+.ss-hdr .ss-openall{float:right;font-size:11px;font-weight:700;opacity:.9;text-decoration:underline;letter-spacing:.02em;}
+.ss-blue-hdr{background-color:var(--ss-c-blue);}.ss-green-hdr{background-color:var(--ss-c-green);}.ss-orange-hdr{background-color:var(--ss-c-orange);}.ss-purple-hdr{background-color:var(--ss-c-purple);}.ss-red-hdr{background-color:var(--ss-c-red);}
+.ss-hdr-para{margin:0;line-height:160%;}
 
   </style>
 </head>
-<body data-skin="supersearch" data-columns="3" data-colours="primary" data-show-title="true" data-open-mode="links">
-<div class="supersearch-masthead"><span class="masthead-title"><span class="masthead-prefix">Super Search</span> · Research Super Search</span></div>
-<div class="searchbar-wrapper">
-  <div class="searchbar-inner">
-    <form class="searchbar-form" id="superSearchForm" onsubmit="return false;">
-      <input type="text" id="superSearchInput" name="q" placeholder="Type one query, then pick a search…" aria-label="Super Search query" autofocus>
-      <button type="button" id="superSearchApply">Search</button>
+<body data-ss-skin="supersearch" data-ss-columns="3" data-ss-colours="primary" data-ss-show-title="true" data-ss-open-mode="links">
+<div class="ss-root"><div class="ss-masthead"><span class="ss-masthead-title"><span class="ss-masthead-prefix">Super Search</span> · Research Super Search</span></div>
+<div class="ss-searchbar-wrapper">
+  <div class="ss-searchbar-inner">
+    <form class="ss-searchbar-form" id="ss-form" onsubmit="return false;">
+      <input type="text" id="ss-input" name="q" placeholder="Type one query, then pick a search…" aria-label="Super Search query" autofocus>
+      <button type="button" id="ss-apply">Search</button>
       
-      <span class="searchbar-hint">Type a query and press Search. Each link below opens that search on its own site.</span>
+      <span class="ss-searchbar-hint">Type a query and press Search. Each link below opens that search on its own site.</span>
     </form>
   </div>
 </div>
-<div class="maincontent">
-  <div class="section group">
-<div class="col">
-    <p class="hdr-para">
-      <a class="hdr green-hdr" data-section-header="true"><b>Academic</b></a>
+<div class="ss-maincontent">
+  <div class="ss-section ss-group">
+<div class="ss-col">
+    <p class="ss-hdr-para">
+      <button type="button" class="ss-hdr ss-green-hdr" data-ss-section-header="true" aria-expanded="true"><b>Academic</b></button>
     </p>
 
-    <a class="btn green-btn disabled-empty" data-template="https://scholar.google.com/scholar?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-green-btn ss-disabled-empty" data-ss-template="https://scholar.google.com/scholar?q=%s" href="#" target="_blank" rel="noopener noreferrer">
       Google Scholar
     </a>
 
-    <a class="btn green-btn disabled-empty" data-template="https://www.google.com/search?tbm=bks&amp;q=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-green-btn ss-disabled-empty" data-ss-template="https://www.google.com/search?tbm=bks&amp;q=%s" href="#" target="_blank" rel="noopener noreferrer">
       Google Books
     </a>
 
-    <a class="btn green-btn disabled-empty" data-template="https://www.semanticscholar.org/search?q=%s&amp;sort=relevance" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-green-btn ss-disabled-empty" data-ss-template="https://www.semanticscholar.org/search?q=%s&amp;sort=relevance" href="#" target="_blank" rel="noopener noreferrer">
       Semantic Scholar
     </a>
 
-    <a class="btn green-btn disabled-empty" data-template="https://www.jstor.org/action/doSearch?Query=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-green-btn ss-disabled-empty" data-ss-template="https://www.jstor.org/action/doSearch?Query=%s" href="#" target="_blank" rel="noopener noreferrer">
       JSTOR
     </a>
 
-    <a class="btn green-btn disabled-empty" data-template="https://pubmed.ncbi.nlm.nih.gov/?term=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-green-btn ss-disabled-empty" data-ss-template="https://pubmed.ncbi.nlm.nih.gov/?term=%s" href="#" target="_blank" rel="noopener noreferrer">
       PubMed
     </a>
 
-    <a class="btn green-btn disabled-empty" data-template="https://arxiv.org/abs/?searchtype=all&amp;query=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-green-btn ss-disabled-empty" data-ss-template="https://arxiv.org/abs/?searchtype=all&amp;query=%s" href="#" target="_blank" rel="noopener noreferrer">
       arXiv
     </a>
 
-    <p class="hdr-para">
-      <a class="hdr blue-hdr" data-section-header="true"><b>Discussion</b></a>
+    <p class="ss-hdr-para">
+      <button type="button" class="ss-hdr ss-blue-hdr" data-ss-section-header="true" aria-expanded="true"><b>Discussion</b></button>
     </p>
 
-    <a class="btn blue-btn disabled-empty" data-template="https://www.reddit.com/search/?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-blue-btn ss-disabled-empty" data-ss-template="https://www.reddit.com/search/?q=%s" href="#" target="_blank" rel="noopener noreferrer">
       Reddit
     </a>
 
-    <a class="btn blue-btn disabled-empty" data-template="https://substack.com/search/%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-blue-btn ss-disabled-empty" data-ss-template="https://substack.com/search/%s" href="#" target="_blank" rel="noopener noreferrer">
       Substack
     </a>
-</div><div class="col">
-    <p class="hdr-para">
-      <a class="hdr purple-hdr" data-section-header="true"><b>Repositories &amp; Theses</b></a>
+</div><div class="ss-col">
+    <p class="ss-hdr-para">
+      <button type="button" class="ss-hdr ss-purple-hdr" data-ss-section-header="true" aria-expanded="true"><b>Repositories &amp; Theses</b></button>
     </p>
 
-    <a class="btn purple-btn disabled-empty" data-template="https://core.ac.uk/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-purple-btn ss-disabled-empty" data-ss-template="https://core.ac.uk/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
       CORE
     </a>
 
-    <a class="btn purple-btn disabled-empty" data-template="https://www.base-search.net/Search/Results?lookfor=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-purple-btn ss-disabled-empty" data-ss-template="https://www.base-search.net/Search/Results?lookfor=%s" href="#" target="_blank" rel="noopener noreferrer">
       BASE
     </a>
 
-    <a class="btn purple-btn disabled-empty" data-template="https://explore.openaire.eu/search/find?keyword=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-purple-btn ss-disabled-empty" data-ss-template="https://explore.openaire.eu/search/find?keyword=%s" href="#" target="_blank" rel="noopener noreferrer">
       OpenDOAR / OpenAIRE
     </a>
 
-    <a class="btn purple-btn disabled-empty" data-template="https://www.google.com/search?q=site:bl.uk+ethos+%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-purple-btn ss-disabled-empty" data-ss-template="https://www.google.com/search?q=site:bl.uk+ethos+%s" href="#" target="_blank" rel="noopener noreferrer">
       British Library Thesis (EThOS)
     </a>
 
-    <a class="btn purple-btn disabled-empty" data-template="https://search.worldcat.org/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-purple-btn ss-disabled-empty" data-ss-template="https://search.worldcat.org/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
       WorldCat
     </a>
 
-    <p class="hdr-para">
-      <a class="hdr red-hdr" data-section-header="true"><b>Media</b></a>
+    <p class="ss-hdr-para">
+      <button type="button" class="ss-hdr ss-red-hdr" data-ss-section-header="true" aria-expanded="true"><b>Media</b></button>
     </p>
 
-    <a class="btn red-btn disabled-empty" data-template="https://www.youtube.com/results?search_query=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-red-btn ss-disabled-empty" data-ss-template="https://www.youtube.com/results?search_query=%s" href="#" target="_blank" rel="noopener noreferrer">
       YouTube
     </a>
 
-    <a class="btn red-btn disabled-empty" data-template="https://commons.wikimedia.org/w/index.php?search=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-red-btn ss-disabled-empty" data-ss-template="https://commons.wikimedia.org/w/index.php?search=%s" href="#" target="_blank" rel="noopener noreferrer">
       Wikimedia Commons
     </a>
-</div><div class="col">
-    <p class="hdr-para">
-      <a class="hdr blue-hdr" data-section-header="true"><b>Reference</b></a>
+</div><div class="ss-col">
+    <p class="ss-hdr-para">
+      <button type="button" class="ss-hdr ss-blue-hdr" data-ss-section-header="true" aria-expanded="true"><b>Reference</b></button>
     </p>
 
-    <a class="btn blue-btn disabled-empty" data-template="https://en.wikipedia.org/wiki/Special:Search?search=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-blue-btn ss-disabled-empty" data-ss-template="https://en.wikipedia.org/wiki/Special:Search?search=%s" href="#" target="_blank" rel="noopener noreferrer">
       Wikipedia
     </a>
 
-    <a class="btn blue-btn disabled-empty" data-template="https://www.google.com/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-blue-btn ss-disabled-empty" data-ss-template="https://www.google.com/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
       Google
     </a>
 
-    <a class="btn blue-btn disabled-empty" data-template="https://duckduckgo.com/?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-blue-btn ss-disabled-empty" data-ss-template="https://duckduckgo.com/?q=%s" href="#" target="_blank" rel="noopener noreferrer">
       DuckDuckGo
     </a>
 
-    <a class="btn blue-btn disabled-empty" data-template="https://www.gutenberg.org/ebooks/search/?query=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-blue-btn ss-disabled-empty" data-ss-template="https://www.gutenberg.org/ebooks/search/?query=%s" href="#" target="_blank" rel="noopener noreferrer">
       Project Gutenberg
     </a>
 
-    <p class="hdr-para">
-      <a class="hdr orange-hdr" data-section-header="true"><b>News</b></a>
+    <p class="ss-hdr-para">
+      <button type="button" class="ss-hdr ss-orange-hdr" data-ss-section-header="true" aria-expanded="true"><b>News</b></button>
     </p>
 
-    <a class="btn orange-btn disabled-empty" data-template="https://news.google.com/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-orange-btn ss-disabled-empty" data-ss-template="https://news.google.com/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
       Google News
     </a>
 
-    <a class="btn orange-btn disabled-empty" data-template="https://www.bbc.co.uk/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-orange-btn ss-disabled-empty" data-ss-template="https://www.bbc.co.uk/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
       BBC
     </a>
 
-    <a class="btn orange-btn disabled-empty" data-template="https://www.theguardian.com/uk/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-orange-btn ss-disabled-empty" data-ss-template="https://www.theguardian.com/uk/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
       Guardian
     </a>
 
-    <a class="btn orange-btn disabled-empty" data-template="https://www.reuters.com/site-search/?query=%s" href="#" target="_blank" rel="noopener noreferrer">
+    <a class="ss-btn ss-orange-btn ss-disabled-empty" data-ss-template="https://www.reuters.com/site-search/?query=%s" href="#" target="_blank" rel="noopener noreferrer">
       Reuters
     </a>
 </div>
   </div>
 </div>
+</div>
+<script type="application/json" id="ss-menu-config">{"format":"supersearch-builder-v1","title":"Research Super Search","description":"One query across academic databases, repositories, news, media and reference sources. Modelled on the grouped layout of the original UEL Super Search.","filename":"supersearch-research.html","columns":3,"colours":"primary","showTitle":true,"openMode":"links","sections":[{"name":"Academic","colour":"green","included":true,"engines":[{"label":"Google Scholar","template":"https://scholar.google.com/scholar?q=%s","colour":"green","included":true},{"label":"Google Books","template":"https://www.google.com/search?tbm=bks&q=%s","colour":"green","included":true},{"label":"Semantic Scholar","template":"https://www.semanticscholar.org/search?q=%s&sort=relevance","colour":"green","included":true},{"label":"JSTOR","template":"https://www.jstor.org/action/doSearch?Query=%s","colour":"green","included":true},{"label":"PubMed","template":"https://pubmed.ncbi.nlm.nih.gov/?term=%s","colour":"green","included":true},{"label":"arXiv","template":"https://arxiv.org/abs/?searchtype=all&query=%s","colour":"green","included":true}]},{"name":"Repositories & Theses","colour":"purple","included":true,"engines":[{"label":"CORE","template":"https://core.ac.uk/search?q=%s","colour":"purple","included":true},{"label":"BASE","template":"https://www.base-search.net/Search/Results?lookfor=%s","colour":"purple","included":true},{"label":"OpenDOAR / OpenAIRE","template":"https://explore.openaire.eu/search/find?keyword=%s","colour":"purple","included":true},{"label":"British Library Thesis (EThOS)","template":"https://www.google.com/search?q=site:bl.uk+ethos+%s","colour":"purple","included":true},{"label":"WorldCat","template":"https://search.worldcat.org/search?q=%s","colour":"purple","included":true}]},{"name":"Reference","colour":"blue","included":true,"engines":[{"label":"Wikipedia","template":"https://en.wikipedia.org/wiki/Special:Search?search=%s","colour":"blue","included":true},{"label":"Google","template":"https://www.google.com/search?q=%s","colour":"blue","included":true},{"label":"DuckDuckGo","template":"https://duckduckgo.com/?q=%s","colour":"blue","included":true},{"label":"Project Gutenberg","template":"https://www.gutenberg.org/ebooks/search/?query=%s","colour":"blue","included":true}]},{"name":"News","colour":"orange","included":true,"engines":[{"label":"Google News","template":"https://news.google.com/search?q=%s","colour":"orange","included":true},{"label":"BBC","template":"https://www.bbc.co.uk/search?q=%s","colour":"orange","included":true},{"label":"Guardian","template":"https://www.theguardian.com/uk/search?q=%s","colour":"orange","included":true},{"label":"Reuters","template":"https://www.reuters.com/site-search/?query=%s","colour":"orange","included":true}]},{"name":"Media","colour":"red","included":true,"engines":[{"label":"YouTube","template":"https://www.youtube.com/results?search_query=%s","colour":"red","included":true},{"label":"Wikimedia Commons","template":"https://commons.wikimedia.org/w/index.php?search=%s","colour":"red","included":true}]},{"name":"Discussion","colour":"blue","included":true,"engines":[{"label":"Reddit","template":"https://www.reddit.com/search/?q=%s","colour":"blue","included":true},{"label":"Substack","template":"https://substack.com/search/%s","colour":"blue","included":true}]}]}</script>
 <script>
   (function attachSuperSearchBehaviour(root,options){
   options=options||{};
@@ -184,69 +186,64 @@ body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;background:#fff;c
       return (qStart!==-1&&off>qStart&&off<qEnd)?encQuery(q):encPath(q);
     });
   }
-  var input=root.querySelector("#superSearchInput");
-  var buttons=Array.prototype.slice.call(root.querySelectorAll("a.btn[data-template]"));
+  var input=root.querySelector("#ss-input");
+  var buttons=Array.prototype.slice.call(root.querySelectorAll("a.ss-btn[data-ss-template]"));
   function refresh(){
     var q=input?input.value:"";
     buttons.forEach(function(b){
-      var tmpl=b.getAttribute("data-template")||"";
+      var tmpl=b.getAttribute("data-ss-template")||"";
       if(!tmpl){return;}
-      if(!q){ b.setAttribute("href","#"); b.classList.add("disabled-empty"); b.classList.remove("ready"); return; }
+      if(!q){ b.setAttribute("href","#"); b.classList.add("ss-disabled-empty"); b.classList.remove("ss-ready"); return; }
       b.setAttribute("href", fill(tmpl,q));
-      b.classList.remove("disabled-empty");
-      b.classList.add("ready");
+      b.classList.remove("ss-disabled-empty");
+      b.classList.add("ss-ready");
     });
   }
   if(input){ input.addEventListener("input",refresh); }
-  var applyBtn=root.querySelector("#superSearchApply");
+  var applyBtn=root.querySelector("#ss-apply");
   if(applyBtn){ applyBtn.addEventListener("click",refresh); }
-  // A button with no query yet should still focus the box rather than navigate.
+  // A link with no query yet should focus the box rather than navigate.
   buttons.forEach(function(b){
     b.addEventListener("click",function(ev){
       if(!input||!input.value.trim()){ ev.preventDefault(); if(input){input.focus();} }
     });
   });
-  // Optional open-all per section.
-  var openAllBtn=root.querySelector("#superSearchOpenAll");
-  function sectionButtonsFromHeader(headerAnchor){
-    var list=[]; var p=headerAnchor.parentElement; var node=p?p.nextElementSibling:null;
+  // Collect the search links that belong to a section header (siblings until the next header).
+  function sectionButtonsFromHeader(header){
+    var list=[]; var p=header.parentElement; var node=p?p.nextElementSibling:null;
     while(node){
-      var nextHdr=node.querySelector&&node.querySelector('[data-section-header="true"]');
+      var nextHdr=node.querySelector&&node.querySelector('[data-ss-section-header="true"]');
       if(nextHdr)break;
-      if(node.tagName==="A"&&node.classList.contains("btn"))list.push(node);
+      if(node.tagName==="A"&&node.classList.contains("ss-btn"))list.push(node);
       node=node.nextElementSibling;
     }
     return list;
   }
+  // Optional open-all (whole page or per section). Browsers may block bulk pop-ups.
   function openMany(btns){
     if(!input||!input.value.trim()){ if(input)input.focus(); return; }
     refresh();
-    var opened=0;
-    btns.forEach(function(b){ var href=b.getAttribute("href"); if(href&&href!=="#"){ window.open(href,"_blank","noopener"); opened++; } });
-    if(opened>1){ /* browser may have blocked some as pop-ups */ }
+    btns.forEach(function(b){ var href=b.getAttribute("href"); if(href&&href!=="#"){ window.open(href,"_blank","noopener"); } });
   }
+  var openAllBtn=root.querySelector("#ss-openall");
   if(openAllBtn){
     openAllBtn.addEventListener("click",function(){ openMany(buttons); });
   }
-  root.querySelectorAll('[data-open-all="true"]').forEach(function(h){
-    h.addEventListener("click",function(ev){ ev.preventDefault(); ev.stopPropagation(); openMany(sectionButtonsFromHeader(h)); });
-  });
-  // Header collapse (matches the classic menu).
-  root.querySelectorAll('[data-section-header="true"]').forEach(function(h){
+  root.querySelectorAll('[data-ss-open-all="true"]').forEach(function(h){
     h.addEventListener("click",function(ev){
-      ev.preventDefault();
-      var current=h.parentElement.nextElementSibling; var hiding=false;
-      while(current){
-        var nh=current.querySelector&&current.querySelector('[data-section-header="true"]'); if(nh)break;
-        if(current.tagName==="A"&&current.classList.contains("btn")){ hiding=current.style.display!=="none"; break; }
-        current=current.nextElementSibling;
-      }
-      current=h.parentElement.nextElementSibling;
-      while(current){
-        var nh2=current.querySelector&&current.querySelector('[data-section-header="true"]'); if(nh2)break;
-        if(current.tagName==="A"&&current.classList.contains("btn")){ current.style.display=hiding?"none":""; }
-        current=current.nextElementSibling;
-      }
+      ev.preventDefault(); ev.stopPropagation();
+      var header=h.closest('[data-ss-section-header="true"]');
+      openMany(header?sectionButtonsFromHeader(header):buttons);
+    });
+  });
+  // Header collapse/expand: toggles the hidden attribute on the section's links and
+  // reflects state with aria-expanded.
+  root.querySelectorAll('[data-ss-section-header="true"]').forEach(function(h){
+    h.addEventListener("click",function(){
+      var links=sectionButtonsFromHeader(h);
+      var collapsing=links.length?!links[0].hasAttribute("hidden"):true;
+      links.forEach(function(b){ if(collapsing){ b.setAttribute("hidden",""); } else { b.removeAttribute("hidden"); } });
+      h.setAttribute("aria-expanded", collapsing?"false":"true");
     });
   });
   if(options.focusSearch!==false&&input&&input.hasAttribute("autofocus")){ try{input.focus();}catch(e){} }
