@@ -13,6 +13,42 @@ This builder is a sibling of the
 It shares the same philosophy: no account, no backend, no framework, no external
 library, and a **standalone HTML file you own** as the output.
 
+## Stage 1.4 update — drag-and-drop searches between sections
+
+- Search rows can now be dragged **between** sections, not just reordered within one.
+- Same-section reordering still works.
+- Empty sections show a drop target so searches can be moved back into an emptied section.
+- Dragging starts only from the row handle, so text fields stay selectable.
+- A drop indicator shows where the search will land.
+- Drag-and-drop is disabled while the editor is collapsed (no rows are shown to drop onto);
+  expand first, then drag.
+- A moved search keeps its own colour.
+- Drops update the preview immediately and persist to the browser draft, the menu config,
+  and the exported page (all serialise from the same model).
+
+## Stage 1.3 update — stable section columns and column-grouped editor
+
+Mirrors the start-page-builder's section-placement model so layout is predictable and the
+editor reads like the finished page.
+
+- **Stable stored column placement.** Each section now has a remembered `column` number.
+  Sections no longer get auto-rebalanced on every edit — placement stays put unless you
+  move it. Templates and older files without column numbers are auto-assigned once
+  (emptiest-column balancing), then stay stable.
+- **Column-grouped editor.** Section cards are grouped under `Column 1 · N sections`
+  dividers, in column order, so the editor matches the exported layout. Empty columns show
+  a placeholder so you can see where to move sections.
+- **Section movement.** ↑ / ↓ reorder within a column; ← / → move a section one column
+  left/right (landing at the bottom of the destination). Drag-and-drop reorders within a
+  column. Each card shows a `… · Col 3` badge.
+- **Expand all / Collapse all** controls make large menus easy to reorder — collapse hides
+  the search rows and add-search panels, leaving section headers and controls visible. This
+  is editor-only and never affects the export.
+- **Column count changes** clamp sections from removed columns into the last remaining
+  column (e.g. column 5 → column 4 when reducing from five to four).
+- Menu config JSON and the embedded exported-page config now include section `column`
+  values. Templates and examples were regenerated with explicit columns.
+
 ## Stage 1.2 update
 
 - **Namespaced exported markup.** Exported pages now prefix every class, CSS variable and
@@ -161,6 +197,7 @@ builder versions its configs:
     {
       "name": "Academic",
       "colour": "green",
+      "column": 1,
       "engines": [
         { "label": "Google Scholar", "template": "https://scholar.google.com/scholar?q=%s" },
         { "label": "JSTOR", "template": "https://www.jstor.org/action/doSearch?Query=%s" }
@@ -171,6 +208,8 @@ builder versions its configs:
 ```
 
 - `template` is a full URL containing exactly one `%s` token.
+- `column` is the section's stored column (1-based). Sections without one are assigned a
+  column once, then stay put.
 - `openMode` is `"links"` (default) or `"openAll"`.
 - Configs without `openMode` load safely and default to `"links"`.
 - `colours` defaults to `"primary"`, `showTitle` to `true`, `columns` to `3`.

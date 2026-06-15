@@ -12,8 +12,12 @@
       "name": "My Engines",
       "colour": "blue",
       "engines": [
-        { "label": "Google", "template": "https://www.google.com/search?q=%s" }
-      ]
+        {
+          "label": "Google",
+          "template": "https://www.google.com/search?q=%s"
+        }
+      ],
+      "column": 1
     }
   ]
 }

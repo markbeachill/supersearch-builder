@@ -32,11 +32,11 @@
     .field{display:flex;flex-direction:column;gap:3px}.field.full{flex:1 1 320px}label{font-size:11px;font-weight:700;color:#4b5563}
     .field input,.field textarea,.section-title input,.field select,.section-title select,.engine-row input,.engine-row select{border:1px solid #ccc;border-radius:4px;padding:5px 6px;font:inherit;font-size:12px;background:#fff}
     .field textarea{height:42px;min-width:300px;resize:vertical}.field input{min-width:150px}
-    .subtle-help{font-size:11px;color:#666;margin:0 0 6px}.editor-actions{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.section-list{display:flex;flex-direction:column;gap:8px}
+    .subtle-help{font-size:11px;color:#666;margin:0 0 6px}.editor-actions{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.section-list{display:flex;flex-direction:column;gap:8px}.editor-column-heading{background:#eef2ff;border:1px solid #c7d2fe;border-radius:6px;padding:7px 9px;font-size:12px;font-weight:800;color:#3730a3;letter-spacing:.02em}.editor-column-empty{border:1px dashed #d1d5db;border-radius:6px;padding:8px 10px;color:#6b7280;background:#fafafa;font-size:12px}.section-count{font-size:11px;color:#666;border:1px solid #ddd;border-radius:999px;padding:2px 7px;background:#fafafa;white-space:nowrap}.section-drag-handle{border:1px solid #bbb;background:#f4f4f4;border-radius:4px;padding:4px 7px;cursor:grab;font-size:12px;line-height:1;user-select:none;font-weight:700}.section-drag-handle:active{cursor:grabbing}.section-card.section-drag-over{outline:2px dashed #2563eb;outline-offset:2px}.section-card.section-dragging{opacity:.6}.section-list.editor-collapsed .engines,.section-list.editor-collapsed .section-foot,.section-list.editor-collapsed .add-link-panel{display:none}
     .section-card{background:#fff;border-radius:4px;border:1px solid #ddd;padding:8px;box-shadow:0 1px 2px rgba(0,0,0,.04)}.section-card.excluded{opacity:.55;background:#f6f6f6}
     .section-head{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}.toggle-line{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#555;font-weight:700;margin-right:4px}.toggle-line input{margin:0}
     .section-title{display:flex;flex:1 1 330px;gap:6px;align-items:center}.section-title input{flex:1 1 220px;min-width:160px}.section-title select{width:96px}.section-controls{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
-    .engines{display:flex;flex-direction:column;gap:4px}.engine-row{border:1px solid #eee;border-radius:3px;padding:5px;background:#fcfcfc;display:flex;flex-wrap:wrap;gap:5px;align-items:center}.engine-row.drag-over{outline:2px dashed #2563eb;outline-offset:1px}.drag-handle{border:1px solid #bbb;background:#f4f4f4;border-radius:4px;padding:3px 6px;cursor:grab;font-size:12px;line-height:1}.drag-handle:active{cursor:grabbing}.engine-actions{display:flex;gap:4px;align-items:center}.engine-row input[data-action=engine-label]{flex:1 1 140px;min-width:120px}.engine-row input[data-action=engine-template]{flex:2 1 300px;min-width:240px}.engine-row select{width:92px}.engine-row.invalid input[data-action=engine-template]{border-color:#e0a3a3;background:#fff7f7}.empty-engines{font-size:12px;color:#666;padding:4px 0}.section-foot{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+    .engines{display:flex;flex-direction:column;gap:4px}.engine-row{border:1px solid #eee;border-radius:3px;padding:5px;background:#fcfcfc;display:flex;flex-wrap:wrap;gap:5px;align-items:center}.engine-row.drag-over{outline:2px dashed #2563eb;outline-offset:1px;box-shadow:0 -3px 0 -1px #2563eb}.empty-engines.drop-into{outline:2px dashed #2563eb;outline-offset:1px;background:#eef4ff;color:#1d4ed8;border-radius:4px}.drag-handle{border:1px solid #bbb;background:#f4f4f4;border-radius:4px;padding:3px 6px;cursor:grab;font-size:12px;line-height:1}.drag-handle:active{cursor:grabbing}.engine-actions{display:flex;gap:4px;align-items:center}.engine-row input[data-action=engine-label]{flex:1 1 140px;min-width:120px}.engine-row input[data-action=engine-template]{flex:2 1 300px;min-width:240px}.engine-row select{width:92px}.engine-row.invalid input[data-action=engine-template]{border-color:#e0a3a3;background:#fff7f7}.empty-engines{font-size:12px;color:#666;padding:4px 0}.section-foot{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
     .add-link-panel{margin-top:6px;border:1px dashed #b7c3d6;border-radius:6px;padding:8px;background:#f4f8ff;display:none}.add-link-panel.show{display:block}.add-link-panel .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:6px}.add-link-panel input{flex:1 1 200px;min-width:160px;border:1px solid #ccc;border-radius:4px;padding:5px 6px;font-size:12px}.add-link-panel .conv-msg{font-size:11px;color:#475569;flex-basis:100%}.add-link-panel .conv-msg.bad{color:#b91c1c}.add-link-panel .conv-msg.ok{color:#15803d}
     .builder-preview-wrapper h2{margin:0 0 8px;font-size:16px;font-weight:600;border-bottom:1px solid #ddd;padding-bottom:4px;display:flex;justify-content:space-between;gap:10px}.preview-meta{font-size:12px;color:#666;font-weight:400}.preview-frame{background:#fff;min-height:calc(100vh - 120px)}
     .privacy{font-size:11px;color:#666;margin-top:8px;line-height:1.4}
@@ -103,6 +103,8 @@
           <button type="button" id="addSectionBtn">Add section</button>
           <button type="button" class="mini secondary" id="includeAllBtn">Use all sections</button>
           <button type="button" class="mini secondary" id="excludeAllBtn">Use no sections</button>
+          <button type="button" class="mini secondary" id="expandEditorBtn">Expand all</button>
+          <button type="button" class="mini secondary" id="collapseEditorBtn">Collapse all</button>
         </div>
         <div class="section-list" id="sectionList"></div>
         <p class="privacy">Everything stays in this browser. Your draft is saved locally only. Exported pages are standalone HTML with no tracking and no dependency on this site.</p>
@@ -139,6 +141,85 @@ function cleanColourStyle(v){return allowedColourStyles.includes(v)?v:"primary";
 function cleanOpenMode(v){return allowedOpenModes.includes(v)?v:"links";}
 function cleanShowTitle(v){return v!==false && v!=="false" && v!==0 && v!=="0";}
 function cleanColumnCount(v){const n=Number.parseInt(v,10);return n>=MIN_COLUMNS && n<=MAX_COLUMNS?n:DEFAULT_COLUMNS;}
+function cleanSectionColumn(value, columns){const n=Number.parseInt(value,10);const max=cleanColumnCount(columns);return n>=1 && n<=max?n:null;}
+function sectionWeight(section){return 1+(section.engines||[]).filter(e=>e.included!==false).length;}
+function assignMissingSectionColumns(p){
+  // Honour any stored column choices (clamped to the current count), then assign a
+  // column ONCE to any section that lacks one, using emptiest-column balancing. After
+  // that, placement is stable and only changes when the user moves a section.
+  const columnCount=cleanColumnCount(p.columns);
+  const counts=Array.from({length:columnCount},()=>0);
+  (p.sections||[]).forEach(section=>{
+    const existing=cleanSectionColumn(section.column ?? section.col ?? section.columnNumber, columnCount);
+    if(existing){section.column=existing;counts[existing-1]+=sectionWeight(section);}
+    else{section.column=null;}
+  });
+  (p.sections||[]).forEach(section=>{
+    if(section.column)return;
+    let targetIndex=0,fewest=Infinity;
+    counts.forEach((count,i)=>{if(count<fewest){fewest=count;targetIndex=i;}});
+    section.column=targetIndex+1;
+    counts[targetIndex]+=sectionWeight(section);
+  });
+  return p;
+}
+function normaliseSectionOrder(p){
+  // Order the sections array so it reads like the finished menu: all Column 1 sections
+  // first (in their existing order), then Column 2, and so on.
+  assignMissingSectionColumns(p);
+  const columnCount=cleanColumnCount(p.columns);
+  p.sections=(p.sections||[])
+    .map((section,originalIndex)=>({section,originalIndex}))
+    .sort((a,b)=>{
+      const ac=cleanSectionColumn(a.section.column,columnCount)||columnCount;
+      const bc=cleanSectionColumn(b.section.column,columnCount)||columnCount;
+      return ac-bc || a.originalIndex-b.originalIndex;
+    })
+    .map(e=>e.section);
+  return p;
+}
+function setProjectColumnCount(value){
+  // Changing the column count clamps section columns into range (sections in removed
+  // columns fall into the last remaining column) and keeps placement otherwise stable.
+  const next=cleanColumnCount(value);
+  project.columns=next;
+  (project.sections||[]).forEach(section=>{const cur=Number.parseInt(section.column,10);section.column=cur>=1?Math.min(cur,next):null;});
+  normaliseSectionOrder(project);
+}
+function findSectionIndexInColumn(sectionIndex,direction){
+  const section=project.sections[sectionIndex];
+  if(!section)return -1;
+  const column=cleanSectionColumn(section.column,project.columns);
+  if(!column)return -1;
+  if(direction<0){for(let i=sectionIndex-1;i>=0;i--){if(cleanSectionColumn(project.sections[i]?.column,project.columns)===column)return i;}}
+  else{for(let i=sectionIndex+1;i<project.sections.length;i++){if(cleanSectionColumn(project.sections[i]?.column,project.columns)===column)return i;}}
+  return -1;
+}
+function moveSectionWithinColumn(sectionIndex,direction){
+  const targetIndex=findSectionIndexInColumn(sectionIndex,direction);
+  if(targetIndex===-1)return false;
+  [project.sections[sectionIndex],project.sections[targetIndex]]=[project.sections[targetIndex],project.sections[sectionIndex]];
+  return true;
+}
+function moveSectionSideways(sectionIndex,direction){
+  // Move a section one column left/right, landing at the bottom of the destination column.
+  const section=project.sections[sectionIndex];
+  if(!section)return false;
+  const columnCount=cleanColumnCount(project.columns);
+  const current=cleanSectionColumn(section.column,columnCount)||1;
+  const next=current+direction;
+  if(next<1||next>columnCount)return false;
+  const [moved]=project.sections.splice(sectionIndex,1);
+  moved.column=next;
+  let insertIndex=-1;
+  project.sections.forEach((candidate,i)=>{if(cleanSectionColumn(candidate.column,columnCount)===next)insertIndex=i+1;});
+  if(insertIndex===-1){
+    insertIndex=project.sections.findIndex(c=>(cleanSectionColumn(c.column,columnCount)||columnCount)>next);
+    if(insertIndex===-1)insertIndex=project.sections.length;
+  }
+  project.sections.splice(insertIndex,0,moved);
+  return true;
+}
 function makeColumns(count){return Array.from({length:cleanColumnCount(count)},()=>({items:[]}));}
 function ensureHtmlFilename(name){let f=String(name||"supersearch.html").trim()||"supersearch.html";if(!/\.html?$/i.test(f))f+=".html";return f.replace(/[\\/:*?"<>|]+/g,"-");}
 function defaultProject(){return {format:"supersearch-builder-v1",title:"My Super Search",description:"",filename:"supersearch.html",columns:DEFAULT_COLUMNS,colours:"primary",showTitle:true,openMode:"links",sections:[]};}
@@ -366,6 +447,7 @@ function normaliseFriendlyProject(input){
     name:section.name||"Section",
     colour:cleanColour(section.colour||"blue"),
     included:section.included!==false,
+    column:cleanSectionColumn(section.column ?? section.col ?? section.columnNumber, input.columns),
     engines:(section.engines||section.links||[]).map(en=>({
       label:en.label||en.text||"Engine",
       template:en.template||en.url||"",
@@ -373,6 +455,7 @@ function normaliseFriendlyProject(input){
       included:en.included!==false
     }))
   }));
+  assignMissingSectionColumns(p);
   return p;
 }
 function projectToInternalState(p){
@@ -384,16 +467,19 @@ function projectToInternalState(p){
   state.settings.palette=state.settings.colours==="pastel"?{...pastelPalette}:{...defaultPalette};
   state.settings.showTitle=cleanShowTitle(p.showTitle);
   state.settings.openMode=cleanOpenMode(p.openMode);
-  state.menu.columns=makeColumns(state.settings.columns);
+  const columnCount=state.settings.columns;
+  state.menu.columns=makeColumns(columnCount);
+  assignMissingSectionColumns(p);
+  // Place each included section into its stored column, preserving array order so the
+  // exported page matches the editor exactly.
   (p.sections||[]).filter(s=>s.included!==false).forEach(section=>{
     const colour=cleanColour(section.colour||"blue");
     const block=[{type:"header",text:section.name||"Section",color:colour}];
     (section.engines||[]).filter(en=>en.included!==false).forEach(en=>{
       block.push({type:"link",text:en.label||"Engine",template:en.template||"",color:cleanColour(en.colour||colour)});
     });
-    let targetIndex=0,fewest=Infinity;
-    state.menu.columns.forEach((col,i)=>{const count=(col.items||[]).length;if(count<fewest){fewest=count;targetIndex=i;}});
-    state.menu.columns[targetIndex].items.push(...block);
+    const colIndex=(cleanSectionColumn(section.column,columnCount)||1)-1;
+    state.menu.columns[colIndex].items.push(...block);
   });
   ensureColumnCount(state.menu,state.settings.columns);
   return state;
@@ -419,11 +505,35 @@ function renderSettings(){
   document.getElementById("showTitleInput").checked=cleanShowTitle(project.showTitle);
   document.getElementById("templateDescription").innerHTML="Each search is a link with a <code>%s</code> where your query goes. Add one by pasting a results-page link into <strong>+ Add from a search link</strong>, or make a Google <strong>site search</strong> of any website with <strong>+ Add a site search</strong>. Tick <strong>Use</strong> to include a section. Links mode rewrites every link from one query box; open-all mode adds buttons that try to open a whole section at once.";
 }
+let editorCollapsed=false;
+function applyEditorCollapseState(){
+  const container=document.getElementById("sectionList");
+  if(!container)return;
+  container.classList.toggle("editor-collapsed",editorCollapsed);
+  const expandButton=document.getElementById("expandEditorBtn");
+  const collapseButton=document.getElementById("collapseEditorBtn");
+  if(expandButton)expandButton.disabled=!editorCollapsed;
+  if(collapseButton)collapseButton.disabled=editorCollapsed||!project.sections.length;
+}
+function setEditorCollapsed(collapsed){
+  editorCollapsed=Boolean(collapsed);
+  applyEditorCollapseState();
+  setStatus(editorCollapsed?"Editor sections collapsed. Section controls stay visible for easier reordering.":"Editor sections expanded.");
+}
 function renderEditor(){
   const container=document.getElementById("sectionList");
-  if(!project.sections.length){container.innerHTML=`<div class="section-card"><div class="engines"><div class="empty-engines">No sections yet. Use “Add section” to start.</div></div></div>`;return;}
-  container.innerHTML=project.sections.map((section,si)=>{
+  if(!project.sections.length){container.innerHTML=`<div class="section-card"><div class="engines"><div class="empty-engines">No sections yet. Use “Add section” to start.</div></div></div>`;applyEditorCollapseState();return;}
+  normaliseSectionOrder(project);
+  const columnCount=cleanColumnCount(project.columns);
+  const sectionCardHtml=(section,si)=>{
     const included=section.included!==false;
+    const engineCount=(section.engines||[]).length;
+    const engineLabel=engineCount===1?"1 search":`${engineCount} searches`;
+    const sectionColumn=cleanSectionColumn(section.column,project.columns)||1;
+    const canMoveUp=findSectionIndexInColumn(si,-1)!==-1;
+    const canMoveDown=findSectionIndexInColumn(si,1)!==-1;
+    const canMoveLeft=sectionColumn>1;
+    const canMoveRight=sectionColumn<columnCount;
     const rows=(section.engines||[]).map((en,li)=>{
       const valid=E.isValidTemplate(en.template);
       return `
@@ -438,22 +548,27 @@ function renderEditor(){
           <button type="button" class="mini danger" data-action="delete-engine">Remove</button>
         </div>
       </div>`;
-    }).join("")||`<div class="empty-engines">No engines in this section yet.</div>`;
+    }).join("")||`<div class="empty-engines" data-empty-drop="${si}">No searches in this section yet. Drag a search here to move it in.</div>`;
     return `
       <article class="section-card ${included?"":"excluded"}" data-section-index="${si}">
         <div class="section-head">
+          <span class="section-drag-handle" draggable="true" title="Drag to reorder this section within column ${sectionColumn}" aria-label="Drag to reorder this section within column ${sectionColumn}">☰</span>
           <label class="toggle-line"><input type="checkbox" data-action="toggle-section" ${included?"checked":""}> Use</label>
           <div class="section-title">
             <input type="text" value="${escapeHtml(section.name||"")}" data-action="section-name" aria-label="Section name">
             <select data-action="section-colour" aria-label="Section colour">${colourOptions(cleanColour(section.colour||"blue"))}</select>
           </div>
+          <span class="section-count">${escapeHtml(engineLabel)} · Col ${sectionColumn}</span>
           <div class="section-controls">
-            <button type="button" class="mini secondary" data-action="move-section-up" ${si===0?"disabled":""}>↑</button>
-            <button type="button" class="mini secondary" data-action="move-section-down" ${si===project.sections.length-1?"disabled":""}>↓</button>
+            <button type="button" class="mini secondary" data-action="move-section-up" title="Move up within column ${sectionColumn}" ${canMoveUp?"":"disabled"}>↑</button>
+            <button type="button" class="mini secondary" data-action="move-section-down" title="Move down within column ${sectionColumn}" ${canMoveDown?"":"disabled"}>↓</button>
+            <button type="button" class="mini secondary" data-action="move-section-left" title="Move one column left" ${canMoveLeft?"":"disabled"}>←</button>
+            <button type="button" class="mini secondary" data-action="move-section-right" title="Move one column right" ${canMoveRight?"":"disabled"}>→</button>
             <button type="button" class="mini secondary" data-action="duplicate-section">Copy</button>
             <button type="button" class="mini danger" data-action="delete-section">Delete</button>
           </div>
         </div>
+        ${included?"":`<div class="empty-engines">This section is kept in the editor but is not currently used in the preview/export.</div>`}
         <div class="engines">${rows}</div>
         <div class="section-foot">
           <button type="button" class="mini secondary" data-action="add-engine">+ Add search</button>
@@ -479,7 +594,22 @@ function renderEditor(){
           <div class="conv-msg" data-site="msg">Searches the site through Google — useful when a site has poor or no search of its own.</div>
         </div>
       </article>`;
-  }).join("");
+  };
+  const parts=[];
+  for(let column=1;column<=columnCount;column++){
+    const sectionsInColumn=project.sections
+      .map((section,si)=>({section,si}))
+      .filter(entry=>(cleanSectionColumn(entry.section.column,project.columns)||1)===column);
+    const label=sectionsInColumn.length===1?"1 section":`${sectionsInColumn.length} sections`;
+    parts.push(`<div class="editor-column-heading">Column ${column} · ${label}</div>`);
+    if(sectionsInColumn.length){
+      sectionsInColumn.forEach(entry=>parts.push(sectionCardHtml(entry.section,entry.si)));
+    }else{
+      parts.push(`<div class="editor-column-empty">No sections in column ${column}. Use ←/→ on a section to move it here.</div>`);
+    }
+  }
+  container.innerHTML=parts.join("");
+  applyEditorCollapseState();
 }
 function renderPreview(){
   const state=getCurrentState();
@@ -574,9 +704,11 @@ function onSectionListClick(event){
   }
   if(action==="add-section"){return;}
   if(action==="delete-section"){if(confirm("Delete this section?")){project.sections.splice(si,1);scheduleRender();}return;}
-  if(action==="duplicate-section"){const copy=JSON.parse(JSON.stringify(section));copy.name=(section.name||"Section")+" copy";project.sections.splice(si+1,0,copy);scheduleRender();return;}
-  if(action==="move-section-up"&&si>0){[project.sections[si-1],project.sections[si]]=[project.sections[si],project.sections[si-1]];scheduleRender();return;}
-  if(action==="move-section-down"&&si<project.sections.length-1){[project.sections[si+1],project.sections[si]]=[project.sections[si],project.sections[si+1]];scheduleRender();return;}
+  if(action==="duplicate-section"){const copy=JSON.parse(JSON.stringify(section));copy.name=(section.name||"Section")+" copy";copy.column=cleanSectionColumn(section.column,project.columns)||1;project.sections.splice(si+1,0,copy);scheduleRender();return;}
+  if(action==="move-section-up"){if(moveSectionWithinColumn(si,-1))scheduleRender();return;}
+  if(action==="move-section-down"){if(moveSectionWithinColumn(si,1))scheduleRender();return;}
+  if(action==="move-section-left"){if(moveSectionSideways(si,-1)){scheduleRender();setStatus("Moved section one column left.");}return;}
+  if(action==="move-section-right"){if(moveSectionSideways(si,1)){scheduleRender();setStatus("Moved section one column right.");}return;}
   const enRow=btn.closest("[data-engine-index]");
   if(!enRow)return;
   const li=Number(enRow.getAttribute("data-engine-index"));
@@ -585,13 +717,60 @@ function onSectionListClick(event){
   else if(action==="move-engine-down"&&li<section.engines.length-1){[section.engines[li+1],section.engines[li]]=[section.engines[li],section.engines[li+1]];scheduleRender();}
 }
 
-/* Drag reorder of engines within a section */
+/* Drag reorder of searches (within or across sections) */
 let dragInfo=null;
-function onLinkDragStart(e){const h=e.target.closest(".drag-handle");if(!h)return;const row=h.closest("[data-engine-index]");if(!row)return;dragInfo={si:Number(row.getAttribute("data-section-index")),li:Number(row.getAttribute("data-engine-index"))};e.dataTransfer.effectAllowed="move";try{e.dataTransfer.setData("text/plain","drag");}catch(err){}}
-function onLinkDragOver(e){if(!dragInfo)return;const row=e.target.closest("[data-engine-index]");if(!row)return;if(Number(row.getAttribute("data-section-index"))!==dragInfo.si)return;e.preventDefault();row.classList.add("drag-over");}
-function onLinkDragLeave(e){const row=e.target.closest("[data-engine-index]");if(row)row.classList.remove("drag-over");}
-function onLinkDrop(e){if(!dragInfo)return;const row=e.target.closest("[data-engine-index]");if(!row)return;const si=Number(row.getAttribute("data-section-index"));if(si!==dragInfo.si)return;e.preventDefault();const target=Number(row.getAttribute("data-engine-index"));const arr=project.sections[si].engines;const [moved]=arr.splice(dragInfo.li,1);arr.splice(target,0,moved);dragInfo=null;scheduleRender();}
-function onLinkDragEnd(){document.querySelectorAll(".engine-row.drag-over").forEach(el=>el.classList.remove("drag-over"));dragInfo=null;}
+let sectionDragIndex=null;
+function onLinkDragStart(e){
+  // Dragging is disabled while the editor is collapsed (no rows/targets are visible).
+  if(editorCollapsed){e.preventDefault&&e.preventDefault();return;}
+  // Section drag takes priority if the section handle was grabbed.
+  const sh=e.target.closest(".section-drag-handle");
+  if(sh){const card=sh.closest("[data-section-index]");if(card){sectionDragIndex=Number(card.getAttribute("data-section-index"));card.classList.add("section-dragging");e.dataTransfer.effectAllowed="move";try{e.dataTransfer.setData("text/plain","section");}catch(err){}}return;}
+  // Search-row drag starts only from the row handle, so text fields stay selectable.
+  const h=e.target.closest(".drag-handle");if(!h)return;const row=h.closest("[data-engine-index]");if(!row)return;dragInfo={si:Number(row.getAttribute("data-section-index")),li:Number(row.getAttribute("data-engine-index"))};e.dataTransfer.effectAllowed="move";try{e.dataTransfer.setData("text/plain","drag");}catch(err){}}
+function sameColumn(aIndex,bIndex){return (cleanSectionColumn(project.sections[aIndex]?.column,project.columns)||1)===(cleanSectionColumn(project.sections[bIndex]?.column,project.columns)||1);}
+function clearLinkDropMarks(){document.querySelectorAll(".engine-row.drag-over,.engine-row.drop-into,.empty-engines.drop-into").forEach(el=>el.classList.remove("drag-over","drop-into"));}
+function onLinkDragOver(e){
+  // Section reorder (within column only).
+  if(sectionDragIndex!=null){const card=e.target.closest("[data-section-index]");if(!card)return;const si=Number(card.getAttribute("data-section-index"));if(si===sectionDragIndex||!sameColumn(si,sectionDragIndex))return;e.preventDefault();card.classList.add("section-drag-over");return;}
+  if(!dragInfo)return;
+  // Search-row drag: accept any section (cross-section move allowed).
+  const row=e.target.closest("[data-engine-index]");
+  if(row){e.preventDefault();clearLinkDropMarks();row.classList.add("drag-over");return;}
+  const empty=e.target.closest("[data-empty-drop]");
+  if(empty){e.preventDefault();clearLinkDropMarks();empty.classList.add("drop-into");return;}
+}
+function onLinkDragLeave(e){const row=e.target.closest("[data-engine-index]");if(row)row.classList.remove("drag-over");const empty=e.target.closest("[data-empty-drop]");if(empty)empty.classList.remove("drop-into");const card=e.target.closest("[data-section-index]");if(card)card.classList.remove("section-drag-over");}
+function onLinkDrop(e){
+  // Section reorder within column.
+  if(sectionDragIndex!=null){const card=e.target.closest("[data-section-index]");if(card){const target=Number(card.getAttribute("data-section-index"));if(target!==sectionDragIndex&&sameColumn(target,sectionDragIndex)){e.preventDefault();const [moved]=project.sections.splice(sectionDragIndex,1);const adjusted=target>sectionDragIndex?target-1:target;project.sections.splice(adjusted,0,moved);sectionDragIndex=null;scheduleRender();return;}}sectionDragIndex=null;return;}
+  if(!dragInfo)return;
+  const sourceSection=project.sections[dragInfo.si];
+  if(!sourceSection){dragInfo=null;return;}
+  // Drop onto a specific row: insert at that row's position (same or different section).
+  const row=e.target.closest("[data-engine-index]");
+  if(row){
+    e.preventDefault();
+    const targetSi=Number(row.getAttribute("data-section-index"));
+    let targetLi=Number(row.getAttribute("data-engine-index"));
+    const [moved]=sourceSection.engines.splice(dragInfo.li,1);
+    // If moving down within the same section past the removed item, the index shifts by one.
+    if(targetSi===dragInfo.si && targetLi>dragInfo.li) targetLi--;
+    project.sections[targetSi].engines.splice(targetLi,0,moved);
+    dragInfo=null;scheduleRender();return;
+  }
+  // Drop onto an empty section: append there.
+  const empty=e.target.closest("[data-empty-drop]");
+  if(empty){
+    e.preventDefault();
+    const targetSi=Number(empty.getAttribute("data-empty-drop"));
+    const [moved]=sourceSection.engines.splice(dragInfo.li,1);
+    (project.sections[targetSi].engines=project.sections[targetSi].engines||[]).push(moved);
+    dragInfo=null;scheduleRender();return;
+  }
+  dragInfo=null;
+}
+function onLinkDragEnd(){clearLinkDropMarks();document.querySelectorAll(".section-card.section-drag-over,.section-card.section-dragging").forEach(el=>el.classList.remove("section-drag-over","section-dragging"));dragInfo=null;sectionDragIndex=null;}
 
 /* Templates */
 let templateFiles={};
@@ -685,7 +864,7 @@ function initialiseEvents(){
   document.getElementById("titleInput").addEventListener("input",e=>{project.title=e.target.value;schedulePreviewRender();});
   document.getElementById("filenameInput").addEventListener("input",e=>{project.filename=e.target.value;schedulePreviewRender();});
   document.getElementById("descriptionInput").addEventListener("input",e=>{project.description=e.target.value;schedulePreviewRender();});
-  document.getElementById("columnsInput").addEventListener("change",e=>{project.columns=cleanColumnCount(e.target.value);setStatus(`Layout set to ${project.columns} columns.`);schedulePreviewRender();});
+  document.getElementById("columnsInput").addEventListener("change",e=>{setProjectColumnCount(e.target.value);setStatus(`Layout set to ${project.columns} columns.`);scheduleRender();});
   document.getElementById("coloursInput").addEventListener("change",e=>{project.colours=cleanColourStyle(e.target.value);schedulePreviewRender();});
   document.getElementById("openModeInput").addEventListener("change",e=>{project.openMode=cleanOpenMode(e.target.value);setStatus(project.openMode==="openAll"?"Open-all buttons enabled (browser may ask to allow pop-ups).":"Links mode: buttons open one engine each.");schedulePreviewRender();});
   document.getElementById("showTitleInput").addEventListener("change",e=>{project.showTitle=e.target.checked;schedulePreviewRender();});
@@ -698,9 +877,11 @@ function initialiseEvents(){
   list.addEventListener("dragleave",onLinkDragLeave);
   list.addEventListener("drop",onLinkDrop);
   list.addEventListener("dragend",onLinkDragEnd);
-  document.getElementById("addSectionBtn").addEventListener("click",()=>{project.sections.push({name:"New section",colour:"blue",included:true,engines:[{label:"Google",template:"https://www.google.com/search?q=%s",colour:"blue",included:true}]});scheduleRender();});
+  document.getElementById("addSectionBtn").addEventListener("click",()=>{project.sections.push({name:"New section",colour:"blue",included:true,column:null,engines:[{label:"Google",template:"https://www.google.com/search?q=%s",colour:"blue",included:true}]});assignMissingSectionColumns(project);scheduleRender();});
   document.getElementById("includeAllBtn").addEventListener("click",()=>{project.sections.forEach(s=>s.included=true);scheduleRender();});
   document.getElementById("excludeAllBtn").addEventListener("click",()=>{project.sections.forEach(s=>s.included=false);scheduleRender();});
+  document.getElementById("expandEditorBtn").addEventListener("click",()=>setEditorCollapsed(false));
+  document.getElementById("collapseEditorBtn").addEventListener("click",()=>setEditorCollapsed(true));
   const fromUrl=getTemplateFromUrl();
   document.getElementById("templateSelect").addEventListener("change",()=>setStatus("Template selected. Click Use template to replace the current menu."));
   document.getElementById("loadTemplateBtn").addEventListener("click",()=>{if(confirm("Use the selected template? This replaces the current menu in this browser."))loadTemplate(true);});

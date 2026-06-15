@@ -12,60 +12,135 @@
       "name": "Academic",
       "colour": "green",
       "engines": [
-        { "label": "Google Scholar", "template": "https://scholar.google.com/scholar?q=%s" },
-        { "label": "Google Books", "template": "https://www.google.com/search?tbm=bks&q=%s" },
-        { "label": "Semantic Scholar", "template": "https://www.semanticscholar.org/search?q=%s&sort=relevance" },
-        { "label": "JSTOR", "template": "https://www.jstor.org/action/doSearch?Query=%s" },
-        { "label": "PubMed", "template": "https://pubmed.ncbi.nlm.nih.gov/?term=%s" },
-        { "label": "arXiv", "template": "https://arxiv.org/abs/?searchtype=all&query=%s" }
-      ]
+        {
+          "label": "Google Scholar",
+          "template": "https://scholar.google.com/scholar?q=%s"
+        },
+        {
+          "label": "Google Books",
+          "template": "https://www.google.com/search?tbm=bks&q=%s"
+        },
+        {
+          "label": "Semantic Scholar",
+          "template": "https://www.semanticscholar.org/search?q=%s&sort=relevance"
+        },
+        {
+          "label": "JSTOR",
+          "template": "https://www.jstor.org/action/doSearch?Query=%s"
+        },
+        {
+          "label": "PubMed",
+          "template": "https://pubmed.ncbi.nlm.nih.gov/?term=%s"
+        },
+        {
+          "label": "arXiv",
+          "template": "https://arxiv.org/abs/?searchtype=all&query=%s"
+        }
+      ],
+      "column": 1
     },
     {
       "name": "Repositories & Theses",
       "colour": "purple",
       "engines": [
-        { "label": "CORE", "template": "https://core.ac.uk/search?q=%s" },
-        { "label": "BASE", "template": "https://www.base-search.net/Search/Results?lookfor=%s" },
-        { "label": "OpenDOAR / OpenAIRE", "template": "https://explore.openaire.eu/search/find?keyword=%s" },
-        { "label": "British Library Thesis (EThOS)", "template": "https://www.google.com/search?q=site:bl.uk+ethos+%s" },
-        { "label": "WorldCat", "template": "https://search.worldcat.org/search?q=%s" }
-      ]
+        {
+          "label": "CORE",
+          "template": "https://core.ac.uk/search?q=%s"
+        },
+        {
+          "label": "BASE",
+          "template": "https://www.base-search.net/Search/Results?lookfor=%s"
+        },
+        {
+          "label": "OpenDOAR / OpenAIRE",
+          "template": "https://explore.openaire.eu/search/find?keyword=%s"
+        },
+        {
+          "label": "British Library Thesis (EThOS)",
+          "template": "https://www.google.com/search?q=site:bl.uk+ethos+%s"
+        },
+        {
+          "label": "WorldCat",
+          "template": "https://search.worldcat.org/search?q=%s"
+        }
+      ],
+      "column": 1
     },
     {
       "name": "Reference",
       "colour": "blue",
       "engines": [
-        { "label": "Wikipedia", "template": "https://en.wikipedia.org/wiki/Special:Search?search=%s" },
-        { "label": "Google", "template": "https://www.google.com/search?q=%s" },
-        { "label": "DuckDuckGo", "template": "https://duckduckgo.com/?q=%s" },
-        { "label": "Project Gutenberg", "template": "https://www.gutenberg.org/ebooks/search/?query=%s" }
-      ]
+        {
+          "label": "Wikipedia",
+          "template": "https://en.wikipedia.org/wiki/Special:Search?search=%s"
+        },
+        {
+          "label": "Google",
+          "template": "https://www.google.com/search?q=%s"
+        },
+        {
+          "label": "DuckDuckGo",
+          "template": "https://duckduckgo.com/?q=%s"
+        },
+        {
+          "label": "Project Gutenberg",
+          "template": "https://www.gutenberg.org/ebooks/search/?query=%s"
+        }
+      ],
+      "column": 2
     },
     {
       "name": "News",
       "colour": "orange",
       "engines": [
-        { "label": "Google News", "template": "https://news.google.com/search?q=%s" },
-        { "label": "BBC", "template": "https://www.bbc.co.uk/search?q=%s" },
-        { "label": "Guardian", "template": "https://www.theguardian.com/uk/search?q=%s" },
-        { "label": "Reuters", "template": "https://www.reuters.com/site-search/?query=%s" }
-      ]
+        {
+          "label": "Google News",
+          "template": "https://news.google.com/search?q=%s"
+        },
+        {
+          "label": "BBC",
+          "template": "https://www.bbc.co.uk/search?q=%s"
+        },
+        {
+          "label": "Guardian",
+          "template": "https://www.theguardian.com/uk/search?q=%s"
+        },
+        {
+          "label": "Reuters",
+          "template": "https://www.reuters.com/site-search/?query=%s"
+        }
+      ],
+      "column": 2
     },
     {
       "name": "Media",
       "colour": "red",
       "engines": [
-        { "label": "YouTube", "template": "https://www.youtube.com/results?search_query=%s" },
-        { "label": "Wikimedia Commons", "template": "https://commons.wikimedia.org/w/index.php?search=%s" }
-      ]
+        {
+          "label": "YouTube",
+          "template": "https://www.youtube.com/results?search_query=%s"
+        },
+        {
+          "label": "Wikimedia Commons",
+          "template": "https://commons.wikimedia.org/w/index.php?search=%s"
+        }
+      ],
+      "column": 3
     },
     {
       "name": "Discussion",
       "colour": "blue",
       "engines": [
-        { "label": "Reddit", "template": "https://www.reddit.com/search/?q=%s" },
-        { "label": "Substack", "template": "https://substack.com/search/%s" }
-      ]
+        {
+          "label": "Reddit",
+          "template": "https://www.reddit.com/search/?q=%s"
+        },
+        {
+          "label": "Substack",
+          "template": "https://substack.com/search/%s"
+        }
+      ],
+      "column": 3
     }
   ]
 }

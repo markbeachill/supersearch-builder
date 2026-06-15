@@ -81,18 +81,6 @@ body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;background:#fff;c
     </a>
 
     <p class="ss-hdr-para">
-      <button type="button" class="ss-hdr ss-blue-hdr" data-ss-section-header="true" aria-expanded="true"><b>Discussion</b></button>
-    </p>
-
-    <a class="ss-btn ss-blue-btn ss-disabled-empty" data-ss-template="https://www.reddit.com/search/?q=%s" href="#" target="_blank" rel="noopener noreferrer">
-      Reddit
-    </a>
-
-    <a class="ss-btn ss-blue-btn ss-disabled-empty" data-ss-template="https://substack.com/search/%s" href="#" target="_blank" rel="noopener noreferrer">
-      Substack
-    </a>
-</div><div class="ss-col">
-    <p class="ss-hdr-para">
       <button type="button" class="ss-hdr ss-purple-hdr" data-ss-section-header="true" aria-expanded="true"><b>Repositories &amp; Theses</b></button>
     </p>
 
@@ -114,18 +102,6 @@ body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;background:#fff;c
 
     <a class="ss-btn ss-purple-btn ss-disabled-empty" data-ss-template="https://search.worldcat.org/search?q=%s" href="#" target="_blank" rel="noopener noreferrer">
       WorldCat
-    </a>
-
-    <p class="ss-hdr-para">
-      <button type="button" class="ss-hdr ss-red-hdr" data-ss-section-header="true" aria-expanded="true"><b>Media</b></button>
-    </p>
-
-    <a class="ss-btn ss-red-btn ss-disabled-empty" data-ss-template="https://www.youtube.com/results?search_query=%s" href="#" target="_blank" rel="noopener noreferrer">
-      YouTube
-    </a>
-
-    <a class="ss-btn ss-red-btn ss-disabled-empty" data-ss-template="https://commons.wikimedia.org/w/index.php?search=%s" href="#" target="_blank" rel="noopener noreferrer">
-      Wikimedia Commons
     </a>
 </div><div class="ss-col">
     <p class="ss-hdr-para">
@@ -167,11 +143,35 @@ body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;background:#fff;c
     <a class="ss-btn ss-orange-btn ss-disabled-empty" data-ss-template="https://www.reuters.com/site-search/?query=%s" href="#" target="_blank" rel="noopener noreferrer">
       Reuters
     </a>
+</div><div class="ss-col">
+    <p class="ss-hdr-para">
+      <button type="button" class="ss-hdr ss-red-hdr" data-ss-section-header="true" aria-expanded="true"><b>Media</b></button>
+    </p>
+
+    <a class="ss-btn ss-red-btn ss-disabled-empty" data-ss-template="https://www.youtube.com/results?search_query=%s" href="#" target="_blank" rel="noopener noreferrer">
+      YouTube
+    </a>
+
+    <a class="ss-btn ss-red-btn ss-disabled-empty" data-ss-template="https://commons.wikimedia.org/w/index.php?search=%s" href="#" target="_blank" rel="noopener noreferrer">
+      Wikimedia Commons
+    </a>
+
+    <p class="ss-hdr-para">
+      <button type="button" class="ss-hdr ss-blue-hdr" data-ss-section-header="true" aria-expanded="true"><b>Discussion</b></button>
+    </p>
+
+    <a class="ss-btn ss-blue-btn ss-disabled-empty" data-ss-template="https://www.reddit.com/search/?q=%s" href="#" target="_blank" rel="noopener noreferrer">
+      Reddit
+    </a>
+
+    <a class="ss-btn ss-blue-btn ss-disabled-empty" data-ss-template="https://substack.com/search/%s" href="#" target="_blank" rel="noopener noreferrer">
+      Substack
+    </a>
 </div>
   </div>
 </div>
 </div>
-<script type="application/json" id="ss-menu-config">{"format":"supersearch-builder-v1","title":"Research Super Search","description":"One query across academic databases, repositories, news, media and reference sources. Modelled on the grouped layout of the original UEL Super Search.","filename":"supersearch-research.html","columns":3,"colours":"primary","showTitle":true,"openMode":"links","sections":[{"name":"Academic","colour":"green","included":true,"engines":[{"label":"Google Scholar","template":"https://scholar.google.com/scholar?q=%s","colour":"green","included":true},{"label":"Google Books","template":"https://www.google.com/search?tbm=bks&q=%s","colour":"green","included":true},{"label":"Semantic Scholar","template":"https://www.semanticscholar.org/search?q=%s&sort=relevance","colour":"green","included":true},{"label":"JSTOR","template":"https://www.jstor.org/action/doSearch?Query=%s","colour":"green","included":true},{"label":"PubMed","template":"https://pubmed.ncbi.nlm.nih.gov/?term=%s","colour":"green","included":true},{"label":"arXiv","template":"https://arxiv.org/abs/?searchtype=all&query=%s","colour":"green","included":true}]},{"name":"Repositories & Theses","colour":"purple","included":true,"engines":[{"label":"CORE","template":"https://core.ac.uk/search?q=%s","colour":"purple","included":true},{"label":"BASE","template":"https://www.base-search.net/Search/Results?lookfor=%s","colour":"purple","included":true},{"label":"OpenDOAR / OpenAIRE","template":"https://explore.openaire.eu/search/find?keyword=%s","colour":"purple","included":true},{"label":"British Library Thesis (EThOS)","template":"https://www.google.com/search?q=site:bl.uk+ethos+%s","colour":"purple","included":true},{"label":"WorldCat","template":"https://search.worldcat.org/search?q=%s","colour":"purple","included":true}]},{"name":"Reference","colour":"blue","included":true,"engines":[{"label":"Wikipedia","template":"https://en.wikipedia.org/wiki/Special:Search?search=%s","colour":"blue","included":true},{"label":"Google","template":"https://www.google.com/search?q=%s","colour":"blue","included":true},{"label":"DuckDuckGo","template":"https://duckduckgo.com/?q=%s","colour":"blue","included":true},{"label":"Project Gutenberg","template":"https://www.gutenberg.org/ebooks/search/?query=%s","colour":"blue","included":true}]},{"name":"News","colour":"orange","included":true,"engines":[{"label":"Google News","template":"https://news.google.com/search?q=%s","colour":"orange","included":true},{"label":"BBC","template":"https://www.bbc.co.uk/search?q=%s","colour":"orange","included":true},{"label":"Guardian","template":"https://www.theguardian.com/uk/search?q=%s","colour":"orange","included":true},{"label":"Reuters","template":"https://www.reuters.com/site-search/?query=%s","colour":"orange","included":true}]},{"name":"Media","colour":"red","included":true,"engines":[{"label":"YouTube","template":"https://www.youtube.com/results?search_query=%s","colour":"red","included":true},{"label":"Wikimedia Commons","template":"https://commons.wikimedia.org/w/index.php?search=%s","colour":"red","included":true}]},{"name":"Discussion","colour":"blue","included":true,"engines":[{"label":"Reddit","template":"https://www.reddit.com/search/?q=%s","colour":"blue","included":true},{"label":"Substack","template":"https://substack.com/search/%s","colour":"blue","included":true}]}]}</script>
+<script type="application/json" id="ss-menu-config">{"format":"supersearch-builder-v1","title":"Research Super Search","description":"One query across academic databases, repositories, news, media and reference sources. Modelled on the grouped layout of the original UEL Super Search.","filename":"supersearch-research.html","columns":3,"colours":"primary","showTitle":true,"openMode":"links","sections":[{"name":"Academic","colour":"green","included":true,"column":1,"engines":[{"label":"Google Scholar","template":"https://scholar.google.com/scholar?q=%s","colour":"green","included":true},{"label":"Google Books","template":"https://www.google.com/search?tbm=bks&q=%s","colour":"green","included":true},{"label":"Semantic Scholar","template":"https://www.semanticscholar.org/search?q=%s&sort=relevance","colour":"green","included":true},{"label":"JSTOR","template":"https://www.jstor.org/action/doSearch?Query=%s","colour":"green","included":true},{"label":"PubMed","template":"https://pubmed.ncbi.nlm.nih.gov/?term=%s","colour":"green","included":true},{"label":"arXiv","template":"https://arxiv.org/abs/?searchtype=all&query=%s","colour":"green","included":true}]},{"name":"Repositories & Theses","colour":"purple","included":true,"column":1,"engines":[{"label":"CORE","template":"https://core.ac.uk/search?q=%s","colour":"purple","included":true},{"label":"BASE","template":"https://www.base-search.net/Search/Results?lookfor=%s","colour":"purple","included":true},{"label":"OpenDOAR / OpenAIRE","template":"https://explore.openaire.eu/search/find?keyword=%s","colour":"purple","included":true},{"label":"British Library Thesis (EThOS)","template":"https://www.google.com/search?q=site:bl.uk+ethos+%s","colour":"purple","included":true},{"label":"WorldCat","template":"https://search.worldcat.org/search?q=%s","colour":"purple","included":true}]},{"name":"Reference","colour":"blue","included":true,"column":2,"engines":[{"label":"Wikipedia","template":"https://en.wikipedia.org/wiki/Special:Search?search=%s","colour":"blue","included":true},{"label":"Google","template":"https://www.google.com/search?q=%s","colour":"blue","included":true},{"label":"DuckDuckGo","template":"https://duckduckgo.com/?q=%s","colour":"blue","included":true},{"label":"Project Gutenberg","template":"https://www.gutenberg.org/ebooks/search/?query=%s","colour":"blue","included":true}]},{"name":"News","colour":"orange","included":true,"column":2,"engines":[{"label":"Google News","template":"https://news.google.com/search?q=%s","colour":"orange","included":true},{"label":"BBC","template":"https://www.bbc.co.uk/search?q=%s","colour":"orange","included":true},{"label":"Guardian","template":"https://www.theguardian.com/uk/search?q=%s","colour":"orange","included":true},{"label":"Reuters","template":"https://www.reuters.com/site-search/?query=%s","colour":"orange","included":true}]},{"name":"Media","colour":"red","included":true,"column":3,"engines":[{"label":"YouTube","template":"https://www.youtube.com/results?search_query=%s","colour":"red","included":true},{"label":"Wikimedia Commons","template":"https://commons.wikimedia.org/w/index.php?search=%s","colour":"red","included":true}]},{"name":"Discussion","colour":"blue","included":true,"column":3,"engines":[{"label":"Reddit","template":"https://www.reddit.com/search/?q=%s","colour":"blue","included":true},{"label":"Substack","template":"https://substack.com/search/%s","colour":"blue","included":true}]}]}</script>
 <script>
   (function attachSuperSearchBehaviour(root,options){
   options=options||{};
