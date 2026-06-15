@@ -36,7 +36,7 @@
     .section-card{background:#fff;border-radius:4px;border:1px solid #ddd;padding:8px;box-shadow:0 1px 2px rgba(0,0,0,.04)}.section-card.excluded{opacity:.55;background:#f6f6f6}
     .section-head{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:6px}.toggle-line{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#555;font-weight:700;margin-right:4px}.toggle-line input{margin:0}
     .section-title{display:flex;flex:1 1 330px;gap:6px;align-items:center}.section-title input{flex:1 1 220px;min-width:160px}.section-title select{width:96px}.section-controls{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
-    .engines{display:flex;flex-direction:column;gap:4px}.engine-row{border:1px solid #eee;border-radius:3px;padding:5px;background:#fcfcfc;display:flex;flex-wrap:wrap;gap:5px;align-items:center}.engine-row.drag-over{outline:2px dashed #2563eb;outline-offset:1px;box-shadow:0 -3px 0 -1px #2563eb}.empty-engines.drop-into{outline:2px dashed #2563eb;outline-offset:1px;background:#eef4ff;color:#1d4ed8;border-radius:4px}.drag-handle{border:1px solid #bbb;background:#f4f4f4;border-radius:4px;padding:3px 6px;cursor:grab;font-size:12px;line-height:1}.drag-handle:active{cursor:grabbing}.engine-actions{display:flex;gap:4px;align-items:center}.engine-row input[data-action=engine-label]{flex:1 1 140px;min-width:120px}.engine-row input[data-action=engine-template]{flex:2 1 300px;min-width:240px}.engine-row select{width:92px}.engine-row.invalid input[data-action=engine-template]{border-color:#e0a3a3;background:#fff7f7}.empty-engines{font-size:12px;color:#666;padding:4px 0}.section-foot{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+    .engines{display:flex;flex-direction:column;gap:4px}.engine-row{border:1px solid #eee;border-radius:3px;padding:5px;background:#fcfcfc;display:flex;flex-wrap:wrap;gap:5px;align-items:center}.engine-row.drag-over{outline:2px dashed #2563eb;outline-offset:1px;box-shadow:0 -3px 0 -1px #2563eb}.empty-engines.drop-into{outline:2px dashed #2563eb;outline-offset:1px;background:#eef4ff;color:#1d4ed8;border-radius:4px}.drag-handle{border:1px solid #bbb;background:#f4f4f4;border-radius:4px;padding:3px 6px;cursor:grab;font-size:12px;line-height:1}.drag-handle:active{cursor:grabbing}.engine-actions{display:flex;gap:4px;align-items:center}.engine-row input[data-action=engine-label]{flex:1 1 140px;min-width:120px}.engine-row input[data-action=engine-template]{flex:2 1 300px;min-width:240px}.engine-row select{width:92px}.engine-row.invalid input[data-action=engine-template]{border-color:#e0a3a3;background:#fff7f7}.empty-engines{font-size:12px;color:#666;padding:4px 0}.link-kind{font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 5px;border-radius:3px;background:#e5e7eb;color:#374151;white-space:nowrap}.link-kind.search{background:#dbeafe;color:#1e40af}.section-foot{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
     .add-link-panel{margin-top:6px;border:1px dashed #b7c3d6;border-radius:6px;padding:8px;background:#f4f8ff;display:none}.add-link-panel.show{display:block}.add-link-panel .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:6px}.add-link-panel input{flex:1 1 200px;min-width:160px;border:1px solid #ccc;border-radius:4px;padding:5px 6px;font-size:12px}.add-link-panel .conv-msg{font-size:11px;color:#475569;flex-basis:100%}.add-link-panel .conv-msg.bad{color:#b91c1c}.add-link-panel .conv-msg.ok{color:#15803d}
     .builder-preview-wrapper h2{margin:0 0 8px;font-size:16px;font-weight:600;border-bottom:1px solid #ddd;padding-bottom:4px;display:flex;justify-content:space-between;gap:10px}.preview-meta{font-size:12px;color:#666;font-weight:400}.preview-frame{background:#fff;min-height:calc(100vh - 120px)}
     .privacy{font-size:11px;color:#666;margin-top:8px;line-height:1.4}
@@ -339,11 +339,20 @@ function attachSuperSearchBehaviour(root,options){
   }
   var input=root.querySelector("#ss-input");
   var buttons=Array.prototype.slice.call(root.querySelectorAll("a.ss-btn[data-ss-template]"));
+  function isStatic(tmpl){return tmpl.indexOf("%s")===-1;}
   function refresh(){
     var q=input?input.value:"";
     buttons.forEach(function(b){
       var tmpl=b.getAttribute("data-ss-template")||"";
-      if(!tmpl){return;}
+      if(!tmpl){ b.setAttribute("href","#"); b.classList.add("ss-disabled-empty"); b.classList.remove("ss-ready"); return; }
+      if(isStatic(tmpl)){
+        // A plain destination link with no query token: always live, regardless of typing.
+        b.setAttribute("href", tmpl);
+        b.classList.remove("ss-disabled-empty");
+        b.classList.add("ss-ready");
+        return;
+      }
+      // A search link: stays plain text until a query is typed, then becomes a link.
       if(!q){ b.setAttribute("href","#"); b.classList.add("ss-disabled-empty"); b.classList.remove("ss-ready"); return; }
       b.setAttribute("href", fill(tmpl,q));
       b.classList.remove("ss-disabled-empty");
@@ -353,9 +362,12 @@ function attachSuperSearchBehaviour(root,options){
   if(input){ input.addEventListener("input",refresh); }
   var applyBtn=root.querySelector("#ss-apply");
   if(applyBtn){ applyBtn.addEventListener("click",refresh); }
-  // A link with no query yet should focus the box rather than navigate.
+  // A search link with no query yet should focus the box rather than navigate; static
+  // links (no %s) always navigate normally.
   buttons.forEach(function(b){
     b.addEventListener("click",function(ev){
+      var tmpl=b.getAttribute("data-ss-template")||"";
+      if(isStatic(tmpl)&&tmpl){ return; }
       if(!input||!input.value.trim()){ ev.preventDefault(); if(input){input.focus();} }
     });
   });
@@ -535,13 +547,16 @@ function renderEditor(){
     const canMoveLeft=sectionColumn>1;
     const canMoveRight=sectionColumn<columnCount;
     const rows=(section.engines||[]).map((en,li)=>{
-      const valid=E.isValidTemplate(en.template);
+      const usable=E.isUsableLink(en.template);
+      const isStatic=E.isStaticLink(en.template);
+      const kindBadge=isStatic?`<span class="link-kind" title="Static link: always live, no query needed">link</span>`:`<span class="link-kind search" title="Search: opens with the typed query">search</span>`;
       return `
-      <div class="engine-row ${valid?"":"invalid"}" data-section-index="${si}" data-engine-index="${li}">
+      <div class="engine-row ${usable?"":"invalid"}" data-section-index="${si}" data-engine-index="${li}">
         <span class="drag-handle" draggable="true" title="Drag to reorder" aria-label="Drag to reorder">↕</span>
-        <input type="text" value="${escapeHtml(en.label||"")}" data-action="engine-label" aria-label="Engine label" placeholder="Label">
-        <input type="text" value="${escapeHtml(en.template||"")}" data-action="engine-template" aria-label="Search template URL with %s" placeholder="https://…?q=%s">
-        <select data-action="engine-colour" aria-label="Engine colour">${colourOptions(cleanColour(en.colour||section.colour))}</select>
+        <input type="text" value="${escapeHtml(en.label||"")}" data-action="engine-label" aria-label="Label" placeholder="Label">
+        <input type="text" value="${escapeHtml(en.template||"")}" data-action="engine-template" aria-label="Search template URL with %s, or a plain link" placeholder="https://…?q=%s  or a plain URL">
+        ${kindBadge}
+        <select data-action="engine-colour" aria-label="Colour">${colourOptions(cleanColour(en.colour||section.colour))}</select>
         <div class="engine-actions">
           <button type="button" class="mini secondary" data-action="move-engine-up" ${li===0?"disabled":""}>↑</button>
           <button type="button" class="mini secondary" data-action="move-engine-down" ${li===(section.engines||[]).length-1?"disabled":""}>↓</button>
@@ -641,7 +656,7 @@ function onSectionListInput(event){
     const en=(section.engines||[])[li];
     if(!en)return;
     if(action==="engine-label"){en.label=event.target.value;schedulePreviewRender();}
-    else if(action==="engine-template"){en.template=event.target.value;enRow.classList.toggle("invalid",!E.isValidTemplate(en.template));schedulePreviewRender();}
+    else if(action==="engine-template"){en.template=event.target.value;enRow.classList.toggle("invalid",!E.isUsableLink(en.template));scheduleRender();}
     else if(action==="engine-colour"){en.colour=cleanColour(event.target.value);schedulePreviewRender();}
   }
 }

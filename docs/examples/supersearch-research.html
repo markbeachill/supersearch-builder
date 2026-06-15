@@ -188,11 +188,20 @@ body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;background:#fff;c
   }
   var input=root.querySelector("#ss-input");
   var buttons=Array.prototype.slice.call(root.querySelectorAll("a.ss-btn[data-ss-template]"));
+  function isStatic(tmpl){return tmpl.indexOf("%s")===-1;}
   function refresh(){
     var q=input?input.value:"";
     buttons.forEach(function(b){
       var tmpl=b.getAttribute("data-ss-template")||"";
-      if(!tmpl){return;}
+      if(!tmpl){ b.setAttribute("href","#"); b.classList.add("ss-disabled-empty"); b.classList.remove("ss-ready"); return; }
+      if(isStatic(tmpl)){
+        // A plain destination link with no query token: always live, regardless of typing.
+        b.setAttribute("href", tmpl);
+        b.classList.remove("ss-disabled-empty");
+        b.classList.add("ss-ready");
+        return;
+      }
+      // A search link: stays plain text until a query is typed, then becomes a link.
       if(!q){ b.setAttribute("href","#"); b.classList.add("ss-disabled-empty"); b.classList.remove("ss-ready"); return; }
       b.setAttribute("href", fill(tmpl,q));
       b.classList.remove("ss-disabled-empty");
@@ -202,9 +211,12 @@ body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;background:#fff;c
   if(input){ input.addEventListener("input",refresh); }
   var applyBtn=root.querySelector("#ss-apply");
   if(applyBtn){ applyBtn.addEventListener("click",refresh); }
-  // A link with no query yet should focus the box rather than navigate.
+  // A search link with no query yet should focus the box rather than navigate; static
+  // links (no %s) always navigate normally.
   buttons.forEach(function(b){
     b.addEventListener("click",function(ev){
+      var tmpl=b.getAttribute("data-ss-template")||"";
+      if(isStatic(tmpl)&&tmpl){ return; }
       if(!input||!input.value.trim()){ ev.preventDefault(); if(input){input.focus();} }
     });
   });

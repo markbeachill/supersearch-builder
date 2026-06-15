@@ -13,6 +13,19 @@ This builder is a sibling of the
 It shares the same philosophy: no account, no backend, no framework, no external
 library, and a **standalone HTML file you own** as the output.
 
+## Stage 1.5 update — static links (links without a query)
+
+- A search entry can now be a **plain link with no `%s`** — a library homepage, a setup
+  page, any fixed destination. Paste a normal URL into the template field and it becomes a
+  static link.
+- Static links are **always live** on the exported page: they appear as proper links on
+  load, with no query needed. Search links (with `%s`) still wait for a typed query.
+- Clicking a static link navigates straight away; clicking a search link before typing
+  still just focuses the query box.
+- Only a genuinely **empty** template is treated as "not set" and skipped.
+- In the builder, each row shows a small `search` or `link` badge, and static links are no
+  longer flagged as invalid.
+
 ## Stage 1.4 update — drag-and-drop searches between sections
 
 - Search rows can now be dragged **between** sections, not just reordered within one.

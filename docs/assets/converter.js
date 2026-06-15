@@ -227,6 +227,15 @@
     var t = String(template || "");
     return /^https?:\/\//i.test(t) && t.indexOf(TOKEN) !== -1;
   }
+  // A complete destination URL with no query token — a static link, always live.
+  function isStaticLink(template) {
+    var t = String(template || "");
+    return /^https?:\/\//i.test(t) && t.indexOf(TOKEN) === -1;
+  }
+  // Any link the page can use: a search template (%s) or a static destination URL.
+  function isUsableLink(template) {
+    return isValidTemplate(template) || isStaticLink(template);
+  }
 
   var api = {
     TOKEN: TOKEN,
@@ -238,7 +247,9 @@
     queryVariants: queryVariants,
     tokenPlacement: tokenPlacement,
     suggestLabel: suggestLabel,
-    isValidTemplate: isValidTemplate
+    isValidTemplate: isValidTemplate,
+    isStaticLink: isStaticLink,
+    isUsableLink: isUsableLink
   };
 
   if (typeof module !== "undefined" && module.exports) {
