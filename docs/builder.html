@@ -656,7 +656,7 @@ function onSectionListInput(event){
     const en=(section.engines||[])[li];
     if(!en)return;
     if(action==="engine-label"){en.label=event.target.value;schedulePreviewRender();}
-    else if(action==="engine-template"){en.template=event.target.value;enRow.classList.toggle("invalid",!E.isUsableLink(en.template));scheduleRender();}
+    else if(action==="engine-template"){en.template=event.target.value;enRow.classList.toggle("invalid",!E.isUsableLink(en.template));schedulePreviewRender();}
     else if(action==="engine-colour"){en.colour=cleanColour(event.target.value);schedulePreviewRender();}
   }
 }
